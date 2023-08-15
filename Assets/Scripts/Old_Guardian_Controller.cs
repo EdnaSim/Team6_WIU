@@ -25,6 +25,7 @@ public class Old_Guardian_Controller : MonoBehaviour
     {
         inRange = false;
         StartCoroutine(AttackTimer());
+        StartCoroutine(ReturnToIdle());
     }
 
     // Update is called once per frame
@@ -70,11 +71,26 @@ public class Old_Guardian_Controller : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
     }
 
+    IEnumerator ReturnToIdle()
+    {
+        yield return new WaitForSeconds(3f);
+        currentState = State.IDLE;
+    }
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         if(ReferenceEquals(collision.gameObject, rangeBox))
         {
             currentState = State.CHARGE;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (ReferenceEquals(collision.gameObject, rangeBox))
+        {
+            ReturnToIdle();
+            currentState = State.IDLE;
         }
     }
 }
