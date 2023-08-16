@@ -9,7 +9,8 @@ public class Old_Guardian_Controller : MonoBehaviour
     {
         IDLE,
         CHARGE,
-        ATTACK
+        ATTACK,
+        DEATH
     }
     [SerializeField] private State currentState;
 
@@ -19,13 +20,32 @@ public class Old_Guardian_Controller : MonoBehaviour
     public AIPath aiPath;
 
     private bool inRange;
+    private bool isDead;
+    
+    private bool StartIdleTimer;
+    private bool StartATKTimer;
+    private bool StartDeathTimer;
+
+    public float ChasePlayerTimer;
+    public LayerMask Player;
+
+    public float FOVradius = 5f;
+    public float ATKradius = 2f;
+    public LayerMask targetMask;
+
 
     // Start is called before the first frame update
     void Start()
     {
         inRange = false;
-        StartCoroutine(AttackTimer());
-        StartCoroutine(ReturnToIdle());
+        isDead = false;
+
+        StartIdleTimer = false;
+        StartATKTimer = false;
+        StartDeathTimer = false;
+        ChasePlayerTimer = 3f;
+
+        ChangeState(currentState);
     }
 
     // Update is called once per frame
@@ -43,45 +63,153 @@ public class Old_Guardian_Controller : MonoBehaviour
         {
             Attack();
         }
+        else if (currentState == State.DEATH)
+        {
+            Death();
+        }
+
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            isDead = true;
+        }
+
+        if(isDead)
+        {
+            aiPath.canMove = false;
+            ChangeState(State.DEATH);
+        }
+
+        FOVCheck();
+        
+    }
+
+    private void ChangeState(State next)
+    {
+        if (next == State.IDLE)
+        {
+            anim.SetBool("IsMoving", false);
+        }
+        else if (next == State.CHARGE)
+        {
+            anim.SetBool("IsMoving", true);
+        }
+        else if (next == State.ATTACK)
+        {
+            anim.SetTrigger("Attack");
+        }
+        else if (next == State.DEATH)
+        {
+            if(!StartDeathTimer)
+            {
+                anim.SetBool("Death", true);
+                anim.SetTrigger("Die");
+                StartDeathTimer = true;
+            }
+        }
+        currentState = next;
     }
 
     private void Idle()
     {
-        aiPath.canMove = false;
-        anim.SetBool("IsMoving", false);
-        if(inRange)
+        if (!isDead)
         {
-            currentState = State.CHARGE;
+            aiPath.canMove = false;
+            anim.SetBool("IsMoving", false);
         }
     }
     private void Charge()
     {
-        aiPath.canMove = true;
-        anim.SetBool("IsMoving", true);
+        if (!isDead)
+        {
+            if (!StartATKTimer)
+            {
+                aiPath.canMove = true;
+                anim.SetBool("IsMoving", true);
+            }
+        }
     }
     private void Attack()
     {
-        anim.SetTrigger("Attack");
-        AttackTimer();
-        currentState = State.IDLE;
+        if (!isDead)
+        {
+            aiPath.canMove = false;
+            if (!StartATKTimer)
+            {
+                StartATKTimer = true;
+                
+                //anim.SetTrigger("Attack");
+                StartCoroutine(AttackTimer());
+            }
+        }
+        //AttackTimer();
+        //currentState = State.ATTACK;
+    }
+
+    private void Death()
+    {
+        aiPath.canMove = false;
+        Destroy(gameObject, 5f);
+    }
+
+    private void FOVCheck()
+    {
+        Collider2D[] detectedUnits = Physics2D.OverlapCircleAll(transform.position, FOVradius, targetMask);
+        Collider2D[] ATKRange = Physics2D.OverlapCircleAll(transform.position, ATKradius, targetMask);
+
+        //Debug.Log(detectedUnits.Length);
+        if (ATKRange.Length != 0)
+        {
+            ChangeState(State.ATTACK);
+            //if(!StartATKTimer)
+            //{
+            //    StartATKTimer = true;
+            //    //anim.SetTrigger("Attack");
+            //    StartCoroutine(AttackTimer());
+            //}
+        }
+
+        else if (detectedUnits.Length != 0)
+        {
+            ChangeState(State.CHARGE);
+            //inRange = true;
+            //ChasePlayerTimer = 3f;
+        }
+
+        else
+        {
+            //inRange = false;
+            if(!StartIdleTimer)
+            {
+                StartIdleTimer = true;
+                StartCoroutine(ReturnToIdle());
+            }
+        }
     }
 
     IEnumerator AttackTimer()
     {
-        yield return new WaitForSeconds(0.5f);
+        ChangeState(State.IDLE);
+        Debug.Log("PlayerDamaged");
+        
+        yield return new WaitForSeconds(1f);
+        StartATKTimer = false;
     }
 
     IEnumerator ReturnToIdle()
     {
+        //Debug.Log("We Vibin");
         yield return new WaitForSeconds(3f);
-        currentState = State.IDLE;
+        ChangeState(State.IDLE);
+        StartIdleTimer = false;
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
         if(ReferenceEquals(collision.gameObject, rangeBox))
         {
-            currentState = State.CHARGE;
+            //ChangeState(State.CHARGE);
+            //inRange = true;
+            //ChasePlayerTimer = 3f;
         }
     }
 
@@ -89,8 +217,19 @@ public class Old_Guardian_Controller : MonoBehaviour
     {
         if (ReferenceEquals(collision.gameObject, rangeBox))
         {
-            ReturnToIdle();
-            currentState = State.IDLE;
+            //StartCoroutine(ReturnToIdle());
+            //Debug.Log("STOP");
+            //ReturnToIdle();
+            //inRange = false;
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, FOVradius);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, ATKradius);
     }
 }
