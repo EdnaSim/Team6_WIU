@@ -7,6 +7,8 @@ public class Player_Controller : MonoBehaviour
     Rigidbody2D rb;
     Animator ar;
     SpriteRenderer sr;
+    public WeaponController wc;
+    [SerializeField] SO_WeaponList wl;
 
     public bool isPaused = false;
 
@@ -20,21 +22,13 @@ public class Player_Controller : MonoBehaviour
 
     bool isAttacking = false; //check if bound to an attack anim (set by anim trigger)
     [Header("Attack")]
-    [SerializeField] float MeleeDamage;
-    [SerializeField] float MeleeCooldown;
-    [SerializeField] Vector2 MeleeRange;
     [SerializeField] Transform MeleeOrigin;
+    public static List<MeleeWeaponStats> TempMeleeInv; // TEMP
     bool CanMelee = true;
 
     [Header("Ranged attack")]
-    [SerializeField] float RangeDamage;
-    [SerializeField] float RangedCooldown;
-    [SerializeField] float RangedAttackRange;
-    [SerializeField] float RangedProjSpeed;
-    [SerializeField] GameObject projPrefab;
-    [SerializeField] int PooledProjTotal;
+    public static List<RangedWeaponStats> TempInventory; //TEMP 
     bool CanRange = true;
-    List<Projectile> PooledProjectiles;
 
     // Start is called before the first frame update
     void Start()
@@ -45,16 +39,14 @@ public class Player_Controller : MonoBehaviour
 
         MovementSpeed = Base_MovementSpeed;
 
-        PooledProjectiles = new List<Projectile>();
-        for (int i = 0; i < PooledProjTotal; i++) {
-            Projectile temp = Instantiate(projPrefab).GetComponent<Projectile>();
-            temp.damage = RangeDamage;
-            temp.caster = gameObject;
-            temp.speed = RangedProjSpeed;
-            temp.MaxRange = RangedAttackRange;
-            temp.FalloffDist = RangedAttackRange / 2;
-            temp.targetLayer = LayerMask.GetMask("Enemy");
-            PooledProjectiles.Add(temp);
+        wc = GetComponent<WeaponController>();
+
+        //TEMP - add weapon instance for each type
+        for (int i = 0; i < wl.RangedWeaponList.Count; i++) {
+            TempInventory.Add(new RangedWeaponStats(wl.RangedWeaponList[i].Stats));
+        }
+        for (int i=0; i < wl.MeleeWeaponlist.Count; i++) {
+            TempMeleeInv.Add(new MeleeWeaponStats(wl.MeleeWeaponlist[i].Stats));
         }
     }
 
@@ -84,6 +76,17 @@ public class Player_Controller : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.B)) {
                 //Open Inventory
+                
+                //TEMP - Find weapon name to switch to it
+                if (wc.RangedStats.WeaponName == "Basic")
+                    wc.ChangeRangedWeapon(TempInventory.Find((RangedWeaponStats w) => w.WeaponName == "Triangle"));
+                else
+                    wc.ChangeRangedWeapon(TempInventory.Find((RangedWeaponStats w) => w.WeaponName == "Basic"));
+
+                if (wc.MeleeStats.WeaponName == "Fists")
+                    wc.ChangeMeleeWeapon(TempMeleeInv.Find((MeleeWeaponStats w) => w.WeaponName == "Sword"));
+                else
+                    wc.ChangeMeleeWeapon(TempMeleeInv.Find((MeleeWeaponStats w) => w.WeaponName == "Fists"));
             }
             if (Input.GetMouseButtonDown(0)) {
                 //Attack (left click)
@@ -128,10 +131,19 @@ public class Player_Controller : MonoBehaviour
         //move the origin to face the mouse
         MeleeOrigin.transform.position = new Vector2(gameObject.transform.position.x + facing.x, gameObject.transform.position.y + facing.y);
     }
-    //TEMP
-    private void OnDrawGizmos() {
-        Gizmos.DrawWireCube(MeleeOrigin.transform.position, MeleeRange);
-    }
+    //TEMP - draw melee range (also rotate it)
+    //private void OnDrawGizmos() {
+    //    //Gizmos.DrawWireCube(MeleeOrigin.transform.position, MeleeRange);
+    //    var oldMatrix = Gizmos.matrix;
+
+    //    // create a matrix which translates an object by "position", rotates it by "rotation" and scales it by "halfExtends * 2"
+    //    Quaternion rotation = Quaternion.Euler(0, 0, Mathf.Atan2(facing.y, facing.x) * Mathf.Rad2Deg);
+    //    Gizmos.matrix = Matrix4x4.TRS(MeleeOrigin.position, rotation, new Vector2(wc.MeleeStats.RadiusX, wc.MeleeStats.RadiusY));
+    //    // Then use it one a default cube which is not translated nor scaled
+    //    Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
+
+    //    Gizmos.matrix = oldMatrix;
+    //}
 
     public void SetPause(int DesiredPause = 2) {
         //0: false
@@ -156,31 +168,18 @@ public class Player_Controller : MonoBehaviour
     //called by animation event trigger ("Melee")
     private void StartMelee() {
         //AOE
-        foreach (Collider2D col in Physics2D.OverlapBoxAll(MeleeOrigin.position, MeleeRange, 0, LayerMask.GetMask("Enemy"))){
-            Debug.Log(col.gameObject.name);
-            HealthManager hm = col.gameObject.GetComponent<HealthManager>();
-            if (hm != null) {
-                hm.TakeDamage(MeleeDamage, gameObject);
-            }
-        }
+        wc.Melee(MeleeOrigin.position, facing);
     }
     IEnumerator StartMeleeCooldown() {
-        yield return new WaitForSeconds(MeleeCooldown);
+        yield return new WaitForSeconds(wc.MeleeStats.Cooldown);
         CanMelee = true;
     }
 
     private void StartRanged() {
-        foreach (Projectile p in PooledProjectiles) {
-            if (p.gameObject.activeSelf) {
-                continue;
-            }
-            p.dir = facing;
-            p.ReSummon();
-            break;
-        }
+        wc.Fire(facing);
     }
     IEnumerator StartRangedCooldown() {
-        yield return new WaitForSeconds(RangedCooldown);
+        yield return new WaitForSeconds(wc.RangedStats.FireRate);
         CanRange = true;
     }
 

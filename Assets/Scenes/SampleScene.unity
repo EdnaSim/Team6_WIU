@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 143715309}
   - component: {fileID: 143715311}
   - component: {fileID: 143715310}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -212,7 +212,7 @@ GameObject:
   - component: {fileID: 163820050}
   - component: {fileID: 163820049}
   - component: {fileID: 163820048}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1067,11 +1067,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b40981723d264e4fa020cb7b0748e66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Base_MaxHealth: 10
+  Base_MaxHealth: 20
   MaxHealth: 0
   CurrentHealth: 0
-  UI_Hpbar: {fileID: 0}
-  DamageMultiplier: 0
+  UI_Hpbar: {fileID: 309742610}
+  DamageMultiplier: 1
   isDead: 0
 --- !u!50 &1371607445
 Rigidbody2D:
@@ -1103,7 +1103,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1590887467}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MeleeOrigin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1140,7 +1140,8 @@ GameObject:
   - component: {fileID: 1912795511}
   - component: {fileID: 1912795516}
   - component: {fileID: 1912795517}
-  m_Layer: 0
+  - component: {fileID: 1912795518}
+  m_Layer: 6
   m_Name: player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1159,19 +1160,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ae19fc8bd48ebd478b88c4cce2109a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wc: {fileID: 0}
+  wl: {fileID: 11400000, guid: 94e914a207908204d839ecac0bbdac4a, type: 2}
   isPaused: 0
   Base_MovementSpeed: 7
   SprintIncrease: 5
-  MeleeDamage: 2
-  MeleeCooldown: 1
-  MeleeRange: {x: 1, y: 1}
   MeleeOrigin: {fileID: 1590887467}
-  RangeDamage: 10
-  RangedCooldown: 1
-  RangedAttackRange: 10
-  RangedProjSpeed: 5
-  projPrefab: {fileID: 7630813025349190170, guid: 72d7dce6a5a0ae741988b13d73f41e27, type: 3}
-  PooledProjTotal: 5
 --- !u!50 &1912795512
 Rigidbody2D:
   serializedVersion: 4
@@ -1192,7 +1186,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &1912795513
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1210,7 +1204,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.32, y: 0.32}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1327,6 +1321,38 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1912795518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912795510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 517ce8bdcd6e5aa4d81442272b56fb67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  owner: {fileID: 1912795510}
+  BaseRangedData: {fileID: 11400000, guid: 512c85833d442dc42aa24649963970af, type: 2}
+  RangedStats:
+    Damage: 10
+    FireRate: 1
+    MaxRange: 10
+    ProjSpeed: 10
+    FallOffDist: 5
+    Spread: 0
+    ShotsPerFire: 0
+    ProjPrefab: {fileID: 0}
+    WeaponName: DefaultName
+  BaseMeleeData: {fileID: 11400000, guid: db9bb2e0671075144928e762717389d7, type: 2}
+  MeleeStats:
+    Damage: 10
+    Cooldown: 1
+    RadiusX: 1
+    RadiusY: 1
+    isAOE: 0
+    WeaponName: DefaultName
 --- !u!1 &1915581308
 GameObject:
   m_ObjectHideFlags: 0
@@ -1338,7 +1364,7 @@ GameObject:
   - component: {fileID: 1915581309}
   - component: {fileID: 1915581311}
   - component: {fileID: 1915581312}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Healthbar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1364,7 +1390,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.79}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1, y: 0.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1915581311
@@ -1556,7 +1582,7 @@ GameObject:
   - component: {fileID: 1941355746}
   - component: {fileID: 1941355748}
   - component: {fileID: 1941355747}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
