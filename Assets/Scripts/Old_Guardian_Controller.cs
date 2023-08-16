@@ -21,6 +21,7 @@ public class Old_Guardian_Controller : MonoBehaviour
 
     private bool inRange;
     private bool isDead;
+    private bool isAttacking;
     
     private bool StartIdleTimer;
     private bool StartATKTimer;
@@ -95,7 +96,7 @@ public class Old_Guardian_Controller : MonoBehaviour
         }
         else if (next == State.ATTACK)
         {
-            anim.SetTrigger("Attack");
+            anim.SetBool("Attack", true);
         }
         else if (next == State.DEATH)
         {
@@ -160,6 +161,7 @@ public class Old_Guardian_Controller : MonoBehaviour
         if (ATKRange.Length != 0)
         {
             ChangeState(State.ATTACK);
+            isAttacking = true;
             //if(!StartATKTimer)
             //{
             //    StartATKTimer = true;
@@ -170,7 +172,10 @@ public class Old_Guardian_Controller : MonoBehaviour
 
         else if (detectedUnits.Length != 0)
         {
-            ChangeState(State.CHARGE);
+            if(!isAttacking)
+            {
+                ChangeState(State.CHARGE);
+            }
             //inRange = true;
             //ChasePlayerTimer = 3f;
         }
@@ -188,11 +193,17 @@ public class Old_Guardian_Controller : MonoBehaviour
 
     IEnumerator AttackTimer()
     {
-        ChangeState(State.IDLE);
+        anim.SetBool("Attack", false);
+
+        yield return new WaitForSeconds(0.75f);
         Debug.Log("PlayerDamaged");
-        
-        yield return new WaitForSeconds(1f);
         StartATKTimer = false;
+        isAttacking = false;
+        
+
+        yield return new WaitForSeconds(1f);
+        ChangeState(State.IDLE);
+        
     }
 
     IEnumerator ReturnToIdle()
