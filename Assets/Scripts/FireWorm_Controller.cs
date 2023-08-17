@@ -1,9 +1,9 @@
+using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Pathfinding;
 
-public class Old_Guardian_Controller : MonoBehaviour
+public class FireWorm_Controller : MonoBehaviour
 {
     public enum State
     {
@@ -18,9 +18,13 @@ public class Old_Guardian_Controller : MonoBehaviour
 
     public AIPath aiPath;
 
+    public GameObject FirePoint;
+    public GameObject FireBall;
+    public float FireballSpeed = 10f;
+
     private bool isDead;
     private bool isAttacking;
-    
+
     private bool StartIdleTimer;
     private bool StartATKTimer;
     private bool StartDeathTimer;
@@ -32,12 +36,9 @@ public class Old_Guardian_Controller : MonoBehaviour
     public float ATKradius = 2f;
     public LayerMask targetMask;
 
-
     // Start is called before the first frame update
     void Start()
     {
-        isDead = false;
-
         StartIdleTimer = false;
         StartATKTimer = false;
         StartDeathTimer = false;
@@ -66,24 +67,18 @@ public class Old_Guardian_Controller : MonoBehaviour
             Death();
         }
 
-        if(Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.R))
         {
             isDead = true;
         }
 
-        if(isDead)
+        if (isDead)
         {
             aiPath.canMove = false;
             ChangeState(State.DEATH);
         }
 
-        if(!isAttacking)
-        {
-            StopCoroutine(AttackTimer());
-        }
-
         FOVCheck();
-        
     }
 
     private void ChangeState(State next)
@@ -91,6 +86,7 @@ public class Old_Guardian_Controller : MonoBehaviour
         if (next == State.IDLE)
         {
             anim.SetBool("IsMoving", false);
+            isAttacking = false;
         }
         else if (next == State.CHARGE)
         {
@@ -98,17 +94,19 @@ public class Old_Guardian_Controller : MonoBehaviour
         }
         else if (next == State.ATTACK)
         {
-            anim.SetBool("Attack", true);
+            anim.SetTrigger("Attack");
+            isAttacking = true;
         }
         else if (next == State.DEATH)
         {
-            if(!StartDeathTimer)
+            if (!StartDeathTimer)
             {
                 anim.SetBool("Death", true);
                 anim.SetTrigger("Die");
                 StartDeathTimer = true;
             }
         }
+
         currentState = next;
     }
 
@@ -120,6 +118,7 @@ public class Old_Guardian_Controller : MonoBehaviour
             anim.SetBool("IsMoving", false);
         }
     }
+
     private void Charge()
     {
         if (!isDead)
@@ -131,26 +130,26 @@ public class Old_Guardian_Controller : MonoBehaviour
             }
         }
     }
+
     private void Attack()
     {
         if (!isDead)
         {
             aiPath.canMove = false;
+            //Shoot
+
+            //Switch to Cooldown
             if (!StartATKTimer)
             {
                 StartATKTimer = true;
-                
-                //anim.SetTrigger("Attack");
-                StartCoroutine(AttackTimer());
+                StartCoroutine(Cooldown());
             }
         }
-        //AttackTimer();
-        //currentState = State.ATTACK;
     }
 
     private void Death()
     {
-        aiPath.canMove = false;
+        isDead = true;
         Destroy(gameObject, 5f);
     }
 
@@ -159,23 +158,17 @@ public class Old_Guardian_Controller : MonoBehaviour
         Collider2D[] detectedUnits = Physics2D.OverlapCircleAll(transform.position, FOVradius, targetMask);
         Collider2D[] ATKRange = Physics2D.OverlapCircleAll(transform.position, ATKradius, targetMask);
 
-        //Debug.Log(detectedUnits.Length);
-        if (ATKRange.Length != 0)
+        if(ATKRange.Length != 0)
         {
             ChangeState(State.ATTACK);
             isAttacking = true;
-            //if(!StartATKTimer)
-            //{
-            //    StartATKTimer = true;
-            //    //anim.SetTrigger("Attack");
-            //    StartCoroutine(AttackTimer());
-            //}
         }
 
         else if (detectedUnits.Length != 0)
         {
-            if(!isAttacking)
+            if (!isAttacking)
             {
+                //Debug.Log("MOVE");
                 ChangeState(State.CHARGE);
             }
             //inRange = true;
@@ -185,7 +178,7 @@ public class Old_Guardian_Controller : MonoBehaviour
         else
         {
             //inRange = false;
-            if(!StartIdleTimer)
+            if (!StartIdleTimer)
             {
                 StartIdleTimer = true;
                 StartCoroutine(ReturnToIdle());
@@ -193,26 +186,26 @@ public class Old_Guardian_Controller : MonoBehaviour
         }
     }
 
-    IEnumerator AttackTimer()
-    {
-        anim.SetBool("Attack", false);
-
-        yield return new WaitForSeconds(0.75f);
-        Debug.Log("PlayerDamaged");
-        StartATKTimer = false;
-        isAttacking = false;
-        
-
-        yield return new WaitForSeconds(1f);
-        ChangeState(State.IDLE);
-        //StopCoroutine(AttackTimer());
-    }
-
     IEnumerator ReturnToIdle()
     {
         yield return new WaitForSeconds(3f);
         ChangeState(State.IDLE);
         StartIdleTimer = false;
+    }
+
+    IEnumerator Cooldown()
+    {
+        yield return new WaitForSeconds(0.6f);
+        var bullet = Instantiate(FireBall, FirePoint.transform.position, FirePoint.transform.rotation);
+        //bullet.GetComponent<Rigidbody2D>().rotation = 180;
+        bullet.GetComponent<Rigidbody2D>().velocity = FirePoint.transform.right * FireballSpeed;
+        ChangeState(State.IDLE);
+        //isAttacking = false;
+        //StartATKTimer = false;
+
+        yield return new WaitForSeconds(0.75f);
+        isAttacking = false;
+        StartATKTimer = false;
     }
 
     private void OnDrawGizmos()
