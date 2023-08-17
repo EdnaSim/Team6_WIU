@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 76faeefe694cdc84884d2d9721a29105
+guid: dd8b937fe3276e644806e7dc56120352
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 10
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -117,7 +117,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Sprout_move_0
+      name: MiniSprout_move_0
       rect:
         serializedVersion: 2
         x: 25
@@ -131,14 +131,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 57bb4ab18627a084c9e14a6d3c9fa165
-      internalID: -1627761210
+      spriteID: f256a101cbf732d4db8899102acb068f
+      internalID: 1930422964
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprout_move_1
+      name: MiniSprout_move_1
       rect:
         serializedVersion: 2
         x: 28
@@ -152,14 +152,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 020671960dd6ed74181a44482ae66452
-      internalID: -127619745
+      spriteID: b95fb875cadd55e47b9058479e65b0f2
+      internalID: 1971546889
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprout_move_2
+      name: MiniSprout_move_2
       rect:
         serializedVersion: 2
         x: 28
@@ -173,14 +173,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2f3aa2cbbcfd1fe4da8640ff8220bd41
-      internalID: -1570327800
+      spriteID: e1beed9532eddc248a0ec2279ded01bc
+      internalID: 1417961964
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprout_move_3
+      name: MiniSprout_move_3
       rect:
         serializedVersion: 2
         x: 25
@@ -194,14 +194,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 234a48d515cfa39499385b72ea2b9494
-      internalID: 809172704
+      spriteID: 7dca3ba98779fed4fa2af88f0cd4843c
+      internalID: 919017016
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprout_move_4
+      name: MiniSprout_move_4
       rect:
         serializedVersion: 2
         x: 22
@@ -215,8 +215,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2f4684ee985252c47bb1369b7d16bd14
-      internalID: 1369388103
+      spriteID: 2be8192c61c57c84a92718ee61558c56
+      internalID: -565794456
       vertices: []
       indices: 
       edges: []
@@ -232,11 +232,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Sprout_move_0: -1627761210
-      Sprout_move_1: -127619745
-      Sprout_move_2: -1570327800
-      Sprout_move_3: 809172704
-      Sprout_move_4: 1369388103
+      MiniSprout_move_0: 1930422964
+      MiniSprout_move_1: 1971546889
+      MiniSprout_move_2: 1417961964
+      MiniSprout_move_3: 919017016
+      MiniSprout_move_4: -565794456
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

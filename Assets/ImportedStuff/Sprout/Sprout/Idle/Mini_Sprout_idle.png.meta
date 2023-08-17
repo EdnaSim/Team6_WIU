@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 76faeefe694cdc84884d2d9721a29105
+guid: dbb5a280cb8c19647a2e1e584d663281
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 10
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -117,12 +117,33 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Sprout_move_0
+      name: Sprout_idle_0
       rect:
         serializedVersion: 2
         x: 25
-        y: 402
-        width: 50
+        y: 306
+        width: 49
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0dd6495a433434543b832d685263c157
+      internalID: -996468194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprout_idle_1
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 210
+        width: 49
         height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -131,62 +152,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 57bb4ab18627a084c9e14a6d3c9fa165
-      internalID: -1627761210
+      spriteID: 30dd619bf24423b41b79eeaaeb511741
+      internalID: -385187909
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprout_move_1
-      rect:
-        serializedVersion: 2
-        x: 28
-        y: 306
-        width: 47
-        height: 61
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 020671960dd6ed74181a44482ae66452
-      internalID: -127619745
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sprout_move_2
-      rect:
-        serializedVersion: 2
-        x: 28
-        y: 210
-        width: 47
-        height: 61
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2f3aa2cbbcfd1fe4da8640ff8220bd41
-      internalID: -1570327800
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sprout_move_3
+      name: Sprout_idle_2
       rect:
         serializedVersion: 2
         x: 25
         y: 114
-        width: 50
-        height: 61
+        width: 49
+        height: 59
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,20 +173,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 234a48d515cfa39499385b72ea2b9494
-      internalID: 809172704
+      spriteID: 4228b858b43000c49b164c52f8ea88d3
+      internalID: -1932189523
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprout_move_4
+      name: Sprout_idle_3
       rect:
         serializedVersion: 2
-        x: 22
-        y: 17
-        width: 53
-        height: 61
+        x: 25
+        y: 18
+        width: 49
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -215,8 +194,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2f4684ee985252c47bb1369b7d16bd14
-      internalID: 1369388103
+      spriteID: 3204cecb284adb549adef2c9c0e8c9f4
+      internalID: 1735029252
       vertices: []
       indices: 
       edges: []
@@ -232,11 +211,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Sprout_move_0: -1627761210
-      Sprout_move_1: -127619745
-      Sprout_move_2: -1570327800
-      Sprout_move_3: 809172704
-      Sprout_move_4: 1369388103
+      Sprout_idle_0: -996468194
+      Sprout_idle_1: -385187909
+      Sprout_idle_2: -1932189523
+      Sprout_idle_3: 1735029252
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

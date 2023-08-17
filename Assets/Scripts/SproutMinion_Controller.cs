@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireWorm_Controller : MonoBehaviour
+public class SproutMinion_Controller : MonoBehaviour
 {
     public enum State
     {
@@ -17,10 +17,6 @@ public class FireWorm_Controller : MonoBehaviour
     public Animator anim;
 
     public AIPath aiPath;
-
-    public GameObject FirePoint;
-    public GameObject FireBall;
-    public float FireballSpeed = 10f;
 
     private bool isDead;
     private bool isAttacking;
@@ -135,14 +131,7 @@ public class FireWorm_Controller : MonoBehaviour
     {
         if (!isDead)
         {
-            aiPath.canMove = false;
 
-            //Switch to Cooldown
-            if (!StartATKTimer)
-            {
-                StartATKTimer = true;
-                StartCoroutine(Cooldown());
-            }
         }
     }
 
@@ -157,7 +146,7 @@ public class FireWorm_Controller : MonoBehaviour
         Collider2D[] detectedUnits = Physics2D.OverlapCircleAll(transform.position, FOVradius, targetMask);
         Collider2D[] ATKRange = Physics2D.OverlapCircleAll(transform.position, ATKradius, targetMask);
 
-        if(ATKRange.Length != 0)
+        if (ATKRange.Length != 0)
         {
             ChangeState(State.ATTACK);
             isAttacking = true;
@@ -190,19 +179,6 @@ public class FireWorm_Controller : MonoBehaviour
         yield return new WaitForSeconds(3f);
         ChangeState(State.IDLE);
         StartIdleTimer = false;
-    }
-
-    IEnumerator Cooldown()
-    {
-        yield return new WaitForSeconds(0.6f);
-        var bullet = Instantiate(FireBall, FirePoint.transform.position, FirePoint.transform.rotation);
-        //bullet.GetComponent<Rigidbody2D>().rotation = 180;
-        bullet.GetComponent<Rigidbody2D>().velocity = FirePoint.transform.right * FireballSpeed;
-        ChangeState(State.IDLE);
-
-        yield return new WaitForSeconds(0.7f);
-        isAttacking = false;
-        StartATKTimer = false;
     }
 
     private void OnDrawGizmos()
