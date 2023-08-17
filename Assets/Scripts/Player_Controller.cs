@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Player_Controller : MonoBehaviour
 {
+    public static Player_Controller PC;
+
     Rigidbody2D rb;
     Animator ar;
     SpriteRenderer sr;
@@ -30,9 +33,15 @@ public class Player_Controller : MonoBehaviour
     public static List<RangedWeaponStats> TempInventory; //TEMP 
     bool CanRange = true;
 
+    [Header("Pet")]
+    [SerializeField] SO_PetDetails PetDetails;
+    Pet pet;
+
     // Start is called before the first frame update
     void Start()
     {
+        PC = this;
+
         rb = GetComponent<Rigidbody2D>();
         ar = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
@@ -48,6 +57,8 @@ public class Player_Controller : MonoBehaviour
         for (int i=0; i < wl.MeleeWeaponlist.Count; i++) {
             TempMeleeInv.Add(new MeleeWeaponStats(wl.MeleeWeaponlist[i].Stats));
         }
+
+        Physics2D.IgnoreLayerCollision(gameObject.layer, gameObject.layer);
     }
 
     // Update is called once per frame
@@ -96,6 +107,10 @@ public class Player_Controller : MonoBehaviour
                     //ar.SetTrigger("Melee");
                     StartMelee();
                     StartCoroutine(StartMeleeCooldown());
+
+                    //make pet target enemy "attacked"
+                    //using radiusX since its the height from the player to the tip of the box
+                    MakePetTargetAttackedEnemy(wc.MeleeStats.RadiusX + 1);
                 }
             }
             if (Input.GetMouseButtonDown(1)) {
@@ -105,6 +120,9 @@ public class Player_Controller : MonoBehaviour
                     //isAttacking = true;
                     StartRanged();
                     StartCoroutine(StartRangedCooldown());
+
+                    //make pet target enemy "attacked"
+                    MakePetTargetAttackedEnemy(wc.RangedStats.MaxRange);
                 }
             }
 
@@ -220,5 +238,29 @@ public class Player_Controller : MonoBehaviour
     //called by anim event triggers when the anim is "over"
     public void ResetIsAttacking() {
         isAttacking = false;
+    }
+
+    public void OnHitByEnemy(GameObject attacker) {
+        //drain sanity
+
+        //pet action
+        if (PetManager.Pet != null) {
+            PetManager.Pet.OwnerAttacked(attacker);
+        }
+    }
+
+    private void MakePetTargetAttackedEnemy(float radius) {
+        if (PetManager.Pet == null) return;
+
+        //get where player clicked
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //returns ray from cam to point
+        //check if within radius range (attack range, for melee and ranged)
+        if (Vector2.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition), transform.position) <= radius) {
+            Collider2D col = Physics2D.Raycast(ray.origin, ray.direction, 100).collider;
+            if (col != null && col.gameObject.layer == LayerMask.NameToLayer("Enemy")) {
+                //make the enemy the summons' target
+                PetManager.Pet.TargetEnemyAttacked(col.gameObject);
+            }
+        }
     }
 }

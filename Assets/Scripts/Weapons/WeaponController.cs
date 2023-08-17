@@ -68,9 +68,11 @@ public class WeaponController : MonoBehaviour
         return true;
     }
 
-    public bool Melee(Vector2 origin, Vector2 dir) {
+    public int Melee(Vector2 origin, Vector2 dir) {
         if (MeleeStats == null)
-            return false;
+            return 0;
+
+        int EnemiesHit = 0;
 
         LayerMask lm = 1 << owner.gameObject.layer;//get all layers
         lm = ~lm;//reverse, so everything EXCEPT owner
@@ -79,11 +81,12 @@ public class WeaponController : MonoBehaviour
         if (!MeleeStats.isAOE) {
             Collider2D col = Physics2D.OverlapBox(origin, new Vector2(MeleeStats.RadiusX, MeleeStats.RadiusY), Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg, lm);
             if (col == null)
-                return false;
+                return 0;
 
             HealthManager hm = col.gameObject.GetComponent<HealthManager>();
             if (hm != null) {
                 hm.TakeDamage(MeleeStats.Damage, owner);
+                EnemiesHit++;
             }
         }
         else {
@@ -91,11 +94,12 @@ public class WeaponController : MonoBehaviour
                 HealthManager hm = col.gameObject.GetComponent<HealthManager>();
                 if (hm != null) {
                     hm.TakeDamage(MeleeStats.Damage, owner);
+                    EnemiesHit++;
                 }
             }
         }
 
-        return true;
+        return EnemiesHit;
     }
 
     public void ChangeRangedWeapon(RangedWeaponStats newWeaponStat) {

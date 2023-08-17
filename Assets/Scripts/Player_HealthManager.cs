@@ -27,6 +27,8 @@ public class Player_HealthManager : HealthManager
         //update after taking damage
         if (UI_Hpbar != null)
             UI_Hpbar.UpdateSlider();
+
+        Player_Controller.PC.OnHitByEnemy(attacker);
     }
 
     public override void Heal(float amt) {
