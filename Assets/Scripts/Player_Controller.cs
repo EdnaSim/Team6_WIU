@@ -10,7 +10,7 @@ public class Player_Controller : MonoBehaviour
     Rigidbody2D rb;
     Animator ar;
     SpriteRenderer sr;
-    public WeaponController wc;
+    [HideInInspector] public WeaponController wc;
     [SerializeField] SO_WeaponList wl;
 
     public bool isPaused = false;

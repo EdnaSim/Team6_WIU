@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
+using TMPro;
 
 public class PetManager : MonoBehaviour
 {
@@ -14,6 +16,7 @@ public class PetManager : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] GameObject PetSelectorContainer;
+    [SerializeField] GameObject NameContainer;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +29,8 @@ public class PetManager : MonoBehaviour
         if (PetDie == null)
             PetDie = new UnityEvent();
         PetDie.AddListener(OnPetDeath);
+
+        NameContainer.SetActive(false);
     }
 
     //new save, select pet
@@ -35,6 +40,9 @@ public class PetManager : MonoBehaviour
         if (!SpawnPet()) {
             Debug.LogError("SO_PetDetails PetType is null, or the Prefabs have not been assigned / PetManager.cs (SpawnPet) does not have the pet type included.");
             return;
+        }
+        if (PetDetails.PetType != SO_PetDetails.PETTYPE.NONE) {
+            NameContainer.SetActive(true);
         }
         //disable the selection page
         PetSelectorContainer.SetActive(false);
@@ -78,6 +86,12 @@ public class PetManager : MonoBehaviour
         PetDetails.HungerDrain = Pet.Base_HungerDrain;
 
         return true;
+    }
+
+    public void NamePet(TMP_InputField input) {
+        PetDetails.Name = input.text;
+        Pet.Nametag.text = PetDetails.Name;
+        NameContainer.SetActive(false);
     }
 
     public void OnPetDeath() {

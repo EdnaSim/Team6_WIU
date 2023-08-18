@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
+using TMPro;
 
 public abstract class Pet : MonoBehaviour
 {
@@ -28,6 +29,9 @@ public abstract class Pet : MonoBehaviour
 
     [Header("Sprite")]
     [SerializeField] protected bool OriginalSpriteFaceRight = false;
+
+    [Header("UI")]
+    [SerializeField] public TMP_Text Nametag;
 
     // Start is called before the first frame update
     void OnEnable()
@@ -136,11 +140,10 @@ public abstract class Pet : MonoBehaviour
     }
 
     public virtual void OwnerAttacked(GameObject attacker) {
-
+        //leave empty, set by the child classes
     }
 
     public virtual void TargetEnemyAttacked(GameObject enemy) {
+        //leave empty, set by the child classes
     }
-        
-    
 }

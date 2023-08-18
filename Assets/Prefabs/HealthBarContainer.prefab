@@ -166,7 +166,7 @@ GameObject:
   - component: {fileID: 7559391101268652866}
   - component: {fileID: 7559391101268652867}
   m_Layer: 7
-  m_Name: HealthBar
+  m_Name: HealthBarContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -267,6 +267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectToFollow: {fileID: 0}
+  OffsetY: 1
 --- !u!1 &7559391101805934917
 GameObject:
   m_ObjectHideFlags: 0
