@@ -17,6 +17,7 @@ public class Old_Guardian_Controller : MonoBehaviour
     public Animator anim;
 
     public AIPath aiPath;
+    private AIDestinationSetter DestSetter;
 
     private bool isDead;
     private bool isAttacking;
@@ -28,10 +29,19 @@ public class Old_Guardian_Controller : MonoBehaviour
     public float ChasePlayerTimer;
     public LayerMask Player;
 
+    [Header("Sight")]
     public float FOVradius = 5f;
+    [Min(0)][SerializeField] float FOVangle;
     public float ATKradius = 2f;
     public LayerMask targetMask;
+    [SerializeField] LayerMask obstacleMask;
 
+    //FOV timer stuff, so enemy doesnt lose the target just by moving slightly past them (due to FOV)
+    [SerializeField] protected float WaitOutOfFOVtime = 2f; //default time till "give up"
+    float OutOfFOVtimer; //the timer that counts down
+    bool OutOfFOVtimerCountingDown = false; //to actually countdwon timer once per frame/deltatime
+    bool canSeeUnit = false;
+    Vector2 facing;
 
     // Start is called before the first frame update
     void Start()
@@ -43,12 +53,15 @@ public class Old_Guardian_Controller : MonoBehaviour
         StartDeathTimer = false;
         ChasePlayerTimer = 3f;
 
+        DestSetter = GetComponent<AIDestinationSetter>();
+
         ChangeState(currentState);
     }
 
     // Update is called once per frame
     void Update()
     {
+        FOVCheck();
         if (currentState == State.IDLE)
         {
             Idle();
@@ -81,9 +94,16 @@ public class Old_Guardian_Controller : MonoBehaviour
         {
             StopCoroutine(AttackTimer());
         }
-
-        FOVCheck();
-        
+    }
+    private void LateUpdate() {
+        //while moving, set Facing to be the dir it is moving to
+        if (aiPath.desiredVelocity != Vector3.zero)
+            facing = aiPath.desiredVelocity.normalized;
+        else {
+            //not moving, prevent facing.x from being 0
+            facing.x = -transform.localScale.x;
+        }
+        Debug.DrawRay(transform.position, facing*FOVradius, Color.green);
     }
 
     private void ChangeState(State next)
@@ -156,41 +176,71 @@ public class Old_Guardian_Controller : MonoBehaviour
 
     private void FOVCheck()
     {
+        //look for units (player layer)
         Collider2D[] detectedUnits = Physics2D.OverlapCircleAll(transform.position, FOVradius, targetMask);
-        Collider2D[] ATKRange = Physics2D.OverlapCircleAll(transform.position, ATKradius, targetMask);
 
-        //Debug.Log(detectedUnits.Length);
-        if (ATKRange.Length != 0)
-        {
-            ChangeState(State.ATTACK);
-            isAttacking = true;
-            //if(!StartATKTimer)
-            //{
-            //    StartATKTimer = true;
-            //    //anim.SetTrigger("Attack");
-            //    StartCoroutine(AttackTimer());
-            //}
-        }
-
-        else if (detectedUnits.Length != 0)
-        {
-            if(!isAttacking)
-            {
-                ChangeState(State.CHARGE);
+        Transform unit;
+        //check for the player, or targetable units, within range
+        if (detectedUnits.Length != 0) {
+            //find nearest GO for target
+            float smallestDist = Mathf.Infinity;
+            Transform nearestGO = null;
+            foreach (Collider2D col in detectedUnits) {
+                if (col.gameObject.tag != "Player" && col.gameObject.tag != "Minion") {
+                    continue;
+                }
+                //get dist between this enemy and the potential target (sqrMagnitude is distance, but maybe faster?)
+                float dist = ((Vector2)transform.position - (Vector2)col.transform.position).sqrMagnitude;
+                if (dist < smallestDist) {
+                    //if the curr target is nearer than the prev target, this target is the new closest one
+                    smallestDist = dist;
+                    nearestGO = col.gameObject.transform;
+                }
             }
-            //inRange = true;
-            //ChasePlayerTimer = 3f;
-        }
-
-        else
-        {
-            //inRange = false;
-            if(!StartIdleTimer)
-            {
-                StartIdleTimer = true;
-                StartCoroutine(ReturnToIdle());
+            //Debug.Log("nearest Go: " + nearestGO?.name);
+            unit = nearestGO; //make nearest potential target the target
+            if (unit == null)
+                return;
+            Vector2 dir = ((Vector2)unit.position - (Vector2)transform.position).normalized;
+            //check if unit is within FOV angle
+            if (Vector2.Angle(facing, dir) <= FOVangle / 2) {
+                float distanceToTarget = Vector2.Distance(transform.position, unit.position);
+                //check for obstructions
+                if (!Physics2D.Raycast(transform.position, dir, distanceToTarget, obstacleMask)) {
+                    canSeeUnit = true;
+                    OutOfFOVtimer = WaitOutOfFOVtime; //reset timer
+                    DestSetter.target = unit;
+                    ChangeState(State.CHARGE);
+                    //Debug.Log(unit.gameObject.name + " seen");
+                }
+                else if (canSeeUnit)
+                    OutOfFOVtimerCountingDown = true; //saw player move behind obstacle, keep following
+            }
+            else if (canSeeUnit) {
+                //saw player, then lost LOS, keep following.
+                OutOfFOVtimerCountingDown = true;
             }
         }
+        else if (canSeeUnit) { //saw player move out of range, give up
+            LostUnit();
+        }
+        //using this bool since there are multiple places that need to count down, 
+        //but only want to -time once per frame
+        if (OutOfFOVtimerCountingDown) {
+            OutOfFOVtimer -= Time.fixedDeltaTime;
+            OutOfFOVtimerCountingDown = false;
+        }
+        if (OutOfFOVtimer <= 0f) {
+            LostUnit();
+        }
+    }
+    protected virtual void LostUnit() {
+        //OutOfFOVtimer ran out, enemy "give up" pursuing player
+        //Debug.Log(gameObject.name + " Lost " + target.gameObject.name);
+        canSeeUnit = false;
+        DestSetter.target = null;
+        ChangeState(State.IDLE);
+        OutOfFOVtimer = WaitOutOfFOVtime;
     }
 
     IEnumerator AttackTimer()
@@ -198,7 +248,7 @@ public class Old_Guardian_Controller : MonoBehaviour
         anim.SetBool("Attack", false);
 
         yield return new WaitForSeconds(0.75f);
-        Debug.Log("PlayerDamaged");
+        //Debug.Log("PlayerDamaged");
         StartATKTimer = false;
         isAttacking = false;
         

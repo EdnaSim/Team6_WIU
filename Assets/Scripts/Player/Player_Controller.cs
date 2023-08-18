@@ -155,12 +155,12 @@ public class Player_Controller : MonoBehaviour
     }
     //TEMP - draw melee range (also rotate it)
     //private void OnDrawGizmos() {
-    //    //Gizmos.DrawWireCube(MeleeOrigin.transform.position, MeleeRange);
     //    var oldMatrix = Gizmos.matrix;
 
     //    // create a matrix which translates an object by "position", rotates it by "rotation" and scales it by "halfExtends * 2"
     //    Quaternion rotation = Quaternion.Euler(0, 0, Mathf.Atan2(facing.y, facing.x) * Mathf.Rad2Deg);
-    //    Gizmos.matrix = Matrix4x4.TRS(MeleeOrigin.position, rotation, new Vector2(wc.MeleeStats.RadiusX, wc.MeleeStats.RadiusY));
+    //    if (wc.MeleeStats != null)
+    //        Gizmos.matrix = Matrix4x4.TRS(MeleeOrigin.position, rotation, new Vector2(wc.MeleeStats.RadiusX, wc.MeleeStats.RadiusY));
     //    // Then use it one a default cube which is not translated nor scaled
     //    Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
 
