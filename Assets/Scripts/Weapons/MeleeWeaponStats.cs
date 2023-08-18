@@ -1,0 +1,32 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+[System.Serializable]
+public class MeleeWeaponStats {
+    public float Damage;
+    public float Cooldown;
+    public float RadiusX; //ps: due to how the melee box is rotated, X looks like Y and vice versa
+    public float RadiusY;
+    public bool isAOE;
+
+    public string WeaponName;
+
+    public MeleeWeaponStats() {
+        Damage = 10;
+        Cooldown = 1;
+        RadiusX = 1;
+        RadiusY = 1;
+        WeaponName = "DefaultName";
+        isAOE = false;
+    }
+
+    public MeleeWeaponStats(MeleeWeaponStats copy) {
+        Damage = copy.Damage;
+        Cooldown = copy.Cooldown;
+        RadiusX = copy.RadiusX;
+        RadiusY = copy.RadiusY;
+        WeaponName = copy.WeaponName;
+        isAOE = copy.isAOE;
+    }
+}
