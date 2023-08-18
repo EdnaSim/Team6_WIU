@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SproutMinion_Controller : MonoBehaviour
+public class Sprout_Controller : MonoBehaviour
 {
     public enum State
     {
         IDLE,
         CHARGE,
         ATTACK,
+        SUMMON,
         DEATH
     }
     [SerializeField] private State currentState;
@@ -24,6 +25,7 @@ public class SproutMinion_Controller : MonoBehaviour
     private bool StartIdleTimer;
     private bool StartATKTimer;
     private bool StartDeathTimer;
+    private bool StartSummonTimer;
 
     public float ChasePlayerTimer;
     public LayerMask Player;
@@ -31,6 +33,12 @@ public class SproutMinion_Controller : MonoBehaviour
     public float FOVradius = 5f;
     public float ATKradius = 2f;
     public LayerMask targetMask;
+
+    public float MinSummonTime = 3f;
+    public float MaxSummonTime = 5f;
+    private float SummonTimer;
+
+    public GameObject MinionSummon;
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +49,8 @@ public class SproutMinion_Controller : MonoBehaviour
         ChasePlayerTimer = 3f;
 
         ChangeState(currentState);
+
+        SummonTimer = Random.Range(MinSummonTime, MaxSummonTime);
     }
 
     // Update is called once per frame
@@ -58,6 +68,10 @@ public class SproutMinion_Controller : MonoBehaviour
         {
             Attack();
         }
+        else if (currentState == State.SUMMON)
+        {
+            Summon();
+        }
         else if (currentState == State.DEATH)
         {
             Death();
@@ -73,7 +87,6 @@ public class SproutMinion_Controller : MonoBehaviour
             aiPath.canMove = false;
             ChangeState(State.DEATH);
         }
-
         FOVCheck();
     }
 
@@ -82,6 +95,7 @@ public class SproutMinion_Controller : MonoBehaviour
         if (next == State.IDLE)
         {
             anim.SetBool("IsMoving", false);
+            anim.SetBool("IsSummon", false);
             isAttacking = false;
         }
         else if (next == State.CHARGE)
@@ -93,11 +107,16 @@ public class SproutMinion_Controller : MonoBehaviour
             anim.SetTrigger("Attack");
             isAttacking = true;
         }
+        else if (next == State.SUMMON)
+        {
+            anim.SetTrigger("Attack");
+            anim.SetBool("IsSummon", true);
+        }
         else if (next == State.DEATH)
         {
             if (!StartDeathTimer)
             {
-                anim.SetBool("Death", true);
+                anim.SetBool("IsDead", true);
                 anim.SetTrigger("Die");
                 StartDeathTimer = true;
             }
@@ -142,6 +161,17 @@ public class SproutMinion_Controller : MonoBehaviour
         }
     }
 
+    private void Summon()
+    {
+        if (!isDead)
+        {
+            //aiPath.canMove = false;
+            Instantiate(MinionSummon, transform.position, transform.rotation);
+            Debug.Log("dibsibesfeio");
+            StartCoroutine(SummonCooldown());
+        }
+    }
+
     private void Death()
     {
         isDead = true;
@@ -161,10 +191,19 @@ public class SproutMinion_Controller : MonoBehaviour
 
         else if (detectedUnits.Length != 0)
         {
-            if (!isAttacking)
+            SummonTimer -= Time.deltaTime;
+            if (!isAttacking && !StartSummonTimer)
             {
                 //Debug.Log("MOVE");
                 ChangeState(State.CHARGE);
+            }
+
+            if (SummonTimer <= 0)
+            {
+                StartSummonTimer = true;
+                aiPath.canMove = false;
+                ChangeState(State.SUMMON);
+                SummonTimer = Random.Range(MinSummonTime, MaxSummonTime);
             }
             //inRange = true;
             //ChasePlayerTimer = 3f;
@@ -194,6 +233,13 @@ public class SproutMinion_Controller : MonoBehaviour
         yield return new WaitForSeconds(0.7f);
         isAttacking = false;
         StartATKTimer = false;
+    }
+
+    IEnumerator SummonCooldown()
+    {
+        ChangeState(State.IDLE);
+        yield return new WaitForSeconds(0.4f);
+        StartSummonTimer = false;
     }
 
     private void OnDrawGizmos()
