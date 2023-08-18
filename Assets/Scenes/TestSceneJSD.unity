@@ -3854,7 +3854,7 @@ MonoBehaviour:
   wc: {fileID: 0}
   wl: {fileID: 11400000, guid: 94e914a207908204d839ecac0bbdac4a, type: 2}
   isPaused: 0
-  Base_MovementSpeed: 10
+  Base_MovementSpeed: 25
   SprintIncrease: 5
   MeleeOrigin: {fileID: 197638213}
   PetDetails: {fileID: 11400000, guid: d30f6f458d36bcf49909a35eae5057a0, type: 2}
@@ -4028,6 +4028,10 @@ MonoBehaviour:
     MaxRange: 10
     ProjSpeed: 10
     FallOffDist: 5
+    Ammo: 0
+    MaxAmmo: 0
+    AmmoPerReload: 0
+    ReloadTime: 0
     Spread: 0
     ShotsPerFire: 1
     AOE: 0
@@ -4158,7 +4162,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 906330046433100080, guid: 4cf0cc3481e29604a890370aed01ae27, type: 3}
       propertyPath: FOVangle
-      value: 90
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 906330046433100080, guid: 4cf0cc3481e29604a890370aed01ae27, type: 3}
+      propertyPath: WaitOutOfFOVtime
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 906330046433100085, guid: 4cf0cc3481e29604a890370aed01ae27, type: 3}
       propertyPath: target

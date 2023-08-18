@@ -69,6 +69,8 @@ public class RangedWeaponStats
         ProjSpeed = copy.ProjSpeed;
         FallOffDist = copy.FallOffDist;
 
+
+
         Spread = copy.Spread;
         ShotsPerFire = copy.ShotsPerFire;
 
