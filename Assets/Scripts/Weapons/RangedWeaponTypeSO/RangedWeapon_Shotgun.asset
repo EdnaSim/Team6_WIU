@@ -18,7 +18,15 @@ MonoBehaviour:
     MaxRange: 5
     ProjSpeed: 10
     FallOffDist: 2.5
+    TotalStoredAmmo: 50
+    MaxAmmo: 50
+    AmmoInTheMag: 10
+    AmmoPerMag: 10
+    ReloadTime: 2.5
     Spread: 20
     ShotsPerFire: 5
+    AOE: 0
+    DoesProjDoInitialDamage: 1
+    AOEDamage: 0
     ProjPrefab: {fileID: 7630813025349190170, guid: 72d7dce6a5a0ae741988b13d73f41e27, type: 3}
     WeaponName: Shotgun

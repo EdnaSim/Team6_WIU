@@ -78,7 +78,6 @@ public class Projectile : MonoBehaviour
         }
         if(AOE > 0) {
             //damage all enemies in AOE
-            Debug.Log("has AOE");
             foreach (Collider2D c in Physics2D.OverlapCircleAll(transform.position, AOE)) {
                 Debug.Log(c.gameObject.name);
                 HealthManager hm = c.gameObject.GetComponent<HealthManager>();

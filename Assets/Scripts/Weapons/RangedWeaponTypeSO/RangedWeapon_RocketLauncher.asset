@@ -18,6 +18,11 @@ MonoBehaviour:
     MaxRange: 10
     ProjSpeed: 6
     FallOffDist: 5
+    TotalStoredAmmo: 50
+    MaxAmmo: 50
+    AmmoInTheMag: 5
+    AmmoPerMag: 5
+    ReloadTime: 3
     Spread: 0
     ShotsPerFire: 1
     AOE: 1.5
