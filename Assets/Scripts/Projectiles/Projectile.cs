@@ -20,6 +20,9 @@ public class Projectile : MonoBehaviour
     private float currDistFromCaster;
     protected bool hashit = false;
     protected float FalloffMult;
+    public float AOE;
+    public float AOEDamage;
+    public bool DoesBulletDoDamage;
 
     protected Rigidbody2D rb;
     protected Animator ar;
@@ -68,9 +71,22 @@ public class Projectile : MonoBehaviour
 
         hashit = true;
         rb.velocity = Vector2.zero;
-        HealthManager hm = col.gameObject.GetComponent<HealthManager>();
-        if (hm != null)
-            hm.TakeDamage(damage * FalloffMult, gameObject);
+        if (AOE <= 0 || (AOE > 0 && DoesBulletDoDamage)) {
+            HealthManager hm = col.gameObject.GetComponent<HealthManager>();
+            if (hm != null)
+                hm.TakeDamage(damage * FalloffMult, gameObject);
+        }
+        if(AOE > 0) {
+            //damage all enemies in AOE
+            Debug.Log("has AOE");
+            foreach (Collider2D c in Physics2D.OverlapCircleAll(transform.position, AOE)) {
+                Debug.Log(c.gameObject.name);
+                HealthManager hm = c.gameObject.GetComponent<HealthManager>();
+                if (hm != null) {
+                    hm.TakeDamage(AOEDamage, caster);
+                }
+            }
+        }
         //if no anim to play
         if (ar == null)
             Destroy(gameObject);

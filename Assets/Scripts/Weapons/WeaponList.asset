@@ -15,6 +15,8 @@ MonoBehaviour:
   RangedWeaponList:
   - {fileID: 11400000, guid: d013b4b0235af6a4086eafb58b95305a, type: 2}
   - {fileID: 11400000, guid: 0698ff28b8fdcef40b2e3d1829e74a08, type: 2}
+  - {fileID: 11400000, guid: 18540a246eb82bc41bee7e13c74ced9c, type: 2}
+  - {fileID: 11400000, guid: 512c85833d442dc42aa24649963970af, type: 2}
   MeleeWeaponlist:
   - {fileID: 11400000, guid: a7de854b8e26b3e4f914d50a2f1c975b, type: 2}
   - {fileID: 11400000, guid: db9bb2e0671075144928e762717389d7, type: 2}

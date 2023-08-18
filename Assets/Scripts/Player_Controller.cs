@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 public class Player_Controller : MonoBehaviour
 {
@@ -30,7 +30,8 @@ public class Player_Controller : MonoBehaviour
     bool CanMelee = true;
 
     [Header("Ranged attack")]
-    public static List<RangedWeaponStats> TempInventory; //TEMP 
+    public static List<RangedWeaponStats> TempInventory; //TEMP
+    int weaponListIndex = 0; //TEMP
     bool CanRange = true;
 
     [Header("Pet")]
@@ -89,10 +90,11 @@ public class Player_Controller : MonoBehaviour
                 //Open Inventory
                 
                 //TEMP - Find weapon name to switch to it
-                if (wc.RangedStats.WeaponName == "Basic")
-                    wc.ChangeRangedWeapon(TempInventory.Find((RangedWeaponStats w) => w.WeaponName == "Triangle"));
-                else
-                    wc.ChangeRangedWeapon(TempInventory.Find((RangedWeaponStats w) => w.WeaponName == "Basic"));
+                //wc.ChangeRangedWeapon(TempInventory.Find((RangedWeaponStats w) => w.WeaponName == "Triangle"));
+                wc.ChangeRangedWeapon(TempInventory[weaponListIndex]);
+                Debug.Log("Current Weapon: " + TempInventory[weaponListIndex].WeaponName);
+                weaponListIndex++;
+                if (weaponListIndex >= TempInventory.Count) weaponListIndex = 0;
 
                 if (wc.MeleeStats.WeaponName == "Fists")
                     wc.ChangeMeleeWeapon(TempMeleeInv.Find((MeleeWeaponStats w) => w.WeaponName == "Sword"));
@@ -101,6 +103,9 @@ public class Player_Controller : MonoBehaviour
             }
             if (Input.GetMouseButtonDown(0)) {
                 //Attack (left click)
+                if (EventSystem.current.IsPointerOverGameObject())
+                    return; //if clicked UI
+
                 if (CanMelee && !isAttacking) {
                     CanMelee = false;
                     //isAttacking = true;

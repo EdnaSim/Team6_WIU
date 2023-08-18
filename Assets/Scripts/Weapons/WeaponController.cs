@@ -6,6 +6,7 @@ using UnityEngine;
 public class WeaponController : MonoBehaviour
 {
     public GameObject owner;
+    public SO_WeaponList WeaponList;
 
     [Header("Projectile")]
     [SerializeField] RangedWeaponData BaseRangedData; //starting weapon type, DO NOT MODIFY BASEDATA.STATS
@@ -53,6 +54,10 @@ public class WeaponController : MonoBehaviour
             temp.speed = RangedStats.ProjSpeed;
             temp.MaxRange = RangedStats.MaxRange;
             temp.FalloffDist = RangedStats.FallOffDist;
+
+            temp.AOE = RangedStats.AOE;
+            temp.AOEDamage = RangedStats.AOEDamage;
+            temp.DoesBulletDoDamage = RangedStats.DoesProjDoInitialDamage;
             //Shotgun spread (if any)
             if (RangedStats.Spread > 0) {
                 //spread out the dir of the bullets (they will move out in a cone)
