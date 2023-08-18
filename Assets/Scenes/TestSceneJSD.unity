@@ -123,6 +123,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &197638212
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 197638213}
+  m_Layer: 6
+  m_Name: MeleePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &197638213
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 197638212}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1912795515}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &286381665
 GameObject:
   m_ObjectHideFlags: 0
@@ -1130,6 +1161,9 @@ GameObject:
   - component: {fileID: 1912795513}
   - component: {fileID: 1912795512}
   - component: {fileID: 1912795511}
+  - component: {fileID: 1912795517}
+  - component: {fileID: 1912795516}
+  - component: {fileID: 1912795518}
   m_Layer: 6
   m_Name: player
   m_TagString: Player
@@ -1149,7 +1183,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ae19fc8bd48ebd478b88c4cce2109a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovementSpeed: 10
+  wc: {fileID: 0}
+  wl: {fileID: 11400000, guid: 94e914a207908204d839ecac0bbdac4a, type: 2}
+  isPaused: 0
+  Base_MovementSpeed: 10
+  SprintIncrease: 5
+  MeleeOrigin: {fileID: 197638213}
+  PetDetails: {fileID: 11400000, guid: d30f6f458d36bcf49909a35eae5057a0, type: 2}
 --- !u!50 &1912795512
 Rigidbody2D:
   serializedVersion: 4
@@ -1260,10 +1300,79 @@ Transform:
   m_LocalPosition: {x: -15.08, y: 2.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 197638213}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1912795516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912795510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f19dd0bfcf8b6364cbae867b1336df05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PetDetails: {fileID: 11400000, guid: d30f6f458d36bcf49909a35eae5057a0, type: 2}
+  PetSelectorContainer: {fileID: 0}
+--- !u!114 &1912795517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912795510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d82895e521534844b547f9898c96575, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Base_MaxHealth: 100
+  MaxHealth: 0
+  CurrentHealth: 0
+  UI_Hpbar: {fileID: 0}
+  DamageMultiplier: 1
+  isDead: 0
+--- !u!114 &1912795518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912795510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 517ce8bdcd6e5aa4d81442272b56fb67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  owner: {fileID: 1912795510}
+  WeaponList: {fileID: 11400000, guid: 94e914a207908204d839ecac0bbdac4a, type: 2}
+  BaseRangedData: {fileID: 11400000, guid: d013b4b0235af6a4086eafb58b95305a, type: 2}
+  RangedStats:
+    Damage: 10
+    FireRate: 1
+    MaxRange: 10
+    ProjSpeed: 10
+    FallOffDist: 5
+    Spread: 0
+    ShotsPerFire: 1
+    AOE: 0
+    DoesProjDoInitialDamage: 1
+    AOEDamage: 0
+    ProjPrefab: {fileID: 0}
+    WeaponName: DefaultName
+  BaseMeleeData: {fileID: 11400000, guid: db9bb2e0671075144928e762717389d7, type: 2}
+  MeleeStats:
+    Damage: 10
+    Cooldown: 1
+    RadiusX: 1
+    RadiusY: 1
+    isAOE: 0
+    WeaponName: DefaultName
 --- !u!1 &2139779996
 GameObject:
   m_ObjectHideFlags: 0
