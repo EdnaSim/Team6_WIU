@@ -26,6 +26,9 @@ public abstract class Pet : MonoBehaviour
     [HideInInspector] public int currentWaypoint = 0;
     protected Seeker seeker;
 
+    [Header("Sprite")]
+    [SerializeField] protected bool OriginalSpriteFaceRight = false;
+
     // Start is called before the first frame update
     void OnEnable()
     {
@@ -75,8 +78,18 @@ public abstract class Pet : MonoBehaviour
             if (Mathf.Abs(rb.velocity.x) > 0.001f) ar.Play("Dog_Run");
         }
 
-        if (facing.x > 0) sr.flipX = false;
-        else if (facing.x < 0) sr.flipX = true;
+        if (facing.x > 0) {
+            if (OriginalSpriteFaceRight)
+                sr.flipX = true;
+            else
+                sr.flipX = false; 
+        }
+        else if (facing.x < 0) {
+            if (OriginalSpriteFaceRight)
+                sr.flipX = false;
+            else
+                sr.flipX = true;
+        }
     }
 
     void UpdatePath() {

@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DogPrefab: {fileID: 2446277046655209078, guid: 55fa2b4051ba07f44a6e25768fb05cf5, type: 3}
   CatPrefab: {fileID: 0}
-  BirdPrefab: {fileID: 0}
+  BirdPrefab: {fileID: 7294596639366455013, guid: b5140ab26af4abe4ba3cf5b87c6f5431, type: 3}
   HorsePrefab: {fileID: 0}
-  PetType: 1
+  PetType: 3
   MaxHunger: 100
   CurrentHunger: 100
   HungerDrain: 10

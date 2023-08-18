@@ -48,7 +48,7 @@ public class PetManager : MonoBehaviour
         switch (PetDetails.PetType) {
             case SO_PetDetails.PETTYPE.DOG:
             if (PetDetails.DogPrefab == null) return false;
-            Pet = Instantiate(PetDetails.DogPrefab, player.transform.position, Quaternion.identity).GetComponent<Pet>();
+            Pet = Instantiate(PetDetails.DogPrefab, player.transform.position, Quaternion.identity).GetComponent<Pet_Dog>();
             //Pet = go.GetComponent<Pet>();
             break;
 
@@ -59,13 +59,17 @@ public class PetManager : MonoBehaviour
 
             case SO_PetDetails.PETTYPE.BIRD:
             if (PetDetails.BirdPrefab == null) return false;
-            Pet = Instantiate(PetDetails.BirdPrefab, player.transform.position, Quaternion.identity).GetComponent<Pet>();
+            Pet = Instantiate(PetDetails.BirdPrefab, player.transform.position, Quaternion.identity).GetComponent<Pet_Bird>();
             break;
 
             case SO_PetDetails.PETTYPE.HORSE:
             if (PetDetails.HorsePrefab == null) return false;
             Pet = Instantiate(PetDetails.HorsePrefab, player.transform.position, Quaternion.identity).GetComponent<Pet>();
             break;
+
+            case SO_PetDetails.PETTYPE.NONE:
+            //return true to close container
+            return true;
 
             default:
             return false;

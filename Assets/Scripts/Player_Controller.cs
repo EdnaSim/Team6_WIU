@@ -36,7 +36,6 @@ public class Player_Controller : MonoBehaviour
 
     [Header("Pet")]
     [SerializeField] SO_PetDetails PetDetails;
-    Pet pet;
 
     // Start is called before the first frame update
     void Start()
