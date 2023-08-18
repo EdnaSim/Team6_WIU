@@ -1,6 +1,7 @@
 using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 public class SproutMinion_Controller : MonoBehaviour
@@ -32,6 +33,8 @@ public class SproutMinion_Controller : MonoBehaviour
     public float ATKradius = 2f;
     public LayerMask targetMask;
 
+    public AIDestinationSetter SproutMinionAItarget;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,6 +45,13 @@ public class SproutMinion_Controller : MonoBehaviour
 
         ChangeState(currentState);
         StartCoroutine(Die());
+
+        SproutMinionAItarget = GetComponent<AIDestinationSetter>();
+
+        if(SproutMinionAItarget.target == null)
+        {
+            SproutMinionAItarget.target = GameObject.FindGameObjectWithTag("Player").transform;
+        }
     }
 
     // Update is called once per frame
