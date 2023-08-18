@@ -131,7 +131,14 @@ public class SproutMinion_Controller : MonoBehaviour
     {
         if (!isDead)
         {
+            aiPath.canMove = false;
 
+            //Switch to Cooldown
+            if (!StartATKTimer)
+            {
+                StartATKTimer = true;
+                StartCoroutine(AttackCooldown());
+            }
         }
     }
 
@@ -179,6 +186,14 @@ public class SproutMinion_Controller : MonoBehaviour
         yield return new WaitForSeconds(3f);
         ChangeState(State.IDLE);
         StartIdleTimer = false;
+    }
+
+    IEnumerator AttackCooldown()
+    {
+        ChangeState(State.IDLE);
+        yield return new WaitForSeconds(0.7f);
+        isAttacking = false;
+        StartATKTimer = false;
     }
 
     private void OnDrawGizmos()

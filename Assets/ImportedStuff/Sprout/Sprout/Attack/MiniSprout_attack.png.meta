@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d7c715d832ec56f4fb73fcf2f16f47e1
+guid: 68bb6e50e5a94e745b16ce8d5ff73c32
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 10
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -117,11 +117,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Sprout-death_0
+      name: MiniSprout_attack_0
       rect:
         serializedVersion: 2
         x: 25
-        y: 690
+        y: 498
         width: 49
         height: 61
       alignment: 0
@@ -131,62 +131,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 490e416b16faafb44bb6a94311e1d7b5
-      internalID: -186572032
+      spriteID: 928d321973e196d4882a241a66a32945
+      internalID: 664380524
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprout-death_1
-      rect:
-        serializedVersion: 2
-        x: 25
-        y: 594
-        width: 49
-        height: 58
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: eb763b456cc8a4b41a779a4b5b864c29
-      internalID: -505532808
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sprout-death_2
-      rect:
-        serializedVersion: 2
-        x: 25
-        y: 498
-        width: 49
-        height: 56
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0333fb608d4939346b4bf7eedb092dac
-      internalID: -251544165
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sprout-death_3
+      name: MiniSprout_attack_1
       rect:
         serializedVersion: 2
         x: 25
         y: 402
-        width: 51
-        height: 48
+        width: 49
+        height: 63
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,20 +152,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5fb0d7a476b1aac43b33f9a12cc50e0c
-      internalID: -677732597
+      spriteID: 0f7e93d9f02762044ade38ee3883f8d4
+      internalID: -1266805208
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprout-death_4
+      name: MiniSprout_attack_2
       rect:
         serializedVersion: 2
         x: 25
         y: 306
-        width: 53
-        height: 36
+        width: 50
+        height: 66
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -215,20 +173,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6d7233c15250bbb4a9ae67f79701411f
-      internalID: -615883368
+      spriteID: e99dd7889b69bbf42a53886b239db13a
+      internalID: 1393878255
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprout-death_6
+      name: MiniSprout_attack_3
       rect:
         serializedVersion: 2
         x: 26
         y: 210
-        width: 51
-        height: 18
+        width: 56
+        height: 61
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -236,20 +194,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 44ffd368ff40f284f8847dc755d2afeb
-      internalID: 1606186581
+      spriteID: 9e94adedef9806e409855e21315482c9
+      internalID: -964665056
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprout-death_7
+      name: MiniSprout_attack_4
       rect:
         serializedVersion: 2
         x: 26
         y: 114
-        width: 51
-        height: 13
+        width: 54
+        height: 61
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -257,20 +215,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e67b6cce83f45c84995f16d29e28c7a5
-      internalID: -1232634262
+      spriteID: 032f2b7f80587d04fb71a67bdd1dda49
+      internalID: 1406522150
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprout-death_8
+      name: MiniSprout_attack_5
       rect:
         serializedVersion: 2
         x: 26
         y: 18
-        width: 51
-        height: 13
+        width: 54
+        height: 61
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -278,8 +236,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d2500f1fc28b1f14ea4de7bbcbdd8964
-      internalID: -209302657
+      spriteID: a2e6fe36c382eb54b9e885667df1b7db
+      internalID: -1807740882
       vertices: []
       indices: 
       edges: []
@@ -295,15 +253,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Sprout-death_0: -186572032
-      Sprout-death_1: -505532808
-      Sprout-death_2: -251544165
-      Sprout-death_3: -677732597
-      Sprout-death_4: -615883368
-      Sprout-death_5: -1755320121
-      Sprout-death_6: 1606186581
-      Sprout-death_7: -1232634262
-      Sprout-death_8: -209302657
+      MiniSprout_attack_0: 664380524
+      MiniSprout_attack_1: -1266805208
+      MiniSprout_attack_2: 1393878255
+      MiniSprout_attack_3: -964665056
+      MiniSprout_attack_4: 1406522150
+      MiniSprout_attack_5: -1807740882
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
