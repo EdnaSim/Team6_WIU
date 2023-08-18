@@ -9,7 +9,7 @@ public class Player_HealthManager : HealthManager
     void Start()
     {
         Player_hm = this;
-
+       
         if (PlayerData.MaxHp <= 0)
             PlayerData.MaxHp = Base_MaxHealth;
         if (PlayerData.CurrHP <= 0)
