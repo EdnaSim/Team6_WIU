@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class Player_Controller : MonoBehaviour
 {
-    public static Player_Controller PC;
+    public static Player_Controller Instance;
 
     Rigidbody2D rb;
     Animator ar;
@@ -40,7 +40,7 @@ public class Player_Controller : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PC = this;
+        Instance = this;
 
         rb = GetComponent<Rigidbody2D>();
         ar = GetComponent<Animator>();
@@ -246,9 +246,11 @@ public class Player_Controller : MonoBehaviour
 
     public void OnHitByEnemy(GameObject attacker) {
         //drain sanity
+        SanityManager.Instance.ChangeSanity(-SanityManager.Instance.DrainAmtOnHit);
 
         //pet action
         if (PetManager.Pet != null) {
+            //Only Pet_Dog has this function filled
             PetManager.Pet.OwnerAttacked(attacker);
         }
     }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player_HealthManager : HealthManager
 {
     public static Player_HealthManager Player_hm;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,12 +27,14 @@ public class Player_HealthManager : HealthManager
         if (PlayerData.CurrHP <= 0) {
             killer = attacker;
             OnDeath();
+            return;
         }
         //update after taking damage
         if (UI_Hpbar != null)
             UI_Hpbar.UpdateSlider();
 
-        Player_Controller.PC.OnHitByEnemy(attacker);
+        //damage effects (sanity drain, pet attack etc)
+        Player_Controller.Instance.OnHitByEnemy(attacker);
     }
 
     public override void Heal(float amt) {
@@ -44,11 +47,24 @@ public class Player_HealthManager : HealthManager
 
     public override void OnDeath() {
         PlayerData.CurrHP = 0;
+        if (UI_Hpbar != null)
+            UI_Hpbar.UpdateSlider();
         isDead = true;
         //play death anim
         if (ar != null)
             ar.SetTrigger("Death");
         else
             OnDeathAnimEnd();
+    }
+
+    public override void OnDeathAnimEnd() {
+        //reset player data
+        PlayerData.MaxHp = 0;
+        PlayerData.CurrHP = 0;
+        PlayerData.MaxSanity = 0;
+        PlayerData.CurrSanity = 0;
+
+        //TODO: display gameover screen
+
     }
 }

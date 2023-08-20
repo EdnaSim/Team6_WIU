@@ -84,6 +84,7 @@ public class PetManager : MonoBehaviour
         }
         PetDetails.MaxHunger = Pet.Base_MaxHunger;
         PetDetails.HungerDrain = Pet.Base_HungerDrain;
+        SanityManager.Instance.PetAlive = true;
 
         return true;
     }
@@ -104,8 +105,9 @@ public class PetManager : MonoBehaviour
         //remove pet (maybe: add a corpse permanently in the base)
         Destroy(Pet.gameObject);
         Pet = null;
-        
-        //drain player sanity
 
+        //drain(-) player sanity
+        SanityManager.Instance.PetAlive = false;
+        SanityManager.Instance.ChangeSanity(-SanityManager.Instance.DrainAmtOnPetDeath);
     }
 }
