@@ -33,12 +33,27 @@ public class Sprout_Controller : MonoBehaviour
     public float FOVradius = 5f;
     public float ATKradius = 2f;
     public LayerMask targetMask;
+    public LayerMask obstacleMask;
+
+    private AIDestinationSetter SproutMinionAItarget;
+
+    [SerializeField]
+    protected float WaitOutOfFOVtime = 2f; //default time till "give up"
+    float OutOfFOVtimer; //the timer that counts down
+    bool OutOfFOVtimerCountingDown = false; //to actually countdwon timer once per frame/deltatime
+    bool canSeeUnit = false;
+    Vector2 facing;
+
+
+    private AIDestinationSetter DestSetter;
 
     public float MinSummonTime = 3f;
     public float MaxSummonTime = 5f;
     private float SummonTimer;
 
     public GameObject MinionSummon;
+
+    private HealthManager healthManager;
 
     // Start is called before the first frame update
     void Start()
@@ -51,11 +66,18 @@ public class Sprout_Controller : MonoBehaviour
         ChangeState(currentState);
 
         SummonTimer = Random.Range(MinSummonTime, MaxSummonTime);
+        DestSetter = GetComponent<AIDestinationSetter>();
+        healthManager = GetComponent<HealthManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (healthManager.CurrentHealth <= 0)
+        {
+            ChangeState(State.DEATH);
+        }
+
         if (currentState == State.IDLE)
         {
             Idle();
@@ -116,6 +138,7 @@ public class Sprout_Controller : MonoBehaviour
         {
             if (!StartDeathTimer)
             {
+                isDead = false;
                 anim.SetBool("IsDead", true);
                 anim.SetTrigger("Die");
                 StartDeathTimer = true;

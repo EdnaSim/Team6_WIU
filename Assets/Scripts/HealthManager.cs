@@ -18,8 +18,12 @@ public class HealthManager : MonoBehaviour
     [Header("Modifiers")]
     public float DamageMultiplier = 1;
 
-    [HideInInspector] public bool isDead = false;
+    [HideInInspector] public bool Death = false;
     protected GameObject killer;
+
+    
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -31,11 +35,13 @@ public class HealthManager : MonoBehaviour
 
         UI_Hpbar?.UpdateSlider();
 
+        ar = transform.GetComponentInChildren<Animator>();
+
         killer = null;
     }
 
     public virtual void TakeDamage(float damage, GameObject attacker) {
-        if (isDead || attacker.layer == gameObject.layer)
+        if (Death || attacker.layer == gameObject.layer)
             return;
 
         CurrentHealth -= (damage * DamageMultiplier);
@@ -58,10 +64,10 @@ public class HealthManager : MonoBehaviour
 
     public virtual void OnDeath() {
         CurrentHealth = 0;
-        isDead = true;
+        Death = true;
         //play death anim
         if (ar != null)
-            ar.SetTrigger("Death");
+            ar.SetTrigger("Die");
         else
             OnDeathAnimEnd();
     }

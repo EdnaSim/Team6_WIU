@@ -1,7 +1,6 @@
 using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 public class SproutMinion_Controller : MonoBehaviour
@@ -19,7 +18,7 @@ public class SproutMinion_Controller : MonoBehaviour
 
     public AIPath aiPath;
 
-    private bool isDead;
+    public bool isDead;
     private bool isAttacking;
 
     private bool StartIdleTimer;
@@ -30,14 +29,31 @@ public class SproutMinion_Controller : MonoBehaviour
     public LayerMask Player;
 
     public float FOVradius = 5f;
+    public float FOVangle;
     public float ATKradius = 2f;
     public LayerMask targetMask;
+    public LayerMask obstacleMask;
 
-    public AIDestinationSetter SproutMinionAItarget;
+    private AIDestinationSetter SproutMinionAItarget;
+
+    [SerializeField] 
+    protected float WaitOutOfFOVtime = 2f; //default time till "give up"
+    float OutOfFOVtimer; //the timer that counts down
+    bool OutOfFOVtimerCountingDown = false; //to actually countdwon timer once per frame/deltatime
+    bool canSeeUnit = false;
+    Vector2 facing;
+
+    private AIDestinationSetter DestSetter;
+
+    private HealthManager healthManager;
+
+    private BoxCollider2D boxCollider;
 
     // Start is called before the first frame update
     void Start()
     {
+        isDead = false;
+
         StartIdleTimer = false;
         StartATKTimer = false;
         StartDeathTimer = false;
@@ -52,11 +68,33 @@ public class SproutMinion_Controller : MonoBehaviour
         {
             SproutMinionAItarget.target = GameObject.FindGameObjectWithTag("Player").transform;
         }
+
+        DestSetter = GetComponent<AIDestinationSetter>();
+        healthManager = GetComponent<HealthManager>();
+        boxCollider = GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        //healthManager.TakeDamage(10f, this.gameObject);
+        if(healthManager.CurrentHealth <= 0)
+        {
+            ChangeState(State.DEATH);
+        }
+
+        if (isDead)
+        {
+            boxCollider.isTrigger = true;
+            aiPath.canMove = false;
+            ChangeState(State.DEATH);
+        }
+
+        if (!isDead)
+        {
+            FOVCheck();
+        }
+        
         if (currentState == State.IDLE)
         {
             Idle();
@@ -79,13 +117,18 @@ public class SproutMinion_Controller : MonoBehaviour
             isDead = true;
         }
 
-        if (isDead)
+    }
+    private void LateUpdate()
+    {
+        //while moving, set Facing to be the dir it is moving to
+        if (aiPath.desiredVelocity != Vector3.zero)
+            facing = aiPath.desiredVelocity.normalized;
+        else
         {
-            aiPath.canMove = false;
-            ChangeState(State.DEATH);
+            //not moving, prevent facing.x from being 0
+            facing.x = -transform.localScale.x;
         }
-
-        FOVCheck();
+        Debug.DrawRay(transform.position, facing * FOVradius, Color.green);
     }
 
     private void ChangeState(State next)
@@ -108,6 +151,7 @@ public class SproutMinion_Controller : MonoBehaviour
         {
             if (!StartDeathTimer)
             {
+                isDead = true;
                 anim.SetBool("IsDead", true);
                 anim.SetTrigger("Die");
                 StartDeathTimer = true;
@@ -156,15 +200,49 @@ public class SproutMinion_Controller : MonoBehaviour
     private void Death()
     {
         isDead = true;
+        //aiPath.canMove = false;
         Destroy(gameObject, 5f);
     }
 
     private void FOVCheck()
     {
+        //Collider2D[] detectedUnits = Physics2D.OverlapCircleAll(transform.position, FOVradius, targetMask);
+        //Collider2D[] ATKRange = Physics2D.OverlapCircleAll(transform.position, ATKradius, targetMask);
+
+        //if (ATKRange.Length != 0)
+        //{
+        //    ChangeState(State.ATTACK);
+        //    isAttacking = true;
+        //}
+
+        //else if (detectedUnits.Length != 0)
+        //{
+        //    if (!isAttacking)
+        //    {
+        //        //Debug.Log("MOVE");
+        //        ChangeState(State.CHARGE);
+        //    }
+        //    //inRange = true;
+        //    //ChasePlayerTimer = 3f;
+        //}
+
+        //else
+        //{
+        //    //inRange = false;
+        //    if (!StartIdleTimer)
+        //    {
+        //        StartIdleTimer = true;
+        //        StartCoroutine(ReturnToIdle());
+        //    }
+        //}
+
+        //look for units (player layer)
         Collider2D[] detectedUnits = Physics2D.OverlapCircleAll(transform.position, FOVradius, targetMask);
         Collider2D[] ATKRange = Physics2D.OverlapCircleAll(transform.position, ATKradius, targetMask);
 
-        if (ATKRange.Length != 0)
+        Transform unit;
+        //check for the player, or targetable units, within range
+        if(ATKRange.Length != 0)
         {
             ChangeState(State.ATTACK);
             isAttacking = true;
@@ -172,24 +250,75 @@ public class SproutMinion_Controller : MonoBehaviour
 
         else if (detectedUnits.Length != 0)
         {
-            if (!isAttacking)
+            //find nearest GO for target
+            float smallestDist = Mathf.Infinity;
+            Transform nearestGO = null;
+            foreach (Collider2D col in detectedUnits)
             {
-                //Debug.Log("MOVE");
-                ChangeState(State.CHARGE);
+                if (col.gameObject.tag != "Player" && col.gameObject.tag != "Minion")
+                {
+                    continue;
+                }
+                //get dist between this enemy and the potential target (sqrMagnitude is distance, but maybe faster?)
+                float dist = ((Vector2)transform.position - (Vector2)col.transform.position).sqrMagnitude;
+                if (dist < smallestDist)
+                {
+                    //if the curr target is nearer than the prev target, this target is the new closest one
+                    smallestDist = dist;
+                    nearestGO = col.gameObject.transform;
+                }
             }
-            //inRange = true;
-            //ChasePlayerTimer = 3f;
+            //Debug.Log("nearest Go: " + nearestGO?.name);
+            unit = nearestGO; //make nearest potential target the target
+            if (unit == null)
+                return;
+            Vector2 dir = ((Vector2)unit.position - (Vector2)transform.position).normalized;
+            //check if unit is within FOV angle
+            if (Vector2.Angle(facing, dir) <= FOVangle / 2)
+            {
+                float distanceToTarget = Vector2.Distance(transform.position, unit.position);
+                //check for obstructions
+                if (!Physics2D.Raycast(transform.position, dir, distanceToTarget, obstacleMask))
+                {
+                    canSeeUnit = true;
+                    OutOfFOVtimer = WaitOutOfFOVtime; //reset timer
+                    DestSetter.target = unit;
+                    ChangeState(State.CHARGE);
+                    //Debug.Log(unit.gameObject.name + " seen");
+                }
+                else if (canSeeUnit)
+                    OutOfFOVtimerCountingDown = true; //saw player move behind obstacle, keep following
+            }
+            else if (canSeeUnit)
+            {
+                //saw player, then lost LOS, keep following.
+                OutOfFOVtimerCountingDown = true;
+            }
         }
-
-        else
+        else if (canSeeUnit)
+        { //saw player move out of range, give up
+            LostUnit();
+        }
+        //using this bool since there are multiple places that need to count down, 
+        //but only want to -time once per frame
+        if (OutOfFOVtimerCountingDown)
         {
-            //inRange = false;
-            if (!StartIdleTimer)
-            {
-                StartIdleTimer = true;
-                StartCoroutine(ReturnToIdle());
-            }
+            OutOfFOVtimer -= Time.fixedDeltaTime;
+            OutOfFOVtimerCountingDown = false;
         }
+        if (OutOfFOVtimer <= 0f)
+        {
+            LostUnit();
+        }
+    }
+    protected virtual void LostUnit()
+    {
+        //OutOfFOVtimer ran out, enemy "give up" pursuing player
+        //Debug.Log(gameObject.name + " Lost " + target.gameObject.name);
+        canSeeUnit = false;
+        DestSetter.target = null;
+        ChangeState(State.IDLE);
+        OutOfFOVtimer = WaitOutOfFOVtime;
     }
 
     IEnumerator ReturnToIdle()

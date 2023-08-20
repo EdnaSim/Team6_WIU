@@ -13,6 +13,8 @@ public class Fireball_Controller : MonoBehaviour
     Vector2 moveDirection;
     private Animator anim;
 
+    private HealthManager healthManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +22,7 @@ public class Fireball_Controller : MonoBehaviour
         anim = GetComponent<Animator>();
         //moveDirection = (transform.position - transform.position).normalized * MoveSpeed;
         //rb.velocity = new Vector2(moveDirection.x, moveDirection.y);
-        Destroy(gameObject, 10f);
+        Destroy(gameObject, 5f);
     }
 
     // Update is called once per frame

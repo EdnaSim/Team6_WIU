@@ -36,6 +36,8 @@ public class FireWorm_Controller : MonoBehaviour
     public float ATKradius = 2f;
     public LayerMask targetMask;
 
+    private HealthManager healthManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,11 +47,18 @@ public class FireWorm_Controller : MonoBehaviour
         ChasePlayerTimer = 3f;
 
         ChangeState(currentState);
+
+        healthManager = GetComponent<HealthManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (healthManager.CurrentHealth <= 0)
+        {
+            ChangeState(State.DEATH);
+        }
+
         if (currentState == State.IDLE)
         {
             Idle();

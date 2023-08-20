@@ -19,7 +19,7 @@ public class Player_HealthManager : HealthManager
     }
 
     public override void TakeDamage(float damage, GameObject attacker) {
-        if (isDead || attacker.layer == gameObject.layer)
+        if (Death || attacker.layer == gameObject.layer)
             return;
 
         PlayerData.CurrHP -= (damage * DamageMultiplier);
@@ -44,7 +44,7 @@ public class Player_HealthManager : HealthManager
 
     public override void OnDeath() {
         PlayerData.CurrHP = 0;
-        isDead = true;
+        Death = true;
         //play death anim
         if (ar != null)
             ar.SetTrigger("Death");

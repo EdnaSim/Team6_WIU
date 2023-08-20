@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 906330046433100085}
   - component: {fileID: 906330046433100081}
   - component: {fileID: 906330046433100080}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BasicMeleeEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -157,10 +157,15 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   FOVradius: 10
+  FOVangle: 0
   ATKradius: 1.25
   targetMask:
     serializedVersion: 2
     m_Bits: 64
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 0
+  WaitOutOfFOVtime: 2
 --- !u!1 &906330046754839109
 GameObject:
   m_ObjectHideFlags: 0
