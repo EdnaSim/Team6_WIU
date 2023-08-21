@@ -64,6 +64,8 @@ public class Player_HealthManager : HealthManager
         PlayerData.MaxSanity = 0;
         PlayerData.CurrSanity = 0;
 
+        //reset pet
+        PetManager.Instance.ResetAndRemovePet();
         //TODO: display gameover screen
 
     }

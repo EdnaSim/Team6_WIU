@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class SanityManager : MonoBehaviour
 {
@@ -14,10 +16,20 @@ public class SanityManager : MonoBehaviour
     public float DrainAmtOnHit;
     public float DrainAmtOnPetDeath;
 
-    [Header("Pets being cute")]
-    [Tooltip("Usually between 0 and 1. 1 being the original amount, and 0 being no drain at all.")]
+    public bool inDark;
+
+    [Header("Modifiers")]
+    [Tooltip("Recommended between -1 and 0. Additive with the PetDrainReduction. Actual Drain = amt * (DarknessDrainIncrease + PetDrainReduction)")]
+    [Range(-1, 0)] public float DarknessDrainIncrease;
+    [Tooltip("Usually between 0 and 1. 1 being the original amount, and 0 being no drain at all. Additive with DarknessDrainIncrease")]
     [Min(0)] [SerializeField] float PetDrainReduction = 0.5f;
     [HideInInspector] public bool PetAlive = false;
+
+    [Header("UI")]
+    [SerializeField] Slider SanityBar;
+    Image BarImage;
+    Color originalCol;
+    float LowSanityFlashTimer;
 
     private void Awake() {
         Instance = this;
@@ -31,12 +43,32 @@ public class SanityManager : MonoBehaviour
             PlayerData.MaxSanity = Base_MaxSanity;
         if (PlayerData.CurrSanity <= 0)
             PlayerData.CurrSanity = PlayerData.MaxSanity;
+
+        UpdateSanityBar();
+        BarImage = SanityBar.fillRect.GetComponent<Image>();
+        originalCol = BarImage.color;
+    }
+
+    private void Update() {
+        if ((PlayerData.CurrSanity / PlayerData.MaxSanity) * 100 <= 25) {
+            LowSanityFlashTimer += Time.deltaTime;
+            if (LowSanityFlashTimer >= (PlayerData.CurrSanity / PlayerData.MaxSanity)) {
+                BarImage.color = new Color(0.45f, 0.55f, 0.568f, 1);
+            }
+            if (LowSanityFlashTimer > (PlayerData.CurrSanity / PlayerData.MaxSanity)*2) {
+                BarImage.color = originalCol;
+                LowSanityFlashTimer = 0f;
+            }
+        }
+        else {
+            BarImage.color = originalCol;
+        }
     }
 
     //for both adding and substracting sanity
     public void ChangeSanity(float amt) {
         if (amt < 0)
-            PlayerData.CurrSanity += amt * PetDrainReduction;
+            PlayerData.CurrSanity += amt * (PetDrainReduction + (inDark ? DarknessDrainIncrease : 0));
         else
             PlayerData.CurrSanity += amt;
         //check if curr sanity exceeding the max
@@ -47,6 +79,14 @@ public class SanityManager : MonoBehaviour
             PlayerData.CurrSanity = 0; //set 0 to not break the sanity bar display
             //TODO: Game over
 
+        }
+        UpdateSanityBar();
+    }
+
+    public void UpdateSanityBar() {
+        if (SanityBar != null) {
+            SanityBar.maxValue = PlayerData.MaxSanity;
+            SanityBar.value = PlayerData.CurrSanity;
         }
     }
 }

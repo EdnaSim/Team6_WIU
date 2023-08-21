@@ -29,4 +29,4 @@ MonoBehaviour:
     DoesProjDoInitialDamage: 1
     AOEDamage: 0
     ProjPrefab: {fileID: 7630813025349190170, guid: 72d7dce6a5a0ae741988b13d73f41e27, type: 3}
-    WeaponName: Basic
+    WeaponName: Pistol

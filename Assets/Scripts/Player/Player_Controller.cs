@@ -84,6 +84,7 @@ public class Player_Controller : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.M)) {
                 //Open map
+                SanityManager.Instance.ChangeSanity(-10);
             }
             if (Input.GetKeyDown(KeyCode.B)) {
                 //Open Inventory
@@ -117,7 +118,7 @@ public class Player_Controller : MonoBehaviour
                     MakePetTargetAttackedEnemy(wc.MeleeStats.RadiusX + 1);
                 }
             }
-            if (Input.GetMouseButtonDown(1)) {
+            if (Input.GetMouseButton(1)) {
                 //Ranged attack (right click)
                 if (CanRange && !isAttacking) {
                     CanRange = false;

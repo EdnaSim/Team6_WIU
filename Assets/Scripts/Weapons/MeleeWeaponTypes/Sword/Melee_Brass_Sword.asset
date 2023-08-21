@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7c279753c5b34045b28f872774a8e42, type: 3}
-  m_Name: MeleeWeapon_Sword
+  m_Name: Melee_Brass_Sword
   m_EditorClassIdentifier: 
   stats:
-    Damage: 10
+    Damage: 6
     Cooldown: 2
     RadiusX: 2
     RadiusY: 1
     isAOE: 1
-    WeaponName: Sword
+    WeaponName: Brass Sword

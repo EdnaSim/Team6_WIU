@@ -7,6 +7,7 @@ using TMPro;
 
 public class PetManager : MonoBehaviour
 {
+    public static PetManager Instance;
     GameObject player;
     public static UnityEvent PetDie;
 
@@ -18,12 +19,15 @@ public class PetManager : MonoBehaviour
     [SerializeField] GameObject PetSelectorContainer;
     [SerializeField] GameObject NameContainer;
 
+    private void Awake() {
+        Instance = this;
+    }
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
 
-        //TODO: load saved data into SO_petDetails
+        //TODO: load saved data into SO_PetDetails
 
         //listener to be invoked when pet starves to death
         if (PetDie == null)
@@ -96,18 +100,21 @@ public class PetManager : MonoBehaviour
     }
 
     public void OnPetDeath() {
+        ResetAndRemovePet();
+        //drain(-) player sanity
+        SanityManager.Instance.PetAlive = false;
+        SanityManager.Instance.ChangeSanity(-SanityManager.Instance.DrainAmtOnPetDeath);
+    }
+
+    public void ResetAndRemovePet() {
         //reset pet details
         PetDetails.PetType = SO_PetDetails.PETTYPE.NONE;
         PetDetails.MaxHunger = Pet.Base_MaxHunger;
         PetDetails.CurrentHunger = PetDetails.MaxHunger;
         PetDetails.HungerDrain = Pet.Base_HungerDrain;
 
-        //remove pet (maybe: add a corpse permanently in the base)
+        //remove pet
         Destroy(Pet.gameObject);
         Pet = null;
-
-        //drain(-) player sanity
-        SanityManager.Instance.PetAlive = false;
-        SanityManager.Instance.ChangeSanity(-SanityManager.Instance.DrainAmtOnPetDeath);
     }
 }
