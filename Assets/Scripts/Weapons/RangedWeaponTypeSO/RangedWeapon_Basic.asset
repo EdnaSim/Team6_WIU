@@ -13,10 +13,15 @@ MonoBehaviour:
   m_Name: RangedWeapon_Basic
   m_EditorClassIdentifier: 
   stats:
-    Damage: 10
+    Damage: 50
     FireRate: 1
     MaxRange: 10
     ProjSpeed: 10
     FallOffDist: 5
+    Spread: 0
+    ShotsPerFire: 1
+    AOE: 0
+    DoesProjDoInitialDamage: 1
+    AOEDamage: 0
     ProjPrefab: {fileID: 7630813025349190170, guid: 72d7dce6a5a0ae741988b13d73f41e27, type: 3}
     WeaponName: Basic

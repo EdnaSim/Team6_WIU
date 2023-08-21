@@ -178,6 +178,7 @@ public class Sprout_Controller : MonoBehaviour
             //Switch to Cooldown
             if (!StartATKTimer)
             {
+                Player_HealthManager.Player_hm.TakeDamage(20f, gameObject);
                 StartATKTimer = true;
                 StartCoroutine(AttackCooldown());
             }
@@ -190,7 +191,7 @@ public class Sprout_Controller : MonoBehaviour
         {
             //aiPath.canMove = false;
             Instantiate(MinionSummon, transform.position, transform.rotation);
-            Debug.Log("dibsibesfeio");
+            //Debug.Log("dibsibesfeio");
             StartCoroutine(SummonCooldown());
         }
     }

@@ -87,10 +87,10 @@ public class Old_Guardian_Controller : MonoBehaviour
             Death();
         }
 
-        if(Input.GetKeyDown(KeyCode.E))
-        {
-            isDead = true;
-        }
+        //if(Input.GetKeyDown(KeyCode.E))
+        //{
+        //    isDead = true;
+        //}
 
         if(isDead)
         {
@@ -312,6 +312,7 @@ public class Old_Guardian_Controller : MonoBehaviour
     IEnumerator AttackTimer()
     {
         yield return new WaitForSeconds(0.75f);
+        Player_HealthManager.Player_hm.TakeDamage(10f, gameObject);
         Debug.Log("PlayerDamaged");
         StartATKTimer = false;
         isAttacking = false;
@@ -319,7 +320,6 @@ public class Old_Guardian_Controller : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
         ChangeState(State.IDLE);
-        //StopCoroutine(AttackTimer());
     }
 
     IEnumerator ReturnToIdle()

@@ -47,7 +47,7 @@ public class WeaponController : MonoBehaviour
             LayerMask lm = 1 << owner.gameObject.layer;//get all layers
             lm = ~lm;//reverse, so everything EXCEPT owner
             //remove layers that should not be scanned
-            lm -= LayerMask.GetMask("UI", "Ignore Raycast", "TransparentFX", "Water");
+            lm -= LayerMask.GetMask("UI", "Ignore Raycast", "TransparentFX", "Water", "Default");
             temp.targetLayer = lm;
 
             temp.damage = RangedStats.Damage;

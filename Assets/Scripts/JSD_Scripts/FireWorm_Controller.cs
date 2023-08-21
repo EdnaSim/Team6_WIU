@@ -76,10 +76,10 @@ public class FireWorm_Controller : MonoBehaviour
             Death();
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            isDead = true;
-        }
+        //if (Input.GetKeyDown(KeyCode.R))
+        //{
+        //    isDead = true;
+        //}
 
         if (isDead)
         {

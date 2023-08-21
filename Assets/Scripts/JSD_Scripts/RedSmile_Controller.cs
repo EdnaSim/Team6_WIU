@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SproutMinion_Controller : MonoBehaviour
+public class RedSmile_Controller : MonoBehaviour
 {
     public enum State
     {
@@ -31,6 +31,7 @@ public class SproutMinion_Controller : MonoBehaviour
     public float FOVradius = 5f;
     public float FOVangle;
     public float ATKradius = 2f;
+    public float DOTradius = 5f;
     public LayerMask targetMask;
     public LayerMask obstacleMask;
 
@@ -60,7 +61,7 @@ public class SproutMinion_Controller : MonoBehaviour
         ChasePlayerTimer = 3f;
 
         ChangeState(currentState);
-        StartCoroutine(Die());
+        //StartCoroutine(Die());
 
         SproutMinionAItarget = GetComponent<AIDestinationSetter>();
 
@@ -191,7 +192,8 @@ public class SproutMinion_Controller : MonoBehaviour
             //Switch to Cooldown
             if (!StartATKTimer)
             {
-                Player_HealthManager.Player_hm.TakeDamage(3f, gameObject);
+                //Player_HealthManager.Player_hm.TakeDamage(3f, gameObject);
+                Debug.Log("BigDrain");
                 StartATKTimer = true;
                 StartCoroutine(AttackCooldown());
             }
@@ -241,13 +243,26 @@ public class SproutMinion_Controller : MonoBehaviour
         //look for units (player layer)
         Collider2D[] detectedUnits = Physics2D.OverlapCircleAll(transform.position, FOVradius, targetMask);
         Collider2D[] ATKRange = Physics2D.OverlapCircleAll(transform.position, ATKradius, targetMask);
+        Collider2D[] DOTRange = Physics2D.OverlapCircleAll(transform.position, DOTradius, targetMask);
 
         Transform unit;
         //check for the player, or targetable units, within range
+        if(DOTRange.Length != 0)
+        {
+            //Drain Sanity
+            //Debug.Log("Draining Sanity");
+        }
+
         if(ATKRange.Length != 0)
         {
-            ChangeState(State.ATTACK);
-            isAttacking = true;
+            foreach (Collider2D col in detectedUnits)
+            {
+                if(col.gameObject.tag == "Player")
+                {
+                    ChangeState(State.ATTACK);
+                    isAttacking = true;
+                }
+            }
         }
 
         else if (detectedUnits.Length != 0)
@@ -351,5 +366,8 @@ public class SproutMinion_Controller : MonoBehaviour
 
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, ATKradius);
+
+        Gizmos.color = Color.black;
+        Gizmos.DrawWireSphere(transform.position, DOTradius);
     }
 }
