@@ -25,6 +25,8 @@ public class MenuManager : MonoBehaviour
 
     private Slideshow slideshow;
 
+    [SerializeField] GameObject tempNewGame;
+
     private void Start()
     {
         HideMenu(); // Ensure the menu is hidden when the scene starts
@@ -42,6 +44,10 @@ public class MenuManager : MonoBehaviour
         // Add listeners to music and SFX sliders to update mixer volumes
         musicSlider.onValueChanged.AddListener(UpdateMusicVolume);
         sfxSlider.onValueChanged.AddListener(UpdateSFXVolume);
+        slideshow = GetComponentInChildren<Slideshow>();
+
+        if (tempNewGame != null)
+            DontDestroyOnLoad(tempNewGame);
     }
 
     private void UpdateMasterVolume(float volume)
@@ -79,11 +85,13 @@ public class MenuManager : MonoBehaviour
     public void NewGame()
     {
         ShowLoadingScreen("SampleScene"); // Replace with the name of your game scene
-
         //playerData.Reset();
         // Reset the time scale to 1 before loading the next scene
         Time.timeScale = 1f;
         //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        //slideshow.isSlideActive = true;
+        GetNewGame.isNewGame = true;
+        Debug.Log("whyyyyyyyyyyyyyyyyyyy");
     }
 
     private void ShowLoadingScreen(string sceneName)

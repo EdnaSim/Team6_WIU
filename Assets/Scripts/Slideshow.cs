@@ -10,11 +10,11 @@ public class Slideshow : MonoBehaviour
 
     private bool isSlideshowActive = false; // Whether the slideshow is currently active
 
+    public bool isSlideActive = false;
+
     private void Start()
     {
-        // Hide all slides at the start
-        foreach (GameObject slide in slides)
-        {
+        foreach (GameObject slide in slides){
             slide.SetActive(false);
         }
     }
@@ -27,7 +27,9 @@ public class Slideshow : MonoBehaviour
             ToggleSlideshow();
         }
 
-        if (isSlideshowActive)
+        
+
+        if (isSlideshowActive == true || GetNewGame.isNewGame)
         {
             // Show the current slide and hide others
             for (int i = 0; i < slides.Length; i++)
@@ -55,13 +57,14 @@ public class Slideshow : MonoBehaviour
 
     public void ToggleSlideshow()
     {
-        // Toggle the slideshow on/off
+        Debug.Log("oi");
         isSlideshowActive = !isSlideshowActive;
 
         // Reset the current slide index if the slideshow is turned off
         if (!isSlideshowActive)
         {
             currentSlideIndex = 0;
+            //slide.SetActive(true);
         }
     }
 
