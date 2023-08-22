@@ -386,6 +386,7 @@ MonoBehaviour:
   Nametag: {fileID: 6355414520285408111}
   RegenInterval: 3
   RegenAmount: 5
+  MaxPercentLimit: 0.5
 --- !u!1 &8908122883790212695
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,17 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pet_Horse : MonoBehaviour
+public class Pet_Horse : Pet
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [Tooltip("How much % of travel time is saved with the horse")]
+    public float TimeTakenReduction;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

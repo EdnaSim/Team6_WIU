@@ -66,7 +66,7 @@ public class PetManager : MonoBehaviour
 
             case SO_PetDetails.PETTYPE.CAT:
             if (PetDetails.CatPrefab == null) return false;
-            Pet = Instantiate(PetDetails.CatPrefab, player.transform.position, Quaternion.identity).GetComponent<Pet>();
+            Pet = Instantiate(PetDetails.CatPrefab, player.transform.position, Quaternion.identity).GetComponent<Pet_Cat>();
             break;
 
             case SO_PetDetails.PETTYPE.BIRD:
@@ -76,7 +76,7 @@ public class PetManager : MonoBehaviour
 
             case SO_PetDetails.PETTYPE.HORSE:
             if (PetDetails.HorsePrefab == null) return false;
-            Pet = Instantiate(PetDetails.HorsePrefab, player.transform.position, Quaternion.identity).GetComponent<Pet>();
+            Pet = Instantiate(PetDetails.HorsePrefab, player.transform.position, Quaternion.identity).GetComponent<Pet_Horse>();
             break;
 
             case SO_PetDetails.PETTYPE.NONE:

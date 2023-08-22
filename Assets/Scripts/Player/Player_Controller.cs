@@ -84,7 +84,6 @@ public class Player_Controller : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.M)) {
                 //Open map
-                SanityManager.Instance.ChangeSanity(-10);
             }
             if (Input.GetKeyDown(KeyCode.B)) {
                 //Open Inventory

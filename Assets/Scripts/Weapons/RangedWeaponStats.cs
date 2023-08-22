@@ -9,6 +9,7 @@ public class RangedWeaponStats
     [Header("Standard")]
     public float Damage;
     public float FireRate; //cooldown
+    public float StaminaCost;
     public float MaxRange;
     public float ProjSpeed;
     [Tooltip("Distance to start damage fall off")]
@@ -45,6 +46,7 @@ public class RangedWeaponStats
     public RangedWeaponStats() {
         Damage = 10;
         FireRate = 1;
+        StaminaCost = 5;
         MaxRange = 10;
         ProjSpeed = 10;
         FallOffDist = 5;
@@ -70,6 +72,7 @@ public class RangedWeaponStats
     public RangedWeaponStats(RangedWeaponStats copy) {
         Damage = copy.Damage;
         FireRate = copy.FireRate;
+        StaminaCost = copy.StaminaCost;
         MaxRange = copy.MaxRange;
         ProjSpeed = copy.ProjSpeed;
         FallOffDist = copy.FallOffDist;
