@@ -65,7 +65,7 @@ public class Player_Controller : MonoBehaviour
     void Update()
     {
         //stuff that cant be done when paused
-        if (!isPaused) {
+        if (!isPaused || Player_HealthManager.Player_hm.isDead) {
             //get input for moving
             dirH = Input.GetAxis("Horizontal");
             dirV = Input.GetAxis("Vertical");
