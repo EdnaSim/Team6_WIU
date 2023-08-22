@@ -4188,7 +4188,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 906330046433100042, guid: 4cf0cc3481e29604a890370aed01ae27, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 906330046433100085, guid: 4cf0cc3481e29604a890370aed01ae27, type: 3}
       propertyPath: target
@@ -4441,10 +4441,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SproutEnemy
       objectReference: {fileID: 0}
-    - target: {fileID: 7562847014486420589, guid: 435babd32bc3df34b9624723d37e3fa2, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7562847014486420590, guid: 435babd32bc3df34b9624723d37e3fa2, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -4500,11 +4496,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2226677619927626351, guid: 3765981277f6aa74e867836cb105f195, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2226677619927626351, guid: 3765981277f6aa74e867836cb105f195, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8506988914811638604, guid: 3765981277f6aa74e867836cb105f195, type: 3}
       propertyPath: player
@@ -4564,7 +4560,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8506988916278058207, guid: 3765981277f6aa74e867836cb105f195, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3765981277f6aa74e867836cb105f195, type: 3}

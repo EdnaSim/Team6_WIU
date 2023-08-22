@@ -263,7 +263,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   FOVradius: 20
-  ATKradius: 2
+  ATKradius: 1.54
   targetMask:
     serializedVersion: 2
     m_Bits: 64
@@ -316,6 +316,8 @@ MonoBehaviour:
   MaxHealth: 0
   CurrentHealth: 0
   UI_Hpbar: {fileID: 8157748894281796}
+  OnlyShowBarWhenDamaged: 1
+  TimeToShowHPbar: 2
   DamageMultiplier: 1
   Death: 0
 --- !u!1001 &7562847014273583363

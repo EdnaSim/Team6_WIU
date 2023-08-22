@@ -35,7 +35,7 @@ public class Sprout_Controller : MonoBehaviour
     public LayerMask targetMask;
     public LayerMask obstacleMask;
 
-    private AIDestinationSetter SproutMinionAItarget;
+    private AIDestinationSetter Sprouttarget;
 
     [SerializeField]
     protected float WaitOutOfFOVtime = 2f; //default time till "give up"
@@ -64,6 +64,13 @@ public class Sprout_Controller : MonoBehaviour
         ChasePlayerTimer = 3f;
 
         ChangeState(currentState);
+
+        Sprouttarget = GetComponent<AIDestinationSetter>();
+
+        if (Sprouttarget.target == null)
+        {
+            Sprouttarget.target = GameObject.FindGameObjectWithTag("Player").transform;
+        }
 
         SummonTimer = Random.Range(MinSummonTime, MaxSummonTime);
         DestSetter = GetComponent<AIDestinationSetter>();
@@ -209,8 +216,15 @@ public class Sprout_Controller : MonoBehaviour
 
         if (ATKRange.Length != 0)
         {
-            ChangeState(State.ATTACK);
-            isAttacking = true;
+            foreach (Collider2D col in ATKRange)
+            {
+                if (col.gameObject.tag == "Player")
+                {
+                    //Debug.Log(col.gameObject.name);
+                    ChangeState(State.ATTACK);
+                    isAttacking = true;
+                }
+            }
         }
 
         else if (detectedUnits.Length != 0)

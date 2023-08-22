@@ -35,7 +35,7 @@ public class RedSmile_Controller : MonoBehaviour
     public LayerMask targetMask;
     public LayerMask obstacleMask;
 
-    private AIDestinationSetter SproutMinionAItarget;
+    private AIDestinationSetter RedSmiletarget;
 
     [SerializeField] 
     protected float WaitOutOfFOVtime = 2f; //default time till "give up"
@@ -63,12 +63,12 @@ public class RedSmile_Controller : MonoBehaviour
         ChangeState(currentState);
         //StartCoroutine(Die());
 
-        //SproutMinionAItarget = GetComponent<AIDestinationSetter>();
+        RedSmiletarget = GetComponent<AIDestinationSetter>();
 
-        //if(SproutMinionAItarget.target == null)
-        //{
-        //    SproutMinionAItarget.target = GameObject.FindGameObjectWithTag("Player").transform;
-        //}
+        if (RedSmiletarget.target == null)
+        {
+            RedSmiletarget.target = GameObject.FindGameObjectWithTag("Player").transform;
+        }
 
         DestSetter = GetComponent<AIDestinationSetter>();
         healthManager = GetComponent<HealthManager>();
@@ -257,11 +257,11 @@ public class RedSmile_Controller : MonoBehaviour
 
         if(ATKRange.Length != 0)
         {
-            foreach (Collider2D col in detectedUnits)
+            foreach (Collider2D col in ATKRange)
             {
                 if(col.gameObject.tag == "Player")
                 {
-                    Debug.Log(col.gameObject.name);
+                    //Debug.Log(col.gameObject.name);
                     ChangeState(State.ATTACK);
                     isAttacking = true;
                 }

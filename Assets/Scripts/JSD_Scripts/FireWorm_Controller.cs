@@ -35,6 +35,9 @@ public class FireWorm_Controller : MonoBehaviour
     public float FOVradius = 5f;
     public float ATKradius = 2f;
     public LayerMask targetMask;
+    public LayerMask obstacleMask;
+
+    private AIDestinationSetter FireWormtarget;
 
     private HealthManager healthManager;
 
@@ -49,6 +52,13 @@ public class FireWorm_Controller : MonoBehaviour
         ChangeState(currentState);
 
         healthManager = GetComponent<HealthManager>();
+
+        FireWormtarget = GetComponent<AIDestinationSetter>();
+
+        if (FireWormtarget.target == null)
+        {
+            FireWormtarget.target = GameObject.FindGameObjectWithTag("Player").transform;
+        }
     }
 
     // Update is called once per frame
