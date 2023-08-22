@@ -5325,6 +5325,7 @@ MonoBehaviour:
   loadingScreen: {fileID: 1250275797}
   loadingSlider: {fileID: 1989343249}
   loadingPercentageText: {fileID: 1642927385}
+  SceneToLoad: TestSceneJSD
   tempNewGame: {fileID: 684493527}
 --- !u!82 &982042030
 AudioSource:

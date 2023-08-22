@@ -25,6 +25,8 @@ public class MenuManager : MonoBehaviour
 
     private Slideshow slideshow;
 
+    public string SceneToLoad;
+
     [SerializeField] GameObject tempNewGame;
 
     private void Start()
@@ -73,7 +75,7 @@ public class MenuManager : MonoBehaviour
 
     public void PlayGame()
     {
-        ShowLoadingScreen("SampleScene"); // Replace with the name of your game scene
+        ShowLoadingScreen(SceneToLoad); // Replace with the name of your game scene
 
         // Reset the time scale to 1 before loading the next scene
         Time.timeScale = 1f;
@@ -84,7 +86,7 @@ public class MenuManager : MonoBehaviour
     // Function to reset the player data and s
     public void NewGame()
     {
-        ShowLoadingScreen("SampleScene"); // Replace with the name of your game scene
+        ShowLoadingScreen(SceneToLoad); // Replace with the name of your game scene
         //playerData.Reset();
         // Reset the time scale to 1 before loading the next scene
         Time.timeScale = 1f;
