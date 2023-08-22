@@ -79,6 +79,7 @@ public class HealthManager : MonoBehaviour
     public virtual void OnDeath() {
         CurrentHealth = 0;
         isDead = true;
+        UI_Hpbar.SetBarDisplay(false);
         //play death anim
         if (ar != null)
             ar.SetTrigger("Death");
