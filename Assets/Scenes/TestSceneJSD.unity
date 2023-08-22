@@ -3607,7 +3607,7 @@ MonoBehaviour:
   MaxHealth: 0
   CurrentHealth: 0
   UI_Hpbar: {fileID: 1587087487}
-  OnlyShowBarWhenDamaged: 1
+  OnlyShowBarWhenDamaged: 0
   TimeToShowHPbar: 2
   DamageMultiplier: 1
   Death: 0
