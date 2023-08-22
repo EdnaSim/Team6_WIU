@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Melee_Titanium_BaseballBat
   m_EditorClassIdentifier: 
   stats:
-    Damage: 10
-    Cooldown: 3
+    Damage: 15
+    Cooldown: 3.5
     RadiusX: 2
     RadiusY: 1.5
+    StaminaCost: 12
     isAOE: 0
-    WeaponName: Brass baseball bat
+    WeaponName: Titanium baseball bat

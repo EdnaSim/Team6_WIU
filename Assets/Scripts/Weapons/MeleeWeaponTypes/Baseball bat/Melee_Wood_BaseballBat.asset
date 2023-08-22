@@ -17,5 +17,6 @@ MonoBehaviour:
     Cooldown: 3
     RadiusX: 2
     RadiusY: 1.5
+    StaminaCost: 6
     isAOE: 0
     WeaponName: Wooden baseball bat

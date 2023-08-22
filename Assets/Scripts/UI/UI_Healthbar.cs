@@ -6,7 +6,7 @@ using TMPro;
 
 public class UI_Healthbar : MonoBehaviour
 {
-    public Slider slider;
+    [HideInInspector] public Slider slider;
     protected GameObject owner;
     protected HealthManager hm;
     protected TMP_Text numDisplay;

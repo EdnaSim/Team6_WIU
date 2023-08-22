@@ -107,6 +107,8 @@ public class PetManager : MonoBehaviour
     }
 
     public void ResetAndRemovePet() {
+        if (Pet == null) return; 
+
         //reset pet details
         PetDetails.PetType = SO_PetDetails.PETTYPE.NONE;
         PetDetails.MaxHunger = Pet.Base_MaxHunger;

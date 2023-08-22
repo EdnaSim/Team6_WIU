@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Melee_Brass_BaseballBat
   m_EditorClassIdentifier: 
   stats:
-    Damage: 10
+    Damage: 11
     Cooldown: 3
     RadiusX: 2
     RadiusY: 1.5
+    StaminaCost: 8
     isAOE: 0
     WeaponName: Brass baseball bat

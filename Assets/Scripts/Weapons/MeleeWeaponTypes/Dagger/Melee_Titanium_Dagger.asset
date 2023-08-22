@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Melee_Titanium_Dagger
   m_EditorClassIdentifier: 
   stats:
-    Damage: 5
-    Cooldown: 0.5
+    Damage: 8
+    Cooldown: 0.3
     RadiusX: 1
     RadiusY: 1
+    StaminaCost: 6
     isAOE: 0
     WeaponName: Titanium Dagger

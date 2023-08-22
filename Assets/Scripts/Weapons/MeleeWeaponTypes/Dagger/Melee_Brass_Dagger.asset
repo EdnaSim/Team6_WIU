@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Melee_Brass_Dagger
   m_EditorClassIdentifier: 
   stats:
-    Damage: 5
+    Damage: 6
     Cooldown: 0.5
     RadiusX: 1
     RadiusY: 1
+    StaminaCost: 4
     isAOE: 0
     WeaponName: Brass Dagger

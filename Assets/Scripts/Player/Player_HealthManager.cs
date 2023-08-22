@@ -16,11 +16,27 @@ public class Player_HealthManager : HealthManager
         if (PlayerData.CurrHP <= 0)
             PlayerData.CurrHP = PlayerData.MaxHp;
 
-        UI_Hpbar?.UpdateSlider();
+        UI_Hpbar.UpdateSlider();
+    }
+
+    protected override void Update() {
+        if (OnlyShowBarWhenDamaged) {
+            if (HPbarShowTimer > 0f) {
+                UI_Hpbar.SetBarDisplay(true);
+                HPbarShowTimer -= Time.deltaTime;
+            }
+            else {
+                UI_Hpbar.SetBarDisplay(false);
+            }
+        }
+
+        //make the bar go down smoothly
+        float smoothValue = Mathf.SmoothDamp(UI_Hpbar.slider.value, PlayerData.CurrHP, ref currVel, 0.4f);
+        UI_Hpbar.slider.value = smoothValue;
     }
 
     public override void TakeDamage(float damage, GameObject attacker) {
-        if (isDead || attacker.layer == gameObject.layer)
+        if (Death || attacker.layer == gameObject.layer)
             return;
 
         PlayerData.CurrHP -= (damage * DamageMultiplier);
@@ -29,9 +45,6 @@ public class Player_HealthManager : HealthManager
             OnDeath();
             return;
         }
-        //update after taking damage
-        if (UI_Hpbar != null)
-            UI_Hpbar.UpdateSlider();
 
         //damage effects (sanity drain, pet attack etc)
         Player_Controller.Instance.OnHitByEnemy(attacker);
@@ -41,15 +54,11 @@ public class Player_HealthManager : HealthManager
         PlayerData.CurrHP += amt;
         if (PlayerData.CurrHP > PlayerData.MaxHp)
             PlayerData.CurrHP = PlayerData.MaxHp;
-
-        UI_Hpbar.UpdateSlider();
     }
 
     public override void OnDeath() {
         PlayerData.CurrHP = 0;
-        if (UI_Hpbar != null)
-            UI_Hpbar.UpdateSlider();
-        isDead = true;
+        Death = true;
         //play death anim
         if (ar != null)
             ar.SetTrigger("Death");

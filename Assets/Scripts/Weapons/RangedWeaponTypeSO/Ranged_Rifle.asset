@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Ranged_Rifle
   m_EditorClassIdentifier: 
   stats:
-    Damage: 10
+    Damage: 5
     FireRate: 1
+    StaminaCost: 0
     MaxRange: 12
     ProjSpeed: 5
     FallOffDist: 5

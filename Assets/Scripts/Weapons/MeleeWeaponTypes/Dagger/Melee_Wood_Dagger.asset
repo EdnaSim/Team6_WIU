@@ -17,5 +17,6 @@ MonoBehaviour:
     Cooldown: 0.5
     RadiusX: 1
     RadiusY: 1
+    StaminaCost: 3
     isAOE: 0
     WeaponName: Wooden Dagger

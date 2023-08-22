@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class HealthManager : MonoBehaviour
 {
@@ -14,6 +14,7 @@ public class HealthManager : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] protected UI_Healthbar UI_Hpbar;
+    protected float currVel; //for smoothdamp
     [Tooltip("If true, the bar will disappear, and reappear when this unit is damaged, for the duration specified in TimeToShowHPbar. " +
         "If false, the healthbar will be permanently visible, even in the dark")]
     [SerializeField] protected bool OnlyShowBarWhenDamaged = true;
@@ -24,7 +25,7 @@ public class HealthManager : MonoBehaviour
     [Header("Modifiers")]
     public float DamageMultiplier = 1;
 
-    [HideInInspector] public bool isDead = false;
+    [HideInInspector] public bool Death = false;
     protected GameObject killer;
 
     // Start is called before the first frame update
@@ -35,7 +36,9 @@ public class HealthManager : MonoBehaviour
         if (CurrentHealth <= 0)
             CurrentHealth = MaxHealth;
 
-        UI_Hpbar?.UpdateSlider();
+        UI_Hpbar.UpdateSlider();
+
+        ar = transform.GetComponentInChildren<Animator>();
 
         killer = null;
     }
@@ -49,10 +52,14 @@ public class HealthManager : MonoBehaviour
                 UI_Hpbar.SetBarDisplay(false);
             }
         }
+
+        //make the bar go down smoothly
+        float smoothValue = Mathf.SmoothDamp(UI_Hpbar.slider.value, CurrentHealth, ref currVel, 0.4f);
+        UI_Hpbar.slider.value = smoothValue;
     }
 
     public virtual void TakeDamage(float damage, GameObject attacker) {
-        if (isDead || attacker.layer == gameObject.layer)
+        if (Death || attacker.layer == gameObject.layer)
             return;
 
         CurrentHealth -= (damage * DamageMultiplier);
@@ -63,7 +70,7 @@ public class HealthManager : MonoBehaviour
         //update after taking damage
         if (UI_Hpbar != null) {
             UI_Hpbar.SetBarDisplay(true);
-            UI_Hpbar.UpdateSlider();
+            //UI_Hpbar.UpdateSlider();
             HPbarShowTimer = TimeToShowHPbar;
         }
     }
@@ -73,16 +80,16 @@ public class HealthManager : MonoBehaviour
         if (CurrentHealth > MaxHealth)
             CurrentHealth = MaxHealth;
 
-        UI_Hpbar.UpdateSlider();
+        //UI_Hpbar.UpdateSlider();
     }
 
     public virtual void OnDeath() {
         CurrentHealth = 0;
-        isDead = true;
+        Death = true;
         UI_Hpbar.SetBarDisplay(false);
         //play death anim
         if (ar != null)
-            ar.SetTrigger("Death");
+            ar.SetTrigger("Die");
         else
             OnDeathAnimEnd();
     }

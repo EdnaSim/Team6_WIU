@@ -65,7 +65,7 @@ public class Player_Controller : MonoBehaviour
     void Update()
     {
         //stuff that cant be done when paused
-        if (!isPaused || Player_HealthManager.Player_hm.isDead) {
+        if (!isPaused || Player_HealthManager.Player_hm.Death) {
             //get input for moving
             dirH = Input.GetAxis("Horizontal");
             dirV = Input.GetAxis("Vertical");
@@ -84,6 +84,7 @@ public class Player_Controller : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.M)) {
                 //Open map
+                SanityManager.Instance.ChangeSanity(-10);
             }
             if (Input.GetKeyDown(KeyCode.B)) {
                 //Open Inventory
@@ -246,7 +247,8 @@ public class Player_Controller : MonoBehaviour
 
     public void OnHitByEnemy(GameObject attacker) {
         //drain sanity
-        SanityManager.Instance.ChangeSanity(-SanityManager.Instance.DrainAmtOnHit);
+        if (SanityManager.Instance != null)
+            SanityManager.Instance.ChangeSanity(-SanityManager.Instance.DrainAmtOnHit);
 
         //pet action
         if (PetManager.Pet != null) {
