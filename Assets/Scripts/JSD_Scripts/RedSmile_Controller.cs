@@ -192,7 +192,7 @@ public class RedSmile_Controller : MonoBehaviour
             //Switch to Cooldown
             if (!StartATKTimer)
             {
-                //Player_HealthManager.Player_hm.TakeDamage(3f, gameObject);
+                Player_HealthManager.Player_hm.TakeDamage(5f, gameObject);
                 Debug.Log("BigDrain");
                 StartATKTimer = true;
                 StartCoroutine(AttackCooldown());
