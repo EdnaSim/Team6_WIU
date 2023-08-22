@@ -144,30 +144,97 @@ public class KeybindManager : MonoBehaviour
         currentKey.GetComponent<Image>().color = selected;
     }
 
-    public void SaveKeys()
-    {
-        foreach (var key in keys)
-        {
-            PlayerPrefs.SetString(key.Key, key.Value.ToString());
-        }
-
-        PlayerPrefs.Save();
-    }
-
     private void UpdateSaveKeysButtonInteractable()
     {
         HashSet<KeyCode> usedKeyCodes = new HashSet<KeyCode>();
+        Dictionary<KeyCode, List<string>> sameKeys = new Dictionary<KeyCode, List<string>>();
+
+        bool hasChangedKey = false; // Flag to track if any key has changed
 
         foreach (var key in keys)
         {
             if (usedKeyCodes.Contains(key.Value))
             {
-                saveKeysButton.interactable = false;
-                return;
+                if (sameKeys.ContainsKey(key.Value))
+                {
+                    sameKeys[key.Value].Add(key.Key);
+                }
+                else
+                {
+                    sameKeys[key.Value] = new List<string> { key.Key };
+                }
             }
-            usedKeyCodes.Add(key.Value);
+            else
+            {
+                usedKeyCodes.Add(key.Value);
+            }
+
+            string previousValue = PlayerPrefs.GetString(key.Key, "");
+            string newValue = key.Value.ToString();
+
+            if (previousValue != newValue)
+            {
+                hasChangedKey = true;
+            }
         }
 
-        saveKeysButton.interactable = true;
+        bool isValidConfiguration = hasChangedKey && sameKeys.Count == 0;
+
+        if (isValidConfiguration)
+        {
+            saveKeysButton.interactable = true;
+        }
+        else
+        {
+            saveKeysButton.interactable = false;
+        }
+
+        if (sameKeys.Count > 0)
+        {
+            foreach (var pair in sameKeys)
+            {
+                Debug.Log("Keys " + string.Join(", ", pair.Value) + " have the same value: " + pair.Key);
+            }
+            Debug.Log("The configuration is not valid.");
+        }
+        else if (hasChangedKey)
+        {
+            Debug.Log("The configuration is valid.");
+        }
+        else
+        {
+            Debug.Log("No keys were changed, so nothing to validate.");
+        }
+    }
+
+    public void SaveKeys()
+    {
+        bool keysChanged = false; // Flag to track if any keys were changed
+
+        foreach (var key in keys)
+        {
+            string previousValue = PlayerPrefs.GetString(key.Key, "");
+            string newValue = key.Value.ToString();
+
+            if (previousValue != newValue)
+            {
+                PlayerPrefs.SetString(key.Key, newValue);
+                keysChanged = true;
+
+                Debug.Log(key.Key + " value changed: Previous Value - " + previousValue + ", New Value - " + newValue);
+            }
+        }
+
+        if (keysChanged)
+        {
+            PlayerPrefs.Save();
+            Debug.Log("Keys saved successfully.");
+        }
+        else
+        {
+            Debug.Log("No keys were changed, so nothing was saved.");
+        }
+
+        UpdateSaveKeysButtonInteractable();
     }
 }
