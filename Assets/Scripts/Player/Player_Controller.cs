@@ -27,12 +27,13 @@ public class Player_Controller : MonoBehaviour
     [Header("Attack")]
     [SerializeField] Transform MeleeOrigin;
     public static List<MeleeWeaponStats> TempMeleeInv; // TEMP
-    bool CanMelee = true;
+    [HideInInspector] public bool CanMelee = true;
+    int meleeListIndex = 0; //TEMP
 
     [Header("Ranged attack")]
     public static List<RangedWeaponStats> TempInventory; //TEMP
     int weaponListIndex = 0; //TEMP
-    bool CanRange = true;
+    [HideInInspector] public bool CanRange = true;
 
     [Header("Pet")]
     [SerializeField] SO_PetDetails PetDetails;
@@ -95,22 +96,27 @@ public class Player_Controller : MonoBehaviour
                 weaponListIndex++;
                 if (weaponListIndex >= TempInventory.Count) weaponListIndex = 0;
 
-                if (wc.MeleeStats.WeaponName == "Fists")
-                    wc.ChangeMeleeWeapon(TempMeleeInv.Find((MeleeWeaponStats w) => w.WeaponName == "Sword"));
-                else
-                    wc.ChangeMeleeWeapon(TempMeleeInv.Find((MeleeWeaponStats w) => w.WeaponName == "Fists"));
+                //if (wc.MeleeStats.WeaponName == "Fists")
+                //    wc.ChangeMeleeWeapon(TempMeleeInv.Find((MeleeWeaponStats w) => w.WeaponName == "Sword"));
+                //else
+                //    wc.ChangeMeleeWeapon(TempMeleeInv.Find((MeleeWeaponStats w) => w.WeaponName == "Fists"));
+                wc.ChangeMeleeWeapon(TempMeleeInv[meleeListIndex]);
+                Debug.Log("Current Melee: " + TempMeleeInv[meleeListIndex].WeaponName);
+                meleeListIndex++;
+                if (meleeListIndex >= TempMeleeInv.Count) meleeListIndex = 0;
             }
+            //TEMP:
+            //LMB FOR BOTH MELEE AND RANGED, USING INV INDICATOR TO CHECK IF INDICATOR IS ON A WEAPON.
+            //ANIMATION EVENTS(??) TO CHANGE isAttacking BACK TO FALSE
             if (Input.GetMouseButtonDown(0)) {
                 //Attack (left click)
                 if (EventSystem.current.IsPointerOverGameObject())
                     return; //if clicked UI
 
-                if (CanMelee && !isAttacking) {
-                    CanMelee = false;
+                if (!isAttacking) {
                     //isAttacking = true;
                     //ar.SetTrigger("Melee");
                     StartMelee();
-                    StartCoroutine(StartMeleeCooldown());
 
                     //make pet target enemy "attacked"
                     //using radiusX since its the height from the player to the tip of the box
@@ -119,11 +125,8 @@ public class Player_Controller : MonoBehaviour
             }
             if (Input.GetMouseButton(1)) {
                 //Ranged attack (right click)
-                if (CanRange && !isAttacking) {
-                    CanRange = false;
-                    //isAttacking = true;
+                if (!isAttacking) {
                     StartRanged();
-                    StartCoroutine(StartRangedCooldown());
 
                     //make pet target enemy "attacked"
                     MakePetTargetAttackedEnemy(wc.RangedStats.MaxRange);
@@ -191,18 +194,15 @@ public class Player_Controller : MonoBehaviour
     private void StartMelee() {
         //AOE
         wc.Melee(MeleeOrigin.position, facing);
-    }
-    IEnumerator StartMeleeCooldown() {
-        yield return new WaitForSeconds(wc.MeleeStats.Cooldown);
-        CanMelee = true;
+        //play audio
     }
 
     private void StartRanged() {
-        wc.Fire(facing);
-    }
-    IEnumerator StartRangedCooldown() {
-        yield return new WaitForSeconds(wc.RangedStats.FireRate);
-        CanRange = true;
+        if (wc.Fire(facing)) {
+            //isAttacking = true;
+
+            //play audio
+        }
     }
 
     private void UpdateAnimation() {

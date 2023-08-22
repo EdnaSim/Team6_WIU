@@ -21,9 +21,10 @@ MonoBehaviour:
     FallOffDist: 5
     TotalStoredAmmo: 100
     MaxAmmo: 100
-    AmmoInTheMag: 0
+    AmmoInTheMag: 20
     AmmoPerMag: 20
     ReloadTime: 2
+    CanReload: 1
     Spread: 0
     ShotsPerFire: 1
     AOE: 0
@@ -31,3 +32,6 @@ MonoBehaviour:
     AOEDamage: 0
     ProjPrefab: {fileID: 407147973268484955, guid: 4462a90e5981cfc48bfe2c885033f6c1, type: 3}
     WeaponName: Triangle
+    TimerForReload: 0
+    Reloading: 0
+    TimerForFireRate: 0

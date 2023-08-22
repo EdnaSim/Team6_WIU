@@ -3459,6 +3459,8 @@ MonoBehaviour:
   MovementSpeed: 0
   SprintIncrease: 20
   MeleeOrigin: {fileID: 197638213}
+  CanMelee: 1
+  CanRange: 1
   PetDetails: {fileID: 11400000, guid: d30f6f458d36bcf49909a35eae5057a0, type: 2}
 --- !u!50 &1912795512
 Rigidbody2D:
@@ -3626,7 +3628,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owner: {fileID: 1912795510}
   WeaponList: {fileID: 11400000, guid: 94e914a207908204d839ecac0bbdac4a, type: 2}
-  Reloading: 0
   BaseRangedData: {fileID: 11400000, guid: d013b4b0235af6a4086eafb58b95305a, type: 2}
   RangedStats:
     Damage: 10
@@ -3640,6 +3641,7 @@ MonoBehaviour:
     AmmoInTheMag: 0
     AmmoPerMag: 10
     ReloadTime: 1.5
+    CanReload: 1
     Spread: 0
     ShotsPerFire: 1
     AOE: 0
@@ -3647,6 +3649,9 @@ MonoBehaviour:
     AOEDamage: 0
     ProjPrefab: {fileID: 0}
     WeaponName: DefaultName
+    TimerForReload: 0
+    Reloading: 0
+    TimerForFireRate: 0
   BaseMeleeData: {fileID: 11400000, guid: db9bb2e0671075144928e762717389d7, type: 2}
   MeleeStats:
     Damage: 10
@@ -3655,6 +3660,7 @@ MonoBehaviour:
     RadiusY: 1
     StaminaCost: 5
     isAOE: 0
+    TimerForCooldown: 0
     WeaponName: DefaultName
   ReloadingText: {fileID: 152581211}
   NoAmmoText: {fileID: 1070142327}
@@ -4288,7 +4294,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2750919601040052932, guid: 18f736e454153324a8dd8f3c22a86d27, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2750919601040052954, guid: 18f736e454153324a8dd8f3c22a86d27, type: 3}
       propertyPath: m_RootOrder
@@ -4344,11 +4350,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5676049466634378350, guid: 18f736e454153324a8dd8f3c22a86d27, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5676049466634378350, guid: 18f736e454153324a8dd8f3c22a86d27, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18f736e454153324a8dd8f3c22a86d27, type: 3}

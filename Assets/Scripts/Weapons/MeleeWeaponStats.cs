@@ -11,6 +11,8 @@ public class MeleeWeaponStats {
     public float StaminaCost;
     public bool isAOE;
 
+    [HideInInspector] public float TimerForCooldown;
+
     public string WeaponName;
 
     public MeleeWeaponStats() {
@@ -21,6 +23,9 @@ public class MeleeWeaponStats {
         StaminaCost = 5;
         WeaponName = "DefaultName";
         isAOE = false;
+
+        //fixed value
+        TimerForCooldown = 0f;
     }
 
     public MeleeWeaponStats(MeleeWeaponStats copy) {

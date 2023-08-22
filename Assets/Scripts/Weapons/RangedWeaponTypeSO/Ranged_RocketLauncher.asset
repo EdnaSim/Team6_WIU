@@ -24,6 +24,7 @@ MonoBehaviour:
     AmmoInTheMag: 5
     AmmoPerMag: 5
     ReloadTime: 2
+    CanReload: 0
     Spread: 0
     ShotsPerFire: 1
     AOE: 2
@@ -31,3 +32,6 @@ MonoBehaviour:
     AOEDamage: 15
     ProjPrefab: {fileID: 7630813025349190170, guid: 72d7dce6a5a0ae741988b13d73f41e27, type: 3}
     WeaponName: Rocket Launcher
+    TimerForReload: 0
+    Reloading: 0
+    TimerForFireRate: 0

@@ -8,7 +8,7 @@ public class WeaponController : MonoBehaviour
 {
     public GameObject owner;
     public SO_WeaponList WeaponList;
-    [HideInInspector] public bool Reloading = false;
+    float TimeSinceSwitch = 0f;
 
     [Header("Projectile")]
     [SerializeField] RangedWeaponData BaseRangedData; //starting weapon type, DO NOT MODIFY BASEDATA.STATS
@@ -45,9 +45,10 @@ public class WeaponController : MonoBehaviour
     }
 
     public bool Fire(Vector2 DirToFire) {
-        if (RangedStats == null || RangedStats.ProjPrefab == null)
+        if (RangedStats == null || RangedStats.ProjPrefab == null || RangedStats.TimerForFireRate > 0f)
             return false;
 
+        //check if have ammo. (if no, reload)
         if (RangedStats.AmmoInTheMag <= 0) {
             Reload();
             return false;
@@ -85,26 +86,32 @@ public class WeaponController : MonoBehaviour
                 temp.dir = DirToFire;
             }
         }
+        //auto reload after firing, if no more ammo in the mag
+        if (RangedStats.AmmoInTheMag <= 0) {
+            Reload();
+        }
+        RangedStats.TimerForFireRate = RangedStats.FireRate;
 
         return true;
     }
 
     public void Reload() {
-        if (RangedStats.TotalStoredAmmo <= 0) { //TEMP: USE GETAMMO FROM INV INSTEAD OF TOTALSTOREAMMO
+        //no more ammo in inventory, or weapon CanReload is set to false
+        if (RangedStats.TotalStoredAmmo <= 0 || !RangedStats.CanReload) { //TEMP: USE GETAMMO FROM INV INSTEAD OF TOTALSTOREAMMO
             NoAmmoText.enabled = true;
             return;
         }
-        if (!Reloading) {
-            Reloading = true;
+        if (!RangedStats.Reloading) {
+            RangedStats.Reloading = true;
             ReloadingText.enabled = true;
-            StartCoroutine(ReloadTime());
+            RangedStats.TimerForReload = RangedStats.ReloadTime;
         }
     }
 
     private void Update() {
         if (NoAmmoText.enabled && RangedStats.TotalStoredAmmo > 0) //TEMP: USE GETAMMO FROM INV INSTEAD OF TOTALSTOREAMMO
             NoAmmoText.enabled = false;
-        if (Reloading) {
+        if (RangedStats.Reloading) {
             ReloadFlashTimer += Time.deltaTime;
             if (ReloadFlashTimer >= 0.2f) {
                 ReloadingText.enabled = true;
@@ -114,11 +121,29 @@ public class WeaponController : MonoBehaviour
                 ReloadFlashTimer = 0f;
             }
         }
+
+        //reload individual guns (pauses when not equipped)
+        if (RangedStats.Reloading) {
+            if (RangedStats.TimerForReload > 0) {
+                RangedStats.TimerForReload -= Time.deltaTime;
+            }
+            else {
+                FinishReload();
+            }
+        }
+
+        //cooldown
+        if (RangedStats.TimerForFireRate > 0) {
+            RangedStats.TimerForFireRate -= Time.deltaTime;
+        }
+        if (MeleeStats.TimerForCooldown > 0) {
+            MeleeStats.TimerForCooldown -= Time.deltaTime;
+        }
+
+        TimeSinceSwitch += Time.deltaTime;
     }
 
-    IEnumerator ReloadTime() {
-        yield return new WaitForSeconds(RangedStats.ReloadTime);
-
+    private void FinishReload() {
         int diff = RangedStats.AmmoPerMag - RangedStats.AmmoInTheMag;
         if (diff > 0) {
             //have enough to reload something
@@ -134,15 +159,15 @@ public class WeaponController : MonoBehaviour
         }
         ReloadingText.enabled = false;
         ReloadFlashTimer = 0f;
-        Reloading = false;
+        RangedStats.Reloading = false;
     }
 
     public int Melee(Vector2 origin, Vector2 dir) {
-        if (MeleeStats == null)
+        if (MeleeStats == null || MeleeStats.TimerForCooldown > 0)
             return 0;
 
         int EnemiesHit = 0;
-
+        MeleeStats.TimerForCooldown = MeleeStats.Cooldown;
         LayerMask lm = 1 << owner.gameObject.layer;//get all layers
         lm = ~lm;//reverse, so everything EXCEPT owner
         //remove layers that should not be scanned
@@ -167,7 +192,7 @@ public class WeaponController : MonoBehaviour
                 }
             }
         }
-
+        
         return EnemiesHit;
     }
 
@@ -178,9 +203,12 @@ public class WeaponController : MonoBehaviour
         if (Player_Controller.TempInventory.Contains(newWeaponStat)) {
             //TODO: check if newData exists in the player's inventory (not this temp one)
             //BaseData = newData;
-
+         
             //TODO: use stats of the weapon instance from inventory
             RangedStats = newWeaponStat;
+            //decrease fire rate based on time since last weapon switch. weapons "cool down" while inactive
+            RangedStats.TimerForFireRate -= TimeSinceSwitch;
+            TimeSinceSwitch = 0f;
         }
     }
 
@@ -190,6 +218,9 @@ public class WeaponController : MonoBehaviour
 
         if (Player_Controller.TempMeleeInv.Contains(newWeaponStat)) {
             MeleeStats = newWeaponStat;
+            //decrease fire rate based on time since last weapon switch. weapons "cool down" while inactive
+            MeleeStats.TimerForCooldown -= TimeSinceSwitch;
+            TimeSinceSwitch = 0f;
         }
     }
 
