@@ -16,8 +16,8 @@ public class Player_Controller : MonoBehaviour
     public bool isPaused = false;
 
     [Header("Movement")]
-    [SerializeField] float Base_MovementSpeed;
-    float MovementSpeed;
+    public float Base_MovementSpeed;
+    public float MovementSpeed;
     [SerializeField] float SprintIncrease;
     float dirH;
     float dirV;
@@ -74,8 +74,8 @@ public class Player_Controller : MonoBehaviour
                 //Sprint
                 MovementSpeed = Base_MovementSpeed + SprintIncrease;
             }
-            else {
-                MovementSpeed = Base_MovementSpeed;
+            else if (Input.GetKeyUp(KeyCode.LeftShift)) {
+                MovementSpeed -= SprintIncrease;
             }
 
             //input

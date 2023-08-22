@@ -96,4 +96,11 @@ public class HealthManager : MonoBehaviour
     public virtual void OnDeathAnimEnd() {
         gameObject.SetActive(false);
     }
+
+    public void ChangeDamageModifier(float amt)
+    {
+        DamageMultiplier += amt;
+        if (DamageMultiplier < 0)
+            DamageMultiplier = 0;
+    }
 }

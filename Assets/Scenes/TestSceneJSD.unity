@@ -3354,6 +3354,7 @@ MonoBehaviour:
   wl: {fileID: 11400000, guid: 94e914a207908204d839ecac0bbdac4a, type: 2}
   isPaused: 0
   Base_MovementSpeed: 35
+  MovementSpeed: 0
   SprintIncrease: 5
   MeleeOrigin: {fileID: 197638213}
   PetDetails: {fileID: 11400000, guid: d30f6f458d36bcf49909a35eae5057a0, type: 2}
@@ -3501,7 +3502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d82895e521534844b547f9898c96575, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Base_MaxHealth: 10000
+  Base_MaxHealth: 100
   MaxHealth: 0
   CurrentHealth: 0
   UI_Hpbar: {fileID: 1587087487}
@@ -4353,11 +4354,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 883164358074167153, guid: a0a0750635dd43641a4971a85675fe1c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 883164358074167153, guid: a0a0750635dd43641a4971a85675fe1c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7253605109377972924, guid: a0a0750635dd43641a4971a85675fe1c, type: 3}
       propertyPath: m_RootOrder
@@ -4409,7 +4410,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7253605109377972928, guid: a0a0750635dd43641a4971a85675fe1c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7253605109377972929, guid: a0a0750635dd43641a4971a85675fe1c, type: 3}
       propertyPath: target
@@ -4426,11 +4427,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8157747892523513, guid: 435babd32bc3df34b9624723d37e3fa2, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8157747892523513, guid: 435babd32bc3df34b9624723d37e3fa2, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7562847014486420585, guid: 435babd32bc3df34b9624723d37e3fa2, type: 3}
       propertyPath: target
@@ -4442,7 +4443,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7562847014486420589, guid: 435babd32bc3df34b9624723d37e3fa2, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7562847014486420590, guid: 435babd32bc3df34b9624723d37e3fa2, type: 3}
       propertyPath: m_RootOrder
