@@ -10,18 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 398ccf5c3c2275b4c94058edb23b68d4, type: 3}
-  m_Name: RangedWeapon_Basic
+  m_Name: Ranged_Pistol
   m_EditorClassIdentifier: 
   stats:
-    Damage: 50
+    Damage: 10
     FireRate: 1
+    StaminaCost: 5
     MaxRange: 10
     ProjSpeed: 10
     FallOffDist: 5
+    TotalStoredAmmo: 0
+    MaxAmmo: 100
+    AmmoInTheMag: 0
+    AmmoPerMag: 10
+    ReloadTime: 1.5
     Spread: 0
     ShotsPerFire: 1
     AOE: 0
     DoesProjDoInitialDamage: 1
     AOEDamage: 0
-    ProjPrefab: {fileID: 7630813025349190170, guid: 72d7dce6a5a0ae741988b13d73f41e27, type: 3}
-    WeaponName: Basic
+    ProjPrefab: {fileID: 407147973268484955, guid: 4462a90e5981cfc48bfe2c885033f6c1, type: 3}
+    WeaponName: Pistol

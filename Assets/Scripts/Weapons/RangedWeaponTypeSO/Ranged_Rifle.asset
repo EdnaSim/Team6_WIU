@@ -10,18 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 398ccf5c3c2275b4c94058edb23b68d4, type: 3}
-  m_Name: RangedWeapon_RocketLauncher
+  m_Name: Ranged_Rifle
   m_EditorClassIdentifier: 
   stats:
-    Damage: 5
-    FireRate: 5
-    MaxRange: 10
-    ProjSpeed: 6
+    Damage: 10
+    FireRate: 1
+    MaxRange: 12
+    ProjSpeed: 5
     FallOffDist: 5
+    TotalStoredAmmo: 100
+    MaxAmmo: 100
+    AmmoInTheMag: 0
+    AmmoPerMag: 30
+    ReloadTime: 2
     Spread: 0
     ShotsPerFire: 1
-    AOE: 1.5
+    AOE: 0
     DoesProjDoInitialDamage: 1
-    AOEDamage: 7
-    ProjPrefab: {fileID: 7630813025349190170, guid: 72d7dce6a5a0ae741988b13d73f41e27, type: 3}
-    WeaponName: Rocket Launcher
+    AOEDamage: 0
+    ProjPrefab: {fileID: 407147973268484955, guid: 4462a90e5981cfc48bfe2c885033f6c1, type: 3}
+    WeaponName: Triangle

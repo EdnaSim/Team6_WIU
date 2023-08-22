@@ -24,6 +24,7 @@ public class SO_PetDetails : ScriptableObject
     public float MaxHunger;
     public float CurrentHunger;
     public float HungerDrain; //how much to drain the hunger by each time
+    public string Name;
 
     private void Awake() {
         //get saved data
@@ -31,5 +32,6 @@ public class SO_PetDetails : ScriptableObject
         MaxHunger = 100;
         CurrentHunger = MaxHunger;
         HungerDrain = 10;
+        Name = "Pet";
     }
 }

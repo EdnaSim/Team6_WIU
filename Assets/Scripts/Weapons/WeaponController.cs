@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 //weapon class that holds what proj it fires
 public class WeaponController : MonoBehaviour
 {
     public GameObject owner;
     public SO_WeaponList WeaponList;
+    [HideInInspector] public bool Reloading = false;
 
     [Header("Projectile")]
     [SerializeField] RangedWeaponData BaseRangedData; //starting weapon type, DO NOT MODIFY BASEDATA.STATS
@@ -15,6 +17,11 @@ public class WeaponController : MonoBehaviour
     [Header("Melee")]
     [SerializeField] MeleeWeaponData BaseMeleeData;
     public MeleeWeaponStats MeleeStats;
+
+    [Header("UI")]
+    [SerializeField] TMP_Text ReloadingText;
+    [SerializeField] TMP_Text NoAmmoText;
+    float ReloadFlashTimer = 0;
 
     private void Awake() {
         if (owner == null) {
@@ -32,12 +39,21 @@ public class WeaponController : MonoBehaviour
             MeleeStats = new MeleeWeaponStats(BaseMeleeData.Stats);
             Player_Controller.TempMeleeInv.Add(MeleeStats);
         }
+
+        ReloadingText.enabled = false;
+        NoAmmoText.enabled = false;
     }
 
     public bool Fire(Vector2 DirToFire) {
         if (RangedStats == null || RangedStats.ProjPrefab == null)
             return false;
 
+        if (RangedStats.AmmoInTheMag <= 0) {
+            Reload();
+            return false;
+        }
+
+        RangedStats.AmmoInTheMag--;
         for (int i = 0; i < RangedStats.ShotsPerFire; i++) {
             //instantiate projectile
             Projectile temp = Instantiate(RangedStats.ProjPrefab).GetComponent<Projectile>();
@@ -71,6 +87,54 @@ public class WeaponController : MonoBehaviour
         }
 
         return true;
+    }
+
+    public void Reload() {
+        if (RangedStats.TotalStoredAmmo <= 0) {
+            NoAmmoText.enabled = true;
+            return;
+        }
+        if (!Reloading) {
+            Reloading = true;
+            ReloadingText.enabled = true;
+            StartCoroutine(ReloadTime());
+        }
+    }
+
+    private void Update() {
+        if (NoAmmoText.enabled && RangedStats.TotalStoredAmmo > 0)
+            NoAmmoText.enabled = false;
+        if (Reloading) {
+            ReloadFlashTimer += Time.deltaTime;
+            if (ReloadFlashTimer >= 0.2f) {
+                ReloadingText.enabled = true;
+            }
+            if (ReloadFlashTimer > 0.4f) {
+                ReloadingText.enabled = false;
+                ReloadFlashTimer = 0f;
+            }
+        }
+    }
+
+    IEnumerator ReloadTime() {
+        yield return new WaitForSeconds(RangedStats.ReloadTime);
+
+        int diff = RangedStats.AmmoPerMag - RangedStats.AmmoInTheMag;
+        if (diff > 0) {
+            //have enough to reload something
+            if (RangedStats.TotalStoredAmmo > 0) {
+                //when stored ammo runs out, it just puts in all the bullets it can, then stops
+                for (int i = 0; i < diff; i++) {
+                    if (RangedStats.TotalStoredAmmo > 0) {
+                        RangedStats.TotalStoredAmmo--;
+                        RangedStats.AmmoInTheMag++;
+                    }
+                }
+            }
+        }
+        ReloadingText.enabled = false;
+        ReloadFlashTimer = 0f;
+        Reloading = false;
     }
 
     public int Melee(Vector2 origin, Vector2 dir) {

@@ -14,6 +14,12 @@ public class HealthManager : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] protected UI_Healthbar UI_Hpbar;
+    [Tooltip("If true, the bar will disappear, and reappear when this unit is damaged, for the duration specified in TimeToShowHPbar. " +
+        "If false, the healthbar will be permanently visible, even in the dark")]
+    [SerializeField] protected bool OnlyShowBarWhenDamaged = true;
+    [Tooltip("In Seconds. When damaged, the hp bar flashes for a moment, this value is how long to flash for")]
+    [Min(0)][SerializeField] protected float TimeToShowHPbar = 2;
+    protected float HPbarShowTimer = 0f;
 
     [Header("Modifiers")]
     public float DamageMultiplier = 1;
@@ -39,6 +45,17 @@ public class HealthManager : MonoBehaviour
 
         killer = null;
     }
+    protected virtual void Update() {
+        if (OnlyShowBarWhenDamaged) {
+            if (HPbarShowTimer > 0f) {
+                UI_Hpbar.SetBarDisplay(true);
+                HPbarShowTimer -= Time.deltaTime;
+            }
+            else {
+                UI_Hpbar.SetBarDisplay(false);
+            }
+        }
+    }
 
     public virtual void TakeDamage(float damage, GameObject attacker) {
         if (Death || attacker.layer == gameObject.layer)
@@ -50,8 +67,11 @@ public class HealthManager : MonoBehaviour
             OnDeath();
         }
         //update after taking damage
-        if (UI_Hpbar != null)
+        if (UI_Hpbar != null) {
+            UI_Hpbar.SetBarDisplay(true);
             UI_Hpbar.UpdateSlider();
+            HPbarShowTimer = TimeToShowHPbar;
+        }
     }
 
     public virtual void Heal(float amt) {

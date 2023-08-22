@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
+using TMPro;
 
 public abstract class Pet : MonoBehaviour
 {
@@ -29,6 +30,9 @@ public abstract class Pet : MonoBehaviour
     [Header("Sprite")]
     [SerializeField] protected bool OriginalSpriteFaceRight = false;
 
+    [Header("UI")]
+    [SerializeField] public TMP_Text Nametag;
+
     // Start is called before the first frame update
     void OnEnable()
     {
@@ -53,7 +57,7 @@ public abstract class Pet : MonoBehaviour
         facing = (target.transform.position - gameObject.transform.position).normalized;
 
         //target dead, return to player
-        if (!target.gameObject.activeSelf) {
+        if (!target.gameObject.activeSelf || target.GetComponent<HealthManager>().Death) {
             target = player.transform;
         }
 
@@ -63,7 +67,7 @@ public abstract class Pet : MonoBehaviour
     private void LateUpdate() {
         UpdateAnimation();
         //teleport back to player if too far
-        if (Vector2.Distance(player.transform.position, transform.position) > 10) {
+        if (Vector2.Distance(player.transform.position, transform.position) > 15) {
             transform.position = new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z);
         }
     }
@@ -136,11 +140,10 @@ public abstract class Pet : MonoBehaviour
     }
 
     public virtual void OwnerAttacked(GameObject attacker) {
-
+        //leave empty, set by the child classes
     }
 
     public virtual void TargetEnemyAttacked(GameObject enemy) {
+        //leave empty, set by the child classes
     }
-        
-    
 }

@@ -8,6 +8,7 @@ public class MeleeWeaponStats {
     public float Cooldown;
     public float RadiusX; //ps: due to how the melee box is rotated, X looks like Y and vice versa
     public float RadiusY;
+    public float StaminaCost;
     public bool isAOE;
 
     public string WeaponName;
@@ -17,6 +18,7 @@ public class MeleeWeaponStats {
         Cooldown = 1;
         RadiusX = 1;
         RadiusY = 1;
+        StaminaCost = 5;
         WeaponName = "DefaultName";
         isAOE = false;
     }
@@ -26,6 +28,7 @@ public class MeleeWeaponStats {
         Cooldown = copy.Cooldown;
         RadiusX = copy.RadiusX;
         RadiusY = copy.RadiusY;
+        StaminaCost = copy.StaminaCost;
         WeaponName = copy.WeaponName;
         isAOE = copy.isAOE;
     }

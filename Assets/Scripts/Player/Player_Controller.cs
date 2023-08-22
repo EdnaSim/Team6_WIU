@@ -5,12 +5,12 @@ using UnityEngine.EventSystems;
 
 public class Player_Controller : MonoBehaviour
 {
-    public static Player_Controller PC;
+    public static Player_Controller Instance;
 
     Rigidbody2D rb;
     Animator ar;
     SpriteRenderer sr;
-    public WeaponController wc;
+    [HideInInspector] public WeaponController wc;
     [SerializeField] SO_WeaponList wl;
 
     public bool isPaused = false;
@@ -40,7 +40,7 @@ public class Player_Controller : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PC = this;
+        Instance = this;
 
         rb = GetComponent<Rigidbody2D>();
         ar = GetComponent<Animator>();
@@ -117,7 +117,7 @@ public class Player_Controller : MonoBehaviour
                     MakePetTargetAttackedEnemy(wc.MeleeStats.RadiusX + 1);
                 }
             }
-            if (Input.GetMouseButtonDown(1)) {
+            if (Input.GetMouseButton(1)) {
                 //Ranged attack (right click)
                 if (CanRange && !isAttacking) {
                     CanRange = false;
@@ -155,12 +155,12 @@ public class Player_Controller : MonoBehaviour
     }
     //TEMP - draw melee range (also rotate it)
     //private void OnDrawGizmos() {
-    //    //Gizmos.DrawWireCube(MeleeOrigin.transform.position, MeleeRange);
     //    var oldMatrix = Gizmos.matrix;
 
     //    // create a matrix which translates an object by "position", rotates it by "rotation" and scales it by "halfExtends * 2"
     //    Quaternion rotation = Quaternion.Euler(0, 0, Mathf.Atan2(facing.y, facing.x) * Mathf.Rad2Deg);
-    //    Gizmos.matrix = Matrix4x4.TRS(MeleeOrigin.position, rotation, new Vector2(wc.MeleeStats.RadiusX, wc.MeleeStats.RadiusY));
+    //    if (wc.MeleeStats != null)
+    //        Gizmos.matrix = Matrix4x4.TRS(MeleeOrigin.position, rotation, new Vector2(wc.MeleeStats.RadiusX, wc.MeleeStats.RadiusY));
     //    // Then use it one a default cube which is not translated nor scaled
     //    Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
 
@@ -246,9 +246,11 @@ public class Player_Controller : MonoBehaviour
 
     public void OnHitByEnemy(GameObject attacker) {
         //drain sanity
+        SanityManager.Instance.ChangeSanity(-SanityManager.Instance.DrainAmtOnHit);
 
         //pet action
         if (PetManager.Pet != null) {
+            //Only Pet_Dog has this function filled
             PetManager.Pet.OwnerAttacked(attacker);
         }
     }

@@ -63,12 +63,12 @@ public class RedSmile_Controller : MonoBehaviour
         ChangeState(currentState);
         //StartCoroutine(Die());
 
-        SproutMinionAItarget = GetComponent<AIDestinationSetter>();
+        //SproutMinionAItarget = GetComponent<AIDestinationSetter>();
 
-        if(SproutMinionAItarget.target == null)
-        {
-            SproutMinionAItarget.target = GameObject.FindGameObjectWithTag("Player").transform;
-        }
+        //if(SproutMinionAItarget.target == null)
+        //{
+        //    SproutMinionAItarget.target = GameObject.FindGameObjectWithTag("Player").transform;
+        //}
 
         DestSetter = GetComponent<AIDestinationSetter>();
         healthManager = GetComponent<HealthManager>();
@@ -259,6 +259,7 @@ public class RedSmile_Controller : MonoBehaviour
             {
                 if(col.gameObject.tag == "Player")
                 {
+                    Debug.Log(col.gameObject.name);
                     ChangeState(State.ATTACK);
                     isAttacking = true;
                 }
@@ -272,10 +273,11 @@ public class RedSmile_Controller : MonoBehaviour
             Transform nearestGO = null;
             foreach (Collider2D col in detectedUnits)
             {
-                if (col.gameObject.tag != "Player" && col.gameObject.tag != "Minion")
+                if (col.gameObject.tag != "Player")
                 {
                     continue;
                 }
+                
                 //get dist between this enemy and the potential target (sqrMagnitude is distance, but maybe faster?)
                 float dist = ((Vector2)transform.position - (Vector2)col.transform.position).sqrMagnitude;
                 if (dist < smallestDist)

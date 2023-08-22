@@ -6,7 +6,7 @@ using TMPro;
 
 public class UI_Healthbar : MonoBehaviour
 {
-    protected Slider slider;
+    public Slider slider;
     protected GameObject owner;
     protected HealthManager hm;
     protected TMP_Text numDisplay;
@@ -34,5 +34,9 @@ public class UI_Healthbar : MonoBehaviour
         if (numDisplay != null) {
             numDisplay.text = hm.CurrentHealth + " / " + hm.MaxHealth;
         }
+    }
+
+    public virtual void SetBarDisplay(bool b) {
+        gameObject.SetActive(b);
     }
 }
