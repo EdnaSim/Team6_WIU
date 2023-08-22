@@ -17,7 +17,7 @@ public class Player_Controller : MonoBehaviour
 
     [Header("Movement")]
     public float Base_MovementSpeed;
-    public float MovementSpeed;
+    [HideInInspector] public float MovementSpeed;
     [SerializeField] float SprintIncrease;
     float dirH;
     float dirV;
@@ -65,7 +65,7 @@ public class Player_Controller : MonoBehaviour
     void Update()
     {
         //stuff that cant be done when paused
-        if (!isPaused || Player_HealthManager.Player_hm.Death) {
+        if (!isPaused || !Player_HealthManager.Player_hm.Death) {
             //get input for moving
             dirH = Input.GetAxis("Horizontal");
             dirV = Input.GetAxis("Vertical");
@@ -74,8 +74,8 @@ public class Player_Controller : MonoBehaviour
                 //Sprint
                 MovementSpeed = Base_MovementSpeed + SprintIncrease;
             }
-            else {
-                MovementSpeed = Base_MovementSpeed;
+            else if (Input.GetKeyUp(KeyCode.LeftShift)) {
+                MovementSpeed -= SprintIncrease;
             }
 
             //input
@@ -84,7 +84,6 @@ public class Player_Controller : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.M)) {
                 //Open map
-                SanityManager.Instance.ChangeSanity(-10);
             }
             if (Input.GetKeyDown(KeyCode.B)) {
                 //Open Inventory

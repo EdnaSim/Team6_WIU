@@ -22,7 +22,7 @@ MonoBehaviour:
     TotalStoredAmmo: 100
     MaxAmmo: 100
     AmmoInTheMag: 10
-    AmmoPerMag: 12
+    AmmoPerMag: 6
     ReloadTime: 1.5
     Spread: 0
     ShotsPerFire: 1

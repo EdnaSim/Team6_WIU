@@ -2,6 +2,7 @@ using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class RedSmile_Controller : MonoBehaviour
 {
@@ -50,9 +51,15 @@ public class RedSmile_Controller : MonoBehaviour
 
     private BoxCollider2D boxCollider;
 
+    [HideInInspector] public UnityEvent<GameObject> OnHitEvent;
+
     // Start is called before the first frame update
     void Start()
     {
+        if (OnHitEvent == null)
+            OnHitEvent = new UnityEvent<GameObject>();
+        OnHitEvent.AddListener(FindAttacker);
+
         isDead = false;
 
         StartIdleTimer = false;
@@ -199,6 +206,23 @@ public class RedSmile_Controller : MonoBehaviour
         }
     }
 
+    //When hit by something, target the attacker if in LOS
+    private void FindAttacker(GameObject attacker) {
+        Vector2 dir = ((Vector2)attacker.transform.position - (Vector2)transform.position).normalized;
+        float distanceToTarget = Vector2.Distance(transform.position, attacker.transform.position);
+        //check for obstructions
+        if (!Physics2D.Raycast(transform.position, dir, distanceToTarget, obstacleMask)) {
+            canSeeUnit = true;
+            OutOfFOVtimer = WaitOutOfFOVtime; //reset timer
+            DestSetter.target = attacker.transform;
+            ChangeState(State.CHARGE);
+            //Debug.Log(unit.gameObject.name + " seen");
+        }
+        else {
+            ChangeState(State.IDLE);
+        }
+    }
+
     private void Death()
     {
         boxCollider.enabled = false;
@@ -254,12 +278,13 @@ public class RedSmile_Controller : MonoBehaviour
 
         if(ATKRange.Length != 0)
         {
-            foreach (Collider2D col in detectedUnits)
+            foreach (Collider2D col in ATKRange)
             {
                 if(col.gameObject.tag == "Player")
                 {
                     ChangeState(State.ATTACK);
                     isAttacking = true;
+                    break;
                 }
             }
         }
@@ -271,7 +296,7 @@ public class RedSmile_Controller : MonoBehaviour
             Transform nearestGO = null;
             foreach (Collider2D col in detectedUnits)
             {
-                if (col.gameObject.tag != "Player" && col.gameObject.tag != "Minion")
+                if (col.gameObject.tag != "Player")
                 {
                     continue;
                 }

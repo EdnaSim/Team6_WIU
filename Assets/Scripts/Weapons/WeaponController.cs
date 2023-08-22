@@ -90,7 +90,7 @@ public class WeaponController : MonoBehaviour
     }
 
     public void Reload() {
-        if (RangedStats.TotalStoredAmmo <= 0) {
+        if (RangedStats.TotalStoredAmmo <= 0) { //TEMP: USE GETAMMO FROM INV INSTEAD OF TOTALSTOREAMMO
             NoAmmoText.enabled = true;
             return;
         }
@@ -102,7 +102,7 @@ public class WeaponController : MonoBehaviour
     }
 
     private void Update() {
-        if (NoAmmoText.enabled && RangedStats.TotalStoredAmmo > 0)
+        if (NoAmmoText.enabled && RangedStats.TotalStoredAmmo > 0) //TEMP: USE GETAMMO FROM INV INSTEAD OF TOTALSTOREAMMO
             NoAmmoText.enabled = false;
         if (Reloading) {
             ReloadFlashTimer += Time.deltaTime;
@@ -125,8 +125,8 @@ public class WeaponController : MonoBehaviour
             if (RangedStats.TotalStoredAmmo > 0) {
                 //when stored ammo runs out, it just puts in all the bullets it can, then stops
                 for (int i = 0; i < diff; i++) {
-                    if (RangedStats.TotalStoredAmmo > 0) {
-                        RangedStats.TotalStoredAmmo--;
+                    if (RangedStats.TotalStoredAmmo > 0) { //TEMP: USE GETAMMO FROM INV INSTEAD OF TOTALSTOREAMMO
+                        RangedStats.TotalStoredAmmo--; //TEMP: USE GETAMMO FROM INV INSTEAD OF TOTALSTOREAMMO
                         RangedStats.AmmoInTheMag++;
                     }
                 }

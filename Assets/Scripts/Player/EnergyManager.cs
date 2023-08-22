@@ -51,4 +51,24 @@ public class EnergyManager : MonoBehaviour
         staminaAmt += energygain;
         StaminaBar.value = staminaAmt / MaxStaminaAmt;
     }
+
+    public void AdrenalineShot()
+    {
+        if(CanDrain)
+        {
+            Player_HealthManager.Player_hm.ChangeDamageModifier(-0.5f);
+            Player_HealthManager.Player_hm.Heal(25f);
+            Player_Controller.Instance.MovementSpeed += 25f;
+            StartCoroutine(InvulnerableTimer());
+            CanDrain = false;
+        }
+    }
+
+    IEnumerator InvulnerableTimer()
+    {
+        yield return new WaitForSeconds(5f);
+        Player_HealthManager.Player_hm.ChangeDamageModifier(+0.5f);
+        Player_Controller.Instance.MovementSpeed = Player_Controller.Instance.Base_MovementSpeed;
+        CanDrain = true;
+    }
 }

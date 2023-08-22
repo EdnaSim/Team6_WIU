@@ -83,6 +83,14 @@ public class HealthManager : MonoBehaviour
         //UI_Hpbar.UpdateSlider();
     }
 
+    public void ChangeDamageModifier(float amt) {
+        // +ve: take more damage
+        // -ve: take less damage
+        DamageMultiplier += amt;
+        if (DamageMultiplier < 0)
+            DamageMultiplier = 0;
+    }
+
     public virtual void OnDeath() {
         CurrentHealth = 0;
         Death = true;

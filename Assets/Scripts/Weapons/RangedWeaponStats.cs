@@ -17,7 +17,7 @@ public class RangedWeaponStats
 
     [Header("Ammo")]
     [Tooltip("Current ammo in the inventory")]
-    public int TotalStoredAmmo;
+    public int TotalStoredAmmo; //TEMP, USE GetAmmo FROM RACHEL
     [Tooltip("Total ammo of this type that can be carried in inventory")]
     public int MaxAmmo;
     [Tooltip("Ammo currently in the magazine. Once this number reaches 0, need to reload. Not counted as in the inventory")]

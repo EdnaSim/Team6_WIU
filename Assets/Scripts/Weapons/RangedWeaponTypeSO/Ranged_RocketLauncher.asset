@@ -13,20 +13,21 @@ MonoBehaviour:
   m_Name: Ranged_RocketLauncher
   m_EditorClassIdentifier: 
   stats:
-    Damage: 5
+    Damage: 10
     FireRate: 4
+    StaminaCost: 10
     MaxRange: 8
     ProjSpeed: 6
     FallOffDist: 10
-    TotalStoredAmmo: 50
-    MaxAmmo: 50
-    AmmoInTheMag: 0
+    TotalStoredAmmo: 0
+    MaxAmmo: 0
+    AmmoInTheMag: 5
     AmmoPerMag: 5
-    ReloadTime: 3
+    ReloadTime: 2
     Spread: 0
     ShotsPerFire: 1
-    AOE: 1.5
+    AOE: 2
     DoesProjDoInitialDamage: 1
-    AOEDamage: 7
+    AOEDamage: 15
     ProjPrefab: {fileID: 7630813025349190170, guid: 72d7dce6a5a0ae741988b13d73f41e27, type: 3}
     WeaponName: Rocket Launcher

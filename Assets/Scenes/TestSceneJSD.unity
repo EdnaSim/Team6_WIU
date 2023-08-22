@@ -926,7 +926,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 624273727}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a20fa2c7a91d83344997f5c356e19672, type: 3}
+  m_Script: {fileID: 11500000, guid: 54a7811e0f6901441959a65ea987c26c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   StaminaBar: {fileID: 1375824012}
@@ -2678,7 +2678,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7559391101268652864, guid: cb8299a9763bba74795eb67097482c52, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 1.03
       objectReference: {fileID: 0}
     - target: {fileID: 7559391101268652864, guid: cb8299a9763bba74795eb67097482c52, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3455,8 +3455,9 @@ MonoBehaviour:
   wc: {fileID: 0}
   wl: {fileID: 11400000, guid: 94e914a207908204d839ecac0bbdac4a, type: 2}
   isPaused: 0
-  Base_MovementSpeed: 50
-  SprintIncrease: 5
+  Base_MovementSpeed: 30
+  MovementSpeed: 0
+  SprintIncrease: 20
   MeleeOrigin: {fileID: 197638213}
   PetDetails: {fileID: 11400000, guid: d30f6f458d36bcf49909a35eae5057a0, type: 2}
 --- !u!50 &1912795512
@@ -3672,7 +3673,7 @@ MonoBehaviour:
   Base_MaxSanity: 100
   DrainAmtOnStarve: 10
   DrainAmtOnHit: 5
-  DrainAmtOnPetDeath: 30
+  DrainAmtOnPetDeath: 50
   inDark: 0
   DarknessDrainIncrease: -0.2
   PetDrainReduction: 0.3
@@ -4186,7 +4187,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 906330046433100042, guid: 4cf0cc3481e29604a890370aed01ae27, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 906330046433100085, guid: 4cf0cc3481e29604a890370aed01ae27, type: 3}
       propertyPath: target
@@ -4337,6 +4338,10 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 1912795515}
+    - target: {fileID: 2750919601040052959, guid: 18f736e454153324a8dd8f3c22a86d27, type: 3}
+      propertyPath: Base_MaxHealth
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 5676049466634378350, guid: 18f736e454153324a8dd8f3c22a86d27, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -4356,11 +4361,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 883164358074167153, guid: a0a0750635dd43641a4971a85675fe1c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 883164358074167153, guid: a0a0750635dd43641a4971a85675fe1c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7253605109377972924, guid: a0a0750635dd43641a4971a85675fe1c, type: 3}
       propertyPath: m_RootOrder
@@ -4412,7 +4417,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7253605109377972928, guid: a0a0750635dd43641a4971a85675fe1c, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7253605109377972929, guid: a0a0750635dd43641a4971a85675fe1c, type: 3}
       propertyPath: target
@@ -4429,11 +4434,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8157747892523513, guid: 435babd32bc3df34b9624723d37e3fa2, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8157747892523513, guid: 435babd32bc3df34b9624723d37e3fa2, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7562847014486420585, guid: 435babd32bc3df34b9624723d37e3fa2, type: 3}
       propertyPath: target
@@ -4445,7 +4450,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7562847014486420589, guid: 435babd32bc3df34b9624723d37e3fa2, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7562847014486420590, guid: 435babd32bc3df34b9624723d37e3fa2, type: 3}
       propertyPath: m_RootOrder
@@ -4502,11 +4507,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2226677619927626351, guid: 3765981277f6aa74e867836cb105f195, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2226677619927626351, guid: 3765981277f6aa74e867836cb105f195, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8506988914811638604, guid: 3765981277f6aa74e867836cb105f195, type: 3}
       propertyPath: player
@@ -4566,7 +4571,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8506988916278058207, guid: 3765981277f6aa74e867836cb105f195, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3765981277f6aa74e867836cb105f195, type: 3}

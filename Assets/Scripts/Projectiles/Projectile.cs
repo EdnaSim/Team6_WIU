@@ -104,6 +104,7 @@ public class Projectile : MonoBehaviour
         transform.position = caster.transform.position;
         CastPos = caster.transform.position;
         rb.velocity = dir * speed;
+        Debug.Log(rb.velocity);
         currDistFromCaster = 0;
         FalloffMult = 1f;
         if (tr != null)

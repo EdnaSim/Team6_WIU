@@ -15,14 +15,14 @@ MonoBehaviour:
   stats:
     Damage: 5
     FireRate: 1
-    StaminaCost: 0
+    StaminaCost: 5
     MaxRange: 12
     ProjSpeed: 5
     FallOffDist: 5
     TotalStoredAmmo: 100
     MaxAmmo: 100
     AmmoInTheMag: 0
-    AmmoPerMag: 30
+    AmmoPerMag: 20
     ReloadTime: 2
     Spread: 0
     ShotsPerFire: 1

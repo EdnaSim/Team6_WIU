@@ -57,7 +57,8 @@ public abstract class Pet : MonoBehaviour
         facing = (target.transform.position - gameObject.transform.position).normalized;
 
         //target dead, return to player
-        if (!target.gameObject.activeSelf) {
+        
+        if (!target.gameObject.activeSelf || (target.GetComponent<HealthManager>() != null && target.GetComponent<HealthManager>().Death)) {
             target = player.transform;
         }
 
@@ -69,6 +70,17 @@ public abstract class Pet : MonoBehaviour
         //teleport back to player if too far
         if (Vector2.Distance(player.transform.position, transform.position) > 10) {
             transform.position = new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D col) {
+        if (col.gameObject.tag == "Player") {
+            //check if player has edible food
+
+            //if true, consume 1
+
+            //gain hunger back
+            ChangeHunger(10);
         }
     }
 
@@ -131,8 +143,8 @@ public abstract class Pet : MonoBehaviour
             rb.AddForce(force);
     }
 
-    public virtual void DrainHunger(float amt) {
-        details.CurrentHunger -= amt;
+    public virtual void ChangeHunger(float amt) {
+        details.CurrentHunger += amt;
         //starved to death
         if (details.CurrentHunger <= 0) {
             PetManager.PetDie?.Invoke();
