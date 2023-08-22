@@ -193,6 +193,7 @@ public class RedSmile_Controller : MonoBehaviour
             if (!StartATKTimer)
             {
                 Player_HealthManager.Player_hm.TakeDamage(5f, gameObject);
+                SanityManager.Instance.ChangeSanity(-SanityManager.Instance.DrainAmtOnHit * 2);
                 Debug.Log("BigDrain");
                 StartATKTimer = true;
                 StartCoroutine(AttackCooldown());
@@ -249,6 +250,7 @@ public class RedSmile_Controller : MonoBehaviour
         //check for the player, or targetable units, within range
         if(DOTRange.Length != 0)
         {
+            SanityManager.Instance.ChangeSanity(-SanityManager.Instance.DrainAmtOnHit * 0.001f);
             //Drain Sanity
             //Debug.Log("Draining Sanity");
         }
