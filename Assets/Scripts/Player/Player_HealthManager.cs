@@ -47,7 +47,8 @@ public class Player_HealthManager : HealthManager
         }
 
         //damage effects (sanity drain, pet attack etc)
-        Player_Controller.Instance.OnHitByEnemy(attacker);
+        if (attacker.GetComponent<EnergyManager>() == null)
+            Player_Controller.Instance.OnHitByEnemy(attacker);
     }
 
     public override void Heal(float amt) {

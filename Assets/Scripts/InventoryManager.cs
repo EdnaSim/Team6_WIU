@@ -21,7 +21,7 @@ public class InventoryManager : MonoBehaviour
 
     public ArmorSlot armorSlot;
     [SerializeField] GameObject player;
-    [SerializeField] public GameObject consumeButton;
+    public GameObject consumeButton;
 
     private void Awake() 
     {
@@ -31,6 +31,8 @@ public class InventoryManager : MonoBehaviour
     }
     public bool addItem(Item _item)
     {
+        List<MeleeWeaponData> mwl = Player_Controller.Instance.wc.WeaponList.MeleeWeaponlist;
+        List<RangedWeaponData> rwl = Player_Controller.Instance.wc.WeaponList.RangedWeaponList;
         for (int i = 0; i < inventorySlots.Length; i++)
         {
             InventorySlot slot = inventorySlots[i];
@@ -46,7 +48,7 @@ public class InventoryManager : MonoBehaviour
                 return true;
             }
         }
-
+        //if nothing returns true in the above loop
         for (int i = 0; i< inventorySlots.Length; i++)
         {
             InventorySlot slot = inventorySlots[i];
@@ -54,6 +56,19 @@ public class InventoryManager : MonoBehaviour
             if (itemInSlot == null)
             {
                 SpawnNewItem(_item, slot);
+                
+                //add to weapon controller's list, for easier searching later
+                for (int m=0; m < mwl.Count; m++) {
+                    if (_item.itemName == mwl[m].Stats.WeaponName) {
+                        Player_Controller.Instance.wc.AddMeleeWeapon(mwl[m].Stats);
+                    }
+                }
+                //add to range weapon list, if possible
+                for (int r = 0; r < rwl.Count; r++){
+                    if (_item.itemName == rwl[r].Stats.WeaponName) {
+                        Player_Controller.Instance.wc.AddRangedWeapon(rwl[r].Stats);
+                    }
+                }
                 return true;
             }
         }
@@ -69,6 +84,21 @@ public class InventoryManager : MonoBehaviour
             if (itemInSlot != null
                 && itemInSlot.item == _item)
             {
+                //if a weapon, remove from weapon controller lists
+                if (_item.type == Item.itemType.melee) {
+                    for (int m =0; m < WeaponController.OwnedMeleeList.Count; m++) {
+                        if (_item.itemName == WeaponController.OwnedMeleeList[m].WeaponName) {
+                            WeaponController.OwnedMeleeList.RemoveAt(m);
+                        }
+                    }
+                }
+                else if (_item.type == Item.itemType.ranged) {
+                    for (int r =0; r < WeaponController.OwnedRangedList.Count; r++) {
+                        if (_item.itemName == WeaponController.OwnedRangedList[r].WeaponName) {
+                            WeaponController.OwnedRangedList.RemoveAt(r);
+                        }
+                    }
+                }
 
                 itemInSlot.count -= amount;
                 itemInSlot.updateCount();
@@ -83,7 +113,7 @@ public class InventoryManager : MonoBehaviour
 
         return false;
     }
-    public string getSelected()
+    public Item getSelected()
     {
         for (int i = 0; i < inventorySlots.Length; i++)
         {
@@ -91,14 +121,12 @@ public class InventoryManager : MonoBehaviour
             InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
             if (itemInSlot != null && itemInSlot.selected == true)
             {
-                Debug.Log("select" + itemInSlot.item.itemName);
-                return itemInSlot.item.itemName;
-
+                return itemInSlot.item;
             }
             
         }
 
-        return "";
+        return null;
             
     }
     void SpawnNewItem(Item _item , InventorySlot slot)
@@ -109,11 +137,6 @@ public class InventoryManager : MonoBehaviour
         InventoryItem inventoryItem = newItemGo.GetComponent<InventoryItem>();
         inventoryItem.InitializeItem(_item);
         newItemGo.transform.SetParent(slot.transform);
-    }
-
-    private void Update()
-    {
-        //Debug.Log("armor" + getArmour());
     }
 
     public void resetSelected()
@@ -153,7 +176,7 @@ public class InventoryManager : MonoBehaviour
     public int getAmmo()
     {
         Item ammo = getItem("Ammo");
-        if (ammo.amount > 0)
+        if (ammo != null && ammo.amount > 0)
         {
             return ammo.amount;
         }
@@ -163,7 +186,7 @@ public class InventoryManager : MonoBehaviour
         }
         
     }
-    public void setAmmo(int addAmt)
+    public void RemoveAmmo(int addAmt)
     {
         Item ammo = getItem("Ammo");
         removeItem(ammo, addAmt);
@@ -193,7 +216,6 @@ public class InventoryManager : MonoBehaviour
                 }
                 if (itemInSlot.count == 0)
                 {
-                    Debug.Log("delete");
                     Destroy(slot.transform.GetChild(0).gameObject);
                 }
 
@@ -216,7 +238,6 @@ public class InventoryManager : MonoBehaviour
                 addStats(itemInSlot.item);
                 if (itemInSlot.count == 0)
                 {
-                    Debug.Log("delete");
                     Destroy(slot.transform.GetChild(0).gameObject);
                 }
 

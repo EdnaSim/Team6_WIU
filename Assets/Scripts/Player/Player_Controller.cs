@@ -26,13 +26,9 @@ public class Player_Controller : MonoBehaviour
     bool isAttacking = false; //check if bound to an attack anim (set by anim trigger)
     [Header("Attack")]
     [SerializeField] Transform MeleeOrigin;
-    public static List<MeleeWeaponStats> TempMeleeInv; // TEMP
     [HideInInspector] public bool CanMelee = true;
-    int meleeListIndex = 0; //TEMP
 
     [Header("Ranged attack")]
-    public static List<RangedWeaponStats> TempInventory; //TEMP
-    int weaponListIndex = 0; //TEMP
     [HideInInspector] public bool CanRange = true;
 
     [Header("Pet")]
@@ -51,13 +47,13 @@ public class Player_Controller : MonoBehaviour
 
         wc = GetComponent<WeaponController>();
 
-        //TEMP - add weapon instance for each type
-        for (int i = 0; i < wl.RangedWeaponList.Count; i++) {
-            TempInventory.Add(new RangedWeaponStats(wl.RangedWeaponList[i].Stats));
-        }
-        for (int i=0; i < wl.MeleeWeaponlist.Count; i++) {
-            TempMeleeInv.Add(new MeleeWeaponStats(wl.MeleeWeaponlist[i].Stats));
-        }
+        ////TEMP - add weapon instance for each type
+        //for (int i = 0; i < wl.RangedWeaponList.Count; i++) {
+        //    TempInventory.Add(new RangedWeaponStats(wl.RangedWeaponList[i].Stats));
+        //}
+        //for (int i=0; i < wl.MeleeWeaponlist.Count; i++) {
+        //    TempMeleeInv.Add(new MeleeWeaponStats(wl.MeleeWeaponlist[i].Stats));
+        //}
 
         Physics2D.IgnoreLayerCollision(gameObject.layer, gameObject.layer);
     }
@@ -90,49 +86,53 @@ public class Player_Controller : MonoBehaviour
                 
                 //TEMP - Find weapon name to switch to it
                 //wc.ChangeRangedWeapon(TempInventory.Find((RangedWeaponStats w) => w.WeaponName == "Triangle"));
-                wc.ChangeRangedWeapon(TempInventory[weaponListIndex]);
-                Debug.Log("Current Weapon: " + TempInventory[weaponListIndex].WeaponName);
-                weaponListIndex++;
-                if (weaponListIndex >= TempInventory.Count) weaponListIndex = 0;
+                //wc.ChangeRangedWeapon(TempInventory[weaponListIndex]);
+                //Debug.Log("Current Weapon: " + TempInventory[weaponListIndex].WeaponName);
+                //weaponListIndex++;
+                //if (weaponListIndex >= TempInventory.Count) weaponListIndex = 0;
 
-                //if (wc.MeleeStats.WeaponName == "Fists")
-                //    wc.ChangeMeleeWeapon(TempMeleeInv.Find((MeleeWeaponStats w) => w.WeaponName == "Sword"));
-                //else
-                //    wc.ChangeMeleeWeapon(TempMeleeInv.Find((MeleeWeaponStats w) => w.WeaponName == "Fists"));
-                wc.ChangeMeleeWeapon(TempMeleeInv[meleeListIndex]);
-                Debug.Log("Current Melee: " + TempMeleeInv[meleeListIndex].WeaponName);
-                meleeListIndex++;
-                if (meleeListIndex >= TempMeleeInv.Count) meleeListIndex = 0;
+                ////if (wc.MeleeStats.WeaponName == "Fists")
+                ////    wc.ChangeMeleeWeapon(TempMeleeInv.Find((MeleeWeaponStats w) => w.WeaponName == "Sword"));
+                ////else
+                ////    wc.ChangeMeleeWeapon(TempMeleeInv.Find((MeleeWeaponStats w) => w.WeaponName == "Fists"));
+                //wc.ChangeMeleeWeapon(TempMeleeInv[meleeListIndex]);
+                //Debug.Log("Current Melee: " + TempMeleeInv[meleeListIndex].WeaponName);
+                //meleeListIndex++;
+                //if (meleeListIndex >= TempMeleeInv.Count) meleeListIndex = 0;
             }
             //TEMP:
             //LMB FOR BOTH MELEE AND RANGED, USING INV INDICATOR TO CHECK IF INDICATOR IS ON A WEAPON.
-            if (Input.GetMouseButtonDown(0)) {
-                //Attack (left click)
-                if (EventSystem.current.IsPointerOverGameObject())
-                    return; //if clicked UI
+            if (Input.GetMouseButton(0)) {
+                //if clicked on UI / no object selected
+                if (!EventSystem.current.IsPointerOverGameObject() && InventoryManager.Instance.getSelected() != null) {
 
-                if (!isAttacking && wc.CanMelee()) {
-                    ChangeIsAttacking(true);
-                    ar.SetFloat("MouseX", facing.x);
-                    ar.SetFloat("MouseY", facing.y);
-                    ar.SetTrigger("Melee");
+                    if (InventoryManager.Instance.getSelected().type == Item.itemType.melee) {
+                        //melee attack
+                        if (!isAttacking && wc.CanMelee()) {
+                            ChangeIsAttacking(true);
+                            ar.SetFloat("MouseX", facing.x);
+                            ar.SetFloat("MouseY", facing.y);
+                            ar.SetTrigger("Melee");
 
-                    //make pet target enemy "attacked"
-                    //using radiusX since its the height from the player to the tip of the box
-                    MakePetTargetAttackedEnemy(wc.MeleeStats.RadiusX + 1);
+                            //make pet target enemy "attacked"
+                            //using radiusX since its the height from the player to the tip of the box
+                            MakePetTargetAttackedEnemy(wc.MeleeStats.RadiusX + 1);
+                        }
+                    }
+                    else if (InventoryManager.Instance.getSelected().type == Item.itemType.ranged) {
+                        //ranged attack
+                        if (!isAttacking && wc.CanRanged()) {
+                            ChangeIsAttacking(true);
+                            ar.SetFloat("MouseX", facing.x);
+                            ar.SetFloat("MouseY", facing.y);
+                            ar.SetTrigger("Ranged");
+
+                            //make pet target enemy "attacked"
+                            MakePetTargetAttackedEnemy(wc.RangedStats.MaxRange);
+                        }
+                    }
                 }
-            }
-            if (Input.GetMouseButton(1)) {
-                //Ranged attack (right click)
-                if (!isAttacking && wc.CanRanged()) {
-                    ChangeIsAttacking(true);
-                    ar.SetFloat("MouseX", facing.x);
-                    ar.SetFloat("MouseY", facing.y);
-                    ar.SetTrigger("Ranged");
-
-                    //make pet target enemy "attacked"
-                    MakePetTargetAttackedEnemy(wc.RangedStats.MaxRange);
-                }
+                
             }
 
             //Play audio

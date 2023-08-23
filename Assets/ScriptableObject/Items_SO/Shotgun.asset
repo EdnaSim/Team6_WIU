@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Shotgun
   m_EditorClassIdentifier: 
   itemName: Shotgun
-  type: 3
+  type: 4
   image: {fileID: 21300000, guid: 111605f15a6e3e740a64db6974b43c07, type: 3}
   description: 
   amount: 0

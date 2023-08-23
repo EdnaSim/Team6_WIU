@@ -17,7 +17,6 @@ public class ItemPickUp : MonoBehaviour
 
         if (collision.gameObject.tag == "Player" && Input.GetKey(KeyCode.F))
         {
-            Debug.Log("hello");
             pickedUp();
         }
     }

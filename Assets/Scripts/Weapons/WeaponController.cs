@@ -12,10 +12,12 @@ public class WeaponController : MonoBehaviour
     [Header("Projectile")]
     [SerializeField] RangedWeaponData BaseRangedData; //starting weapon type, DO NOT MODIFY BASEDATA.STATS
     public RangedWeaponStats RangedStats; //MODIFY THIS
+    public static List<RangedWeaponStats> OwnedRangedList;
 
     [Header("Melee")]
     [SerializeField] MeleeWeaponData BaseMeleeData;
     public MeleeWeaponStats MeleeStats;
+    public static List<MeleeWeaponStats> OwnedMeleeList;
 
     [Header("UI")]
     [SerializeField] TMP_Text ReloadingText;
@@ -26,17 +28,16 @@ public class WeaponController : MonoBehaviour
         if (owner == null) {
             owner = gameObject;
         }
-        //TEMP
-        Player_Controller.TempInventory = new List<RangedWeaponStats>();
-        Player_Controller.TempMeleeInv = new List<MeleeWeaponStats>();
+        OwnedRangedList = new List<RangedWeaponStats>();
+        OwnedMeleeList = new List<MeleeWeaponStats>();
         //get stats from the base weapon type, as a copy.
         if (BaseRangedData != null) {
             RangedStats = new RangedWeaponStats(BaseRangedData.Stats);
-            Player_Controller.TempInventory.Add(RangedStats);
+            OwnedRangedList.Add(RangedStats);
         }
         if (BaseMeleeData != null) {
             MeleeStats = new MeleeWeaponStats(BaseMeleeData.Stats);
-            Player_Controller.TempMeleeInv.Add(MeleeStats);
+            OwnedMeleeList.Add(MeleeStats);
         }
 
         ReloadingText.enabled = false;
@@ -44,7 +45,7 @@ public class WeaponController : MonoBehaviour
     }
 
     private void Update() {
-        if (NoAmmoText.enabled && RangedStats.TotalStoredAmmo > 0) //TEMP: USE GETAMMO FROM INV INSTEAD OF TOTALSTOREAMMO
+        if (NoAmmoText.enabled && InventoryManager.Instance.getAmmo() > 0) //TEMP: USE GETAMMO FROM INV INSTEAD OF TOTALSTOREAMMO
             NoAmmoText.enabled = false;
         if (RangedStats.Reloading) {
             ReloadFlashTimer += Time.deltaTime;
@@ -72,13 +73,13 @@ public class WeaponController : MonoBehaviour
         }
 
         //cooldown
-        for (int i = 0; i < Player_Controller.TempInventory.Count; i++) {
-            if (Player_Controller.TempInventory[i].TimerForFireRate > 0)
-                Player_Controller.TempInventory[i].TimerForFireRate -= Time.deltaTime;
+        for (int i = 0; i < OwnedRangedList.Count; i++) {
+            if (OwnedRangedList[i].TimerForFireRate > 0)
+                OwnedRangedList[i].TimerForFireRate -= Time.deltaTime;
         }
-        for (int i = 0; i < Player_Controller.TempMeleeInv.Count; i++) {
-            if (Player_Controller.TempMeleeInv[i].TimerForCooldown > 0)
-                Player_Controller.TempMeleeInv[i].TimerForCooldown -= Time.deltaTime;
+        for (int i = 0; i < OwnedMeleeList.Count; i++) {
+            if (OwnedMeleeList[i].TimerForCooldown > 0)
+                OwnedMeleeList[i].TimerForCooldown -= Time.deltaTime;
         }
     }
 
@@ -141,7 +142,7 @@ public class WeaponController : MonoBehaviour
 
     public void Reload() {
         //no more ammo in inventory, or weapon CanReload is set to false
-        if (RangedStats.TotalStoredAmmo <= 0 || !RangedStats.CanReload) { //TEMP: USE GETAMMO FROM INV INSTEAD OF TOTALSTOREAMMO
+        if (InventoryManager.Instance.getAmmo() <= 0 || !RangedStats.CanReload) {
             NoAmmoText.enabled = true;
             return;
         }
@@ -155,14 +156,14 @@ public class WeaponController : MonoBehaviour
     private void FinishReload() {
         int diff = RangedStats.AmmoPerMag - RangedStats.AmmoInTheMag;
         if (diff > 0) {
-            //have enough to reload something
-            if (RangedStats.TotalStoredAmmo > 0) {
-                //when stored ammo runs out, it just puts in all the bullets it can, then stops
-                for (int i = 0; i < diff; i++) {
-                    if (RangedStats.TotalStoredAmmo > 0) { //TEMP: USE GETAMMO FROM INV INSTEAD OF TOTALSTOREAMMO
-                        RangedStats.TotalStoredAmmo--; //TEMP: USE GETAMMO FROM INV INSTEAD OF TOTALSTOREAMMO
-                        RangedStats.AmmoInTheMag++;
-                    }
+            //when stored ammo runs out, it just puts in all the bullets it can, then stops
+            for (int i = 0; i < diff; i++) {
+                if (InventoryManager.Instance.getAmmo() > 0) {
+                    InventoryManager.Instance.RemoveAmmo(1);
+                    RangedStats.AmmoInTheMag++;
+                }
+                else {
+                    break;
                 }
             }
         }
@@ -212,7 +213,7 @@ public class WeaponController : MonoBehaviour
         if (newWeaponStat == null)
             return;
 
-        if (Player_Controller.TempInventory.Contains(newWeaponStat)) {
+        if (OwnedRangedList.Contains(newWeaponStat)) {
             //TODO: check if newData exists in the player's inventory (not this temp one)
             //BaseData = newData;
          
@@ -225,14 +226,17 @@ public class WeaponController : MonoBehaviour
         if (newWeaponStat == null)
             return;
 
-        if (Player_Controller.TempMeleeInv.Contains(newWeaponStat)) {
+        if (OwnedMeleeList.Contains(newWeaponStat)) {
             MeleeStats = newWeaponStat;
         }
     }
 
     //TEMP, should be controlled by inventory
-    public void AddWeapon(RangedWeaponStats stat) {
+    public void AddRangedWeapon(RangedWeaponStats stat) {
         //add copy
-        Player_Controller.TempInventory.Add(new RangedWeaponStats(stat));
+        OwnedRangedList.Add(new RangedWeaponStats(stat));
+    }
+    public void AddMeleeWeapon(MeleeWeaponStats stat) {
+        OwnedMeleeList.Add(new MeleeWeaponStats(stat));
     }
 }

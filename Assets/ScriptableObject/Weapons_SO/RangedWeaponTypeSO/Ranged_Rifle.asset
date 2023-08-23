@@ -31,7 +31,7 @@ MonoBehaviour:
     DoesProjDoInitialDamage: 1
     AOEDamage: 0
     ProjPrefab: {fileID: 407147973268484955, guid: 4462a90e5981cfc48bfe2c885033f6c1, type: 3}
-    WeaponName: Triangle
+    WeaponName: Rifle
     TimerForReload: 0
     Reloading: 0
     TimerForFireRate: 0
