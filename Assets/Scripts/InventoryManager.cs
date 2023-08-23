@@ -186,10 +186,10 @@ public class InventoryManager : MonoBehaviour
         }
         
     }
-    public void RemoveAmmo(int addAmt)
+    public void RemoveAmmo(int amt)
     {
         Item ammo = getItem("Ammo");
-        removeItem(ammo, addAmt);
+        removeItem(ammo, amt);
        
     }
 
