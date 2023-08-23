@@ -12,7 +12,7 @@ public class PetManager : MonoBehaviour
     public static UnityEvent PetDie;
 
     [Header("Pet stuff")]
-    [SerializeField] SO_PetDetails PetDetails;
+    public SO_PetDetails PetDetails;
     public static Pet Pet;
 
     [Header("UI")]
@@ -89,6 +89,7 @@ public class PetManager : MonoBehaviour
         PetDetails.MaxHunger = Pet.Base_MaxHunger;
         PetDetails.HungerDrain = Pet.Base_HungerDrain;
         SanityManager.Instance.PetAlive = true;
+        EnergyManager.Instance.PetAlive = true;
 
         return true;
     }
@@ -104,6 +105,7 @@ public class PetManager : MonoBehaviour
         //drain(-) player sanity
         SanityManager.Instance.PetAlive = false;
         SanityManager.Instance.ChangeSanity(-SanityManager.Instance.DrainAmtOnPetDeath);
+        EnergyManager.Instance.PetAlive = false;
     }
 
     public void ResetAndRemovePet() {

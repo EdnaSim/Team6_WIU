@@ -28,7 +28,7 @@ public abstract class Pet : MonoBehaviour
     protected Seeker seeker;
 
     [Header("Sprite")]
-    [SerializeField] protected bool OriginalSpriteFaceRight = false;
+    [SerializeField] protected bool OriginalSpriteFaceLeft = false;
 
     [Header("UI")]
     [SerializeField] public TMP_Text Nametag;
@@ -95,13 +95,13 @@ public abstract class Pet : MonoBehaviour
         }
 
         if (facing.x > 0) {
-            if (OriginalSpriteFaceRight)
+            if (OriginalSpriteFaceLeft)
                 sr.flipX = true;
             else
                 sr.flipX = false; 
         }
         else if (facing.x < 0) {
-            if (OriginalSpriteFaceRight)
+            if (OriginalSpriteFaceLeft)
                 sr.flipX = false;
             else
                 sr.flipX = true;

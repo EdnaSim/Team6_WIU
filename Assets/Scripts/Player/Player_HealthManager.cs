@@ -60,6 +60,7 @@ public class Player_HealthManager : HealthManager
     public override void OnDeath() {
         PlayerData.CurrHP = 0;
         Death = true;
+        UI_Hpbar.SetBarDisplay(false);
         //play death anim
         if (ar != null)
             ar.SetTrigger("Death");
@@ -67,6 +68,7 @@ public class Player_HealthManager : HealthManager
             OnDeathAnimEnd();
     }
 
+    //called by animation event trigger (but not invoker, directly called by animation)
     public override void OnDeathAnimEnd() {
         //reset player data
         PlayerData.MaxHp = 0;
@@ -76,7 +78,7 @@ public class Player_HealthManager : HealthManager
 
         //reset pet
         PetManager.Instance.ResetAndRemovePet();
-        //TODO: display gameover screen
+        //TODO: display game over screen
 
     }
 }

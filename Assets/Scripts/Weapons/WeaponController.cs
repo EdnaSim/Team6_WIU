@@ -123,7 +123,7 @@ public class WeaponController : MonoBehaviour
             //Shotgun spread (if any)
             if (RangedStats.Spread > 0) {
                 //spread out the dir of the bullets (they will move out in a cone)
-                float x = RangedStats.Spread - ((RangedStats.Spread*2)/RangedStats.ShotsPerFire)*i;
+                float x = RangedStats.Spread - ((RangedStats.Spread*2)/RangedStats.ShotsPerFire) * i;
                 float y = RangedStats.Spread - ((RangedStats.Spread*2) / RangedStats.ShotsPerFire) * i;
                 temp.dir = new Vector2(DirToFire.x + x/100, DirToFire.y + y/100).normalized;
             }

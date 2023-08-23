@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Ammo
   m_EditorClassIdentifier: 
   itemName: Ammo
-  type: 3
+  type: 1
   image: {fileID: -1249268724, guid: f63c5bc210f99c348af612c12087ad14, type: 3}
   description: 
-  amount: 0
+  amount: 2
   stackable: 1

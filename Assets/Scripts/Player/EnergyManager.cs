@@ -14,6 +14,8 @@ public class EnergyManager : MonoBehaviour
 
     public bool CanDrain;
 
+    [HideInInspector] public bool PetAlive = false;
+
     private void Awake()
     {
         Instance = this;
@@ -42,7 +44,10 @@ public class EnergyManager : MonoBehaviour
 
     public void LoseEnergy(float energyloss)
     {
-        staminaAmt -= energyloss;
+        if (PetManager.Instance.PetDetails.PetType == SO_PetDetails.PETTYPE.CAT)
+            staminaAmt -= energyloss * (PetAlive ? PetManager.Pet.GetComponent<Pet_Cat>().StaminaDrainReduction : 1);
+        else
+            staminaAmt -= energyloss;
         StaminaBar.value = staminaAmt / MaxStaminaAmt;
     }
 
