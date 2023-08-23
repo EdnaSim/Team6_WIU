@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc66993ebe8c3c34cbb38d75ebc4a416, type: 3}
+  m_Name: Bowl
+  m_EditorClassIdentifier: 
+  itemName: Bowl
+  type: 1
+  image: {fileID: 21300000, guid: f24702ef4810d2f4392ab8f29d30aad6, type: 3}
+  description: 'To store cooked soup.
+
+    Use this with items to make soup.'
+  amount: 0
+  stackable: 0
