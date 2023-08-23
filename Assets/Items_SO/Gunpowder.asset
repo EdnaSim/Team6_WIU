@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc66993ebe8c3c34cbb38d75ebc4a416, type: 3}
+  m_Name: Gunpowder
+  m_EditorClassIdentifier: 
+  itemName: Gunpowder
+  type: 1
+  image: {fileID: -103150824, guid: a4e96754f04da524d9ef34ae22754a44, type: 3}
+  description: 'might go BOOM.
+
+    Craft ammos with brass ingots. '
+  amount: 0
+  stackable: 1

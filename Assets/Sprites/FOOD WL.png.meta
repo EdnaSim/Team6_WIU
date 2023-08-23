@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 30
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -132,10 +132,10 @@ TextureImporter:
       name: FOOD WL_0
       rect:
         serializedVersion: 2
-        x: 61
-        y: 66
-        width: 28
-        height: 28
+        x: 37
+        y: 68
+        width: 22
+        height: 22
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -158,7 +158,7 @@ TextureImporter:
         width: 21
         height: 21
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -166,6 +166,111 @@ TextureImporter:
       bones: []
       spriteID: 5a2309290ac502b438687b6145e2a43b
       internalID: -366960222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FOOD WL_2
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 67
+        width: 23
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb10fabcd909a19479a16375c966ecc2
+      internalID: 992821214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FOOD WL_3
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 95
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e83be65cfa674c344b7d6af66e9dc3ff
+      internalID: 1376240475
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FOOD WL_4
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 95
+        width: 25
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1625ed6c1c9d52b42b24dc5c66b8d890
+      internalID: 1762735568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FOOD WL_5
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 205
+        width: 21
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5b9c17f5850d1a4087afbbb6d62fcce
+      internalID: 1714775623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FOOD WL_6
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 176
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ffbd21ce8815854ca34ed057ee8321e
+      internalID: -1151042031
       vertices: []
       indices: 
       edges: []
@@ -183,6 +288,11 @@ TextureImporter:
     nameFileIdTable:
       FOOD WL_0: -152005320
       FOOD WL_1: -366960222
+      FOOD WL_2: 992821214
+      FOOD WL_3: 1376240475
+      FOOD WL_4: 1762735568
+      FOOD WL_5: 1714775623
+      FOOD WL_6: -1151042031
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

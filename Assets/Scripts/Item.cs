@@ -11,7 +11,8 @@ public class Item : ScriptableObject
         ores,
         resouces,
         food,
-        weapons
+        weapons,
+        equipment
     }
     public string itemName;
     public itemType type;

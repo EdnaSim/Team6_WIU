@@ -12,13 +12,14 @@ public class ItemPickUp : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        
-        if (collision.gameObject.tag == "Player" /*&& Input.GetKeyDown(KeyCode.F)*/)
+
+        if (collision.gameObject.tag == "Player" && Input.GetKey(KeyCode.F))
         {
             Debug.Log("hello");
             pickedUp();
         }
     }
+
 }

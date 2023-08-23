@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cc66993ebe8c3c34cbb38d75ebc4a416, type: 3}
-  m_Name: mushroom
+  m_Name: Mushroom
   m_EditorClassIdentifier: 
-  itemName: mushroom
+  itemName: Mushroom
   type: 1
   image: {fileID: -366960222, guid: 8423e22983c1e804ebdc5f61db986712, type: 3}
   description: 'Fungi of the Wild.
 
     Cook with a bowl to make Mushroom Soup.'
   amount: 0
-  stackabble: 1
+  stackable: 1

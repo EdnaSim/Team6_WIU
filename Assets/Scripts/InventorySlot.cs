@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class InventorySlot : MonoBehaviour, IDropHandler
 {
-
     public void OnDrop(PointerEventData eventData)
     {
         if (transform.childCount == 0)
@@ -15,5 +14,6 @@ public class InventorySlot : MonoBehaviour, IDropHandler
             inventoryItem.parentAfterDrag = transform;
         }
     }
+
 }
 

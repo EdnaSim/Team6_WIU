@@ -11,9 +11,24 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public TMP_Text countText;
     [HideInInspector] public Item item;
     [HideInInspector] public int count = 1;
+    GameObject description_UI;
+    [SerializeField]GameObject indicator;
+    public bool selected = false;
+    private InventorySlot[] inventorySlots;
+    GameObject consumeButton;
 
     [HideInInspector] public Transform parentAfterDrag;
 
+
+    private void Start()
+    {
+        //description_UI = GameObject.Find("Description");
+        description_UI = InventoryManager.Instance.Desc_UI_Container;
+        indicator.SetActive(false);
+        inventorySlots = InventoryManager.Instance.inventorySlots;
+        consumeButton = InventoryManager.Instance.consumeButton;
+
+    }
     public void InitializeItem(Item newItem)
     {
         item = newItem;     
@@ -31,9 +46,11 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        GetComponent<CanvasGroup>().blocksRaycasts = false;
         image.raycastTarget = false;
         parentAfterDrag = transform.parent;
         transform.SetParent(transform.root);
+        
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -43,7 +60,56 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        GetComponent<CanvasGroup>().blocksRaycasts = true;
         image.raycastTarget = true;
         transform.SetParent(parentAfterDrag);
+        Debug.Log(parentAfterDrag);
     }
+
+    public void showDescription()
+    {
+        Debug.Log("Oi");
+        description_UI.SetActive(true);
+        Debug.Log(description_UI.activeSelf);
+        TMP_Text descriptionName = description_UI.transform.Find("name").GetComponent<TMP_Text>();
+        descriptionName.text = item.itemName.ToString();
+        TMP_Text description = description_UI.transform.Find("description").GetComponent<TMP_Text>();
+        description.text = item.description.ToString();
+    }
+
+    public void hideDescription()
+    {
+        description_UI.SetActive(false);
+    }
+
+    public void selectItem()
+    {
+        for (int i = 0; i < inventorySlots.Length; i++)
+        {
+            InventorySlot slot = inventorySlots[i];
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+            if(itemInSlot != null)
+            {
+                itemInSlot.deselectItem();
+            }
+            
+        }
+        Debug.Log("oiiiiiiiiiiiiiiiiiiii");
+        indicator.SetActive(true);
+        selected = true;
+        if(item.type == Item.itemType.food)
+        {
+
+            consumeButton.SetActive(true);
+        }
+        
+    }
+    public void deselectItem()
+    {
+        indicator.SetActive(false);
+        selected = false;
+        consumeButton.SetActive(false);
+
+    }
+
 }

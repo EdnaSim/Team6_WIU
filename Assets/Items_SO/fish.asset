@@ -10,11 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cc66993ebe8c3c34cbb38d75ebc4a416, type: 3}
-  m_Name: fish
+  m_Name: Fish
   m_EditorClassIdentifier: 
   itemName: Fish
   type: 1
   image: {fileID: -152005320, guid: 8423e22983c1e804ebdc5f61db986712, type: 3}
-  description: 
-  amount: 1
+  description: 'Animal of the Sea.
+
+    Cook this with either a Bowl or Sticks to
+    make food for consumption.
+
+    Also used to feed your pet Cat.'
+  amount: 0
   stackable: 1
