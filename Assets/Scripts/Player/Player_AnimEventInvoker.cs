@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class Player_AnimEventInvoker : MonoBehaviour
 {
-    public UnityEvent OnDeathAnimOver, StartMelee, StartRanged;
+    public UnityEvent OnDeathAnimOver, StartMelee, StartRanged, DoneAttacking;
 
     public void DeathAnimOver() {
         OnDeathAnimOver?.Invoke();
@@ -15,5 +15,8 @@ public class Player_AnimEventInvoker : MonoBehaviour
     }
     public void TriggerRanged() {
         StartRanged.Invoke();
+    }
+    public void TriggerDoneAttack() {
+        DoneAttacking?.Invoke();
     }
 }

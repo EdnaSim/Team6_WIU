@@ -11,7 +11,7 @@ public class MeleeWeaponStats {
     public float StaminaCost;
     public bool isAOE;
 
-    [HideInInspector] public float TimerForCooldown;
+     public float TimerForCooldown;
 
     public string WeaponName;
 

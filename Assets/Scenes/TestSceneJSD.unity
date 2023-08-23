@@ -3433,6 +3433,8 @@ GameObject:
   - component: {fileID: 1912795516}
   - component: {fileID: 1912795518}
   - component: {fileID: 1912795519}
+  - component: {fileID: 1912795520}
+  - component: {fileID: 1912795521}
   m_Layer: 6
   m_Name: player
   m_TagString: Player
@@ -3458,6 +3460,7 @@ MonoBehaviour:
   Base_MovementSpeed: 30
   MovementSpeed: 0
   SprintIncrease: 20
+  MoveDir: {x: 0, y: 0}
   MeleeOrigin: {fileID: 197638213}
   CanMelee: 1
   CanRange: 1
@@ -3499,8 +3502,8 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0.21133333}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.28866667}
-    oldSize: {x: 1, y: 1}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2, y: 2}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -3550,8 +3553,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: -200398934, guid: c0baf632049c58140a141c7d75c9cbef, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -3569,8 +3572,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1912795510}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.08, y: 2.6, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -15.0594, y: 2.6515, z: 0}
+  m_LocalScale: {x: 1.0412, y: 1.103, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 197638213}
@@ -3685,6 +3688,99 @@ MonoBehaviour:
   PetDrainReduction: 0.3
   PetAlive: 0
   SanityBar: {fileID: 1033477356}
+--- !u!95 &1912795520
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912795510}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0460025374decd54ea74b2c00b51d749, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1912795521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912795510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c0b4559e6efc2246ad7d5c0eb9d8ad0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnDeathAnimOver:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1912795517}
+        m_TargetAssemblyTypeName: Player_HealthManager, Assembly-CSharp
+        m_MethodName: OnDeathAnimEnd
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  StartMelee:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1912795511}
+        m_TargetAssemblyTypeName: Player_Controller, Assembly-CSharp
+        m_MethodName: StartMelee
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  StartRanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1912795511}
+        m_TargetAssemblyTypeName: Player_Controller, Assembly-CSharp
+        m_MethodName: StartRanged
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DoneAttacking:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1912795511}
+        m_TargetAssemblyTypeName: Player_Controller, Assembly-CSharp
+        m_MethodName: ChangeIsAttacking
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1924866086
 GameObject:
   m_ObjectHideFlags: 0

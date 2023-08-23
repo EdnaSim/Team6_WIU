@@ -8,7 +8,6 @@ public class WeaponController : MonoBehaviour
 {
     public GameObject owner;
     public SO_WeaponList WeaponList;
-    float TimeSinceSwitch = 0f;
 
     [Header("Projectile")]
     [SerializeField] RangedWeaponData BaseRangedData; //starting weapon type, DO NOT MODIFY BASEDATA.STATS
@@ -44,9 +43,54 @@ public class WeaponController : MonoBehaviour
         NoAmmoText.enabled = false;
     }
 
-    public bool Fire(Vector2 DirToFire) {
-        if (RangedStats == null || RangedStats.ProjPrefab == null || RangedStats.TimerForFireRate > 0f)
+    private void Update() {
+        if (NoAmmoText.enabled && RangedStats.TotalStoredAmmo > 0) //TEMP: USE GETAMMO FROM INV INSTEAD OF TOTALSTOREAMMO
+            NoAmmoText.enabled = false;
+        if (RangedStats.Reloading) {
+            ReloadFlashTimer += Time.deltaTime;
+            if (ReloadFlashTimer >= 0.2f) {
+                ReloadingText.enabled = true;
+            }
+            if (ReloadFlashTimer > 0.4f) {
+                ReloadingText.enabled = false;
+                ReloadFlashTimer = 0f;
+            }
+        }
+        else if (ReloadingText.enabled) {
+            ReloadingText.enabled = false;
+            ReloadFlashTimer = 0f;
+        }
+
+        //reload individual guns (pauses when not equipped)
+        if (RangedStats.Reloading) {
+            if (RangedStats.TimerForReload > 0) {
+                RangedStats.TimerForReload -= Time.deltaTime;
+            }
+            else {
+                FinishReload();
+            }
+        }
+
+        //cooldown
+        for (int i = 0; i < Player_Controller.TempInventory.Count; i++) {
+            if (Player_Controller.TempInventory[i].TimerForFireRate > 0)
+                Player_Controller.TempInventory[i].TimerForFireRate -= Time.deltaTime;
+        }
+        for (int i = 0; i < Player_Controller.TempMeleeInv.Count; i++) {
+            if (Player_Controller.TempMeleeInv[i].TimerForCooldown > 0)
+                Player_Controller.TempMeleeInv[i].TimerForCooldown -= Time.deltaTime;
+        }
+    }
+
+    public bool CanRanged() {
+        if (RangedStats == null || RangedStats.ProjPrefab == null || RangedStats.TimerForFireRate > 0f || RangedStats.Reloading)
             return false;
+
+        return true;
+    }
+
+    public bool Fire(Vector2 DirToFire) {
+        if (!CanRanged()) return false;
 
         //check if have ammo. (if no, reload)
         if (RangedStats.AmmoInTheMag <= 0) {
@@ -108,41 +152,6 @@ public class WeaponController : MonoBehaviour
         }
     }
 
-    private void Update() {
-        if (NoAmmoText.enabled && RangedStats.TotalStoredAmmo > 0) //TEMP: USE GETAMMO FROM INV INSTEAD OF TOTALSTOREAMMO
-            NoAmmoText.enabled = false;
-        if (RangedStats.Reloading) {
-            ReloadFlashTimer += Time.deltaTime;
-            if (ReloadFlashTimer >= 0.2f) {
-                ReloadingText.enabled = true;
-            }
-            if (ReloadFlashTimer > 0.4f) {
-                ReloadingText.enabled = false;
-                ReloadFlashTimer = 0f;
-            }
-        }
-
-        //reload individual guns (pauses when not equipped)
-        if (RangedStats.Reloading) {
-            if (RangedStats.TimerForReload > 0) {
-                RangedStats.TimerForReload -= Time.deltaTime;
-            }
-            else {
-                FinishReload();
-            }
-        }
-
-        //cooldown
-        if (RangedStats.TimerForFireRate > 0) {
-            RangedStats.TimerForFireRate -= Time.deltaTime;
-        }
-        if (MeleeStats.TimerForCooldown > 0) {
-            MeleeStats.TimerForCooldown -= Time.deltaTime;
-        }
-
-        TimeSinceSwitch += Time.deltaTime;
-    }
-
     private void FinishReload() {
         int diff = RangedStats.AmmoPerMag - RangedStats.AmmoInTheMag;
         if (diff > 0) {
@@ -162,11 +171,16 @@ public class WeaponController : MonoBehaviour
         RangedStats.Reloading = false;
     }
 
-    public int Melee(Vector2 origin, Vector2 dir) {
+    public bool CanMelee() {
         if (MeleeStats == null || MeleeStats.TimerForCooldown > 0)
-            return 0;
+            return false;
 
-        int EnemiesHit = 0;
+        return true;
+    }
+
+    public bool Melee(Vector2 origin, Vector2 dir) {
+        if (!CanMelee()) return false;
+
         MeleeStats.TimerForCooldown = MeleeStats.Cooldown;
         LayerMask lm = 1 << owner.gameObject.layer;//get all layers
         lm = ~lm;//reverse, so everything EXCEPT owner
@@ -175,12 +189,11 @@ public class WeaponController : MonoBehaviour
         if (!MeleeStats.isAOE) {
             Collider2D col = Physics2D.OverlapBox(origin, new Vector2(MeleeStats.RadiusX, MeleeStats.RadiusY), Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg, lm);
             if (col == null)
-                return 0;
+                return true;
 
             HealthManager hm = col.gameObject.GetComponent<HealthManager>();
             if (hm != null) {
                 hm.TakeDamage(MeleeStats.Damage, owner);
-                EnemiesHit++;
             }
         }
         else {
@@ -188,12 +201,11 @@ public class WeaponController : MonoBehaviour
                 HealthManager hm = col.gameObject.GetComponent<HealthManager>();
                 if (hm != null) {
                     hm.TakeDamage(MeleeStats.Damage, owner);
-                    EnemiesHit++;
                 }
             }
         }
         
-        return EnemiesHit;
+        return true;
     }
 
     public void ChangeRangedWeapon(RangedWeaponStats newWeaponStat) {
@@ -206,9 +218,6 @@ public class WeaponController : MonoBehaviour
          
             //TODO: use stats of the weapon instance from inventory
             RangedStats = newWeaponStat;
-            //decrease fire rate based on time since last weapon switch. weapons "cool down" while inactive
-            RangedStats.TimerForFireRate -= TimeSinceSwitch;
-            TimeSinceSwitch = 0f;
         }
     }
 
@@ -218,9 +227,6 @@ public class WeaponController : MonoBehaviour
 
         if (Player_Controller.TempMeleeInv.Contains(newWeaponStat)) {
             MeleeStats = newWeaponStat;
-            //decrease fire rate based on time since last weapon switch. weapons "cool down" while inactive
-            MeleeStats.TimerForCooldown -= TimeSinceSwitch;
-            TimeSinceSwitch = 0f;
         }
     }
 
