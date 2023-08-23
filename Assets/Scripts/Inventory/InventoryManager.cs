@@ -12,7 +12,6 @@ public class InventoryManager : MonoBehaviour
 
     public InventorySlot[] inventorySlots;
     public GameObject[] items;
-
     public GameObject inventoryItemPrefab;
 
     private int MaxStackedItems = 20;
@@ -23,12 +22,27 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] GameObject player;
     public GameObject consumeButton;
 
+    [Header("Saving and Loading")]
+    public SO_SavedInvData InvData;
+
     private void Awake() 
     {
         Instance = this;
         Desc_UI_Container.SetActive(false);
         consumeButton.SetActive(false);
     }
+
+    private void Start() {
+        //putting this in awake causes NullReferenceExceptions cuz Player_Controller hasnt been init yet
+        LoadInvSlotData();
+    }
+
+    //TEMP, FOR SAVE TESTING
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.J))
+            SaveInvSlotData();
+    }
+
     public bool addItem(Item _item)
     {
         List<MeleeWeaponData> mwl = Player_Controller.Instance.wc.WeaponList.MeleeWeaponlist;
@@ -279,6 +293,64 @@ public class InventoryManager : MonoBehaviour
         return "";
     }
 
-    
+    public bool SaveInvSlotData() {
+        //clear the data to override
+        InvData.SavedInvSlots.Clear();
+        //for each slot, create new struct and add to the list
+        for (int i=0; i < inventorySlots.Length; i++) {
+            InventoryItem item = inventorySlots[i].GetComponentInChildren<InventoryItem>();
+            //Ternary operator: (x ? if true : if false) - check and fill in empty slots in 1 line
+            InvData.SavedInvSlots.Add(new SavedInvSlot((item==null ? "" : item.item.itemName), (item==null ? 0 : item.count)));
+        }
+        //IMPORTANT: LoadInvSlotData assumes that armour is the last added item. pls change if you modified
+        InventoryItem armour = armorSlot.GetComponentInChildren<InventoryItem>();
+        InvData.SavedInvSlots.Add(new SavedInvSlot((armour == null ? "" : armour.item.itemName), (armour == null ? 0 : 1)));
+
+        return true;
+    }
+
+    public void LoadInvSlotData() {
+        for (int i=0; i < inventorySlots.Length; i++) {
+            if (i >= InvData.SavedInvSlots.Count)
+                break; //in case
+
+            Item item = null;
+            for (int ii=0; ii < items.Length; ii++) {
+                //search for item prefab
+                Item itempickup = items[ii].GetComponent<ItemPickUp>().item;
+                if (itempickup.itemName == InvData.SavedInvSlots[i].ItemName) {
+                    item = itempickup;
+                    break;
+                }
+            }
+            if (item != null) {
+                //add as many items as was recorded to be saved
+                for (int c =0; c < InvData.SavedInvSlots[i].ItemCount; c++)
+                    addItem(item);
+            }
+        }
+
+        //find and equip armour (if wearing)
+        if (InvData.SavedInvSlots.Count - 1 < 0)
+            return;
+        if (InvData.SavedInvSlots[InvData.SavedInvSlots.Count - 1].ItemCount > 0) {
+            //armour was recorded to be equipped, find it
+            for (int j = 0; j < items.Length; j++) {
+                //search for item prefab
+                GameObject itempickup = items[j];
+                Item armour = itempickup.GetComponent<ItemPickUp>().item;
+                //armour should be the last insert into the list
+                if (armour.itemName == InvData.SavedInvSlots[InvData.SavedInvSlots.Count - 1].ItemName) {
+                    //dont instantiate the parent, otherwise the size of the item goes bonkers
+                    GameObject newItemGo = Instantiate(inventoryItemPrefab);
+
+                    InventoryItem inventoryItem = newItemGo.GetComponent<InventoryItem>();
+                    inventoryItem.InitializeItem(armour);
+                    newItemGo.transform.SetParent(armorSlot.transform);
+                    break;
+                }
+            }
+        }
+    }
  
 }

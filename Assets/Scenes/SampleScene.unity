@@ -6147,21 +6147,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c0b4559e6efc2246ad7d5c0eb9d8ad0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnDeathAnimOver:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1333630710}
-        m_TargetAssemblyTypeName: Player_HealthManager, Assembly-CSharp
-        m_MethodName: OnDeathAnimEnd
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   StartMelee:
     m_PersistentCalls:
       m_Calls:
@@ -10034,6 +10019,7 @@ MonoBehaviour:
   armorSlot: {fileID: 1761077585}
   player: {fileID: 1333630704}
   consumeButton: {fileID: 285785665}
+  InvData: {fileID: 11400000, guid: 991202c45ba8df140baccbade8065ad3, type: 2}
 --- !u!4 &2136221740
 Transform:
   m_ObjectHideFlags: 0

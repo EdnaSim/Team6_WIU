@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: ArmyVest
   m_EditorClassIdentifier: 
   itemName: Army Vest
-  type: 4
+  type: 5
   image: {fileID: 21300000, guid: 49e3195f57f4a034683d0dbba101c9b0, type: 3}
   description: 
-  amount: 0
+  amount: 1
   stackable: 0
