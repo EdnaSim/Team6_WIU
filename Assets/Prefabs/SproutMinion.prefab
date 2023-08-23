@@ -152,6 +152,8 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 8
+  spr: {fileID: 7253605109570596117}
+  GFX: {fileID: 7253605109570596116}
   WaitOutOfFOVtime: 5
 --- !u!114 &1343243703
 MonoBehaviour:
@@ -169,6 +171,8 @@ MonoBehaviour:
   MaxHealth: 0
   CurrentHealth: 0
   UI_Hpbar: {fileID: 883164356928622284}
+  OnlyShowBarWhenDamaged: 1
+  TimeToShowHPbar: 2
   DamageMultiplier: 1
   Death: 0
 --- !u!61 &4119924073525433246
@@ -324,6 +328,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7253605109377972924}
     m_Modifications:
+    - target: {fileID: 7559391100258719973, guid: cb8299a9763bba74795eb67097482c52, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -1396791476, guid: 2ae22d306e8b392458bf813b4869231e, type: 3}
+    - target: {fileID: 7559391100258719973, guid: cb8299a9763bba74795eb67097482c52, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7559391100258719973, guid: cb8299a9763bba74795eb67097482c52, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7559391100258719973, guid: cb8299a9763bba74795eb67097482c52, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7559391100258719994, guid: cb8299a9763bba74795eb67097482c52, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -332,6 +352,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7559391100287772307, guid: cb8299a9763bba74795eb67097482c52, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1132717525, guid: 08d1b5cf95f01a0469b1a8e49496bbe3, type: 3}
     - target: {fileID: 7559391101268652864, guid: cb8299a9763bba74795eb67097482c52, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -423,6 +447,10 @@ PrefabInstance:
     - target: {fileID: 7559391101268652876, guid: cb8299a9763bba74795eb67097482c52, type: 3}
       propertyPath: m_SortingOrder
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7559391101805934916, guid: cb8299a9763bba74795eb67097482c52, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.675
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb8299a9763bba74795eb67097482c52, type: 3}

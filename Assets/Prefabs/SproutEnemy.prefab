@@ -263,7 +263,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   FOVradius: 20
-  ATKradius: 1.54
+  ATKradius: 1.84
   targetMask:
     serializedVersion: 2
     m_Bits: 64
@@ -312,7 +312,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b40981723d264e4fa020cb7b0748e66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Base_MaxHealth: 100
+  Base_MaxHealth: 200
   MaxHealth: 0
   CurrentHealth: 0
   UI_Hpbar: {fileID: 8157748894281796}
@@ -327,6 +327,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7562847014486420590}
     m_Modifications:
+    - target: {fileID: 7559391100258719973, guid: cb8299a9763bba74795eb67097482c52, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -1396791476, guid: 2ae22d306e8b392458bf813b4869231e, type: 3}
+    - target: {fileID: 7559391100258719973, guid: cb8299a9763bba74795eb67097482c52, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7559391100258719973, guid: cb8299a9763bba74795eb67097482c52, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7559391100258719973, guid: cb8299a9763bba74795eb67097482c52, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7559391100258719994, guid: cb8299a9763bba74795eb67097482c52, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -335,6 +351,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7559391100287772307, guid: cb8299a9763bba74795eb67097482c52, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1132717525, guid: 08d1b5cf95f01a0469b1a8e49496bbe3, type: 3}
     - target: {fileID: 7559391101268652864, guid: cb8299a9763bba74795eb67097482c52, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -434,6 +454,14 @@ PrefabInstance:
     - target: {fileID: 7559391101268652876, guid: cb8299a9763bba74795eb67097482c52, type: 3}
       propertyPath: m_SortingOrder
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7559391101805934916, guid: cb8299a9763bba74795eb67097482c52, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5375
+      objectReference: {fileID: 0}
+    - target: {fileID: 7559391101805934916, guid: cb8299a9763bba74795eb67097482c52, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.027
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb8299a9763bba74795eb67097482c52, type: 3}

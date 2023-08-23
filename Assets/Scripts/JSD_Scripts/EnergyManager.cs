@@ -14,6 +14,12 @@ public class EnergyManager : MonoBehaviour
 
     public bool CanDrain;
 
+    [Header("UI")]
+    [SerializeField] Slider EnergyBar;
+    Image BarImage;
+    Color originalCol;
+    float LowEnergyFlashTimer;
+
     private void Awake()
     {
         Instance = this;
@@ -24,6 +30,9 @@ public class EnergyManager : MonoBehaviour
         staminaAmt = MaxStaminaAmt;
         StaminaBar.value = staminaAmt / MaxStaminaAmt;
         CanDrain = true;
+
+        BarImage = EnergyBar.fillRect.GetComponent<Image>();
+        originalCol = BarImage.color;
     }
 
     // Update is called once per frame
@@ -31,18 +40,37 @@ public class EnergyManager : MonoBehaviour
     {
         if(CanDrain)
         {
-            LoseEnergy(1f * Time.deltaTime);
+            LoseEnergy(5f * Time.deltaTime);
         }
 
         if(staminaAmt <= 0)
         {
-            Player_HealthManager.Player_hm.TakeDamage(1f, gameObject);
+            Player_HealthManager.Player_hm.TakeDamage(0.01f, gameObject);
+            staminaAmt = 0;
         }
 
-        //if(Input.GetKeyUp(KeyCode.K))
-        //{
-        //    AdrenalineShot();
-        //}
+        if (Input.GetKeyUp(KeyCode.K))
+        {
+            AdrenalineShot();
+        }
+
+        if ((staminaAmt / MaxStaminaAmt) * 100 <= 25)
+        {
+            LowEnergyFlashTimer += Time.deltaTime;
+            if (LowEnergyFlashTimer >= (staminaAmt / MaxStaminaAmt))
+            {
+                BarImage.color = new Color(0.45f, 0.55f, 0.568f, 1);
+            }
+            if (LowEnergyFlashTimer > (staminaAmt / MaxStaminaAmt) * 2)
+            {
+                BarImage.color = originalCol;
+                LowEnergyFlashTimer = 0f;
+            }
+        }
+        else
+        {
+            BarImage.color = originalCol;
+        }
     }
 
     public void LoseEnergy(float energyloss)
@@ -61,6 +89,10 @@ public class EnergyManager : MonoBehaviour
     {
         if(CanDrain)
         {
+            //BarImage.color = new Color(0.45f, 0.55f, 0.568f, 1);
+            BarImage.color = new Color(1f, 0.84f, 0f, 1);
+            EnergyRecover(75f);
+            PlayerData.CurrSanity += 20f;
             Player_HealthManager.Player_hm.ChangeDamageModifier(-0.5f);
             Player_HealthManager.Player_hm.Heal(25f);
             Player_Controller.Instance.MovementSpeed += 25f;
@@ -74,6 +106,7 @@ public class EnergyManager : MonoBehaviour
         yield return new WaitForSeconds(5f);
         Player_HealthManager.Player_hm.ChangeDamageModifier(+0.5f);
         Player_Controller.Instance.MovementSpeed = Player_Controller.Instance.Base_MovementSpeed;
+        BarImage.color = originalCol;
         CanDrain = true;
     }
 }

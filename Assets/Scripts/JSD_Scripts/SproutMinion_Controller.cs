@@ -1,6 +1,7 @@
 using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SproutMinion_Controller : MonoBehaviour
@@ -35,6 +36,10 @@ public class SproutMinion_Controller : MonoBehaviour
     public LayerMask obstacleMask;
 
     private AIDestinationSetter SproutMinionAItarget;
+
+    public SpriteRenderer spr;
+
+    public GameObject GFX;
 
     [SerializeField] 
     protected float WaitOutOfFOVtime = 2f; //default time till "give up"
@@ -72,6 +77,7 @@ public class SproutMinion_Controller : MonoBehaviour
         DestSetter = GetComponent<AIDestinationSetter>();
         healthManager = GetComponent<HealthManager>();
         boxCollider = GetComponent<BoxCollider2D>();
+        spr = GFX.GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -151,6 +157,7 @@ public class SproutMinion_Controller : MonoBehaviour
         {
             if (!StartDeathTimer)
             {
+                StartCoroutine(DamageFlash());
                 isDead = true;
                 anim.SetBool("IsDead", true);
                 anim.SetTrigger("Die");
@@ -349,6 +356,13 @@ public class SproutMinion_Controller : MonoBehaviour
     {
         yield return new WaitForSeconds(15f);
         ChangeState(State.DEATH);
+    }
+
+    public IEnumerator DamageFlash()
+    {
+        spr.color = Color.white;
+        yield return new WaitForSeconds(0.5f);
+        spr.color = Color.white;
     }
 
     private void OnDrawGizmos()

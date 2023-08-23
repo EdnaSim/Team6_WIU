@@ -172,7 +172,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d06b842bd42e9bc4d8ed7706eaae4309, type: 2}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -194,7 +194,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.64705884}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -397,10 +397,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b40981723d264e4fa020cb7b0748e66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Base_MaxHealth: 1000
+  Base_MaxHealth: 500
   MaxHealth: 0
   CurrentHealth: 0
   UI_Hpbar: {fileID: 5676049467368160723}
+  OnlyShowBarWhenDamaged: 1
+  TimeToShowHPbar: 2
   DamageMultiplier: 1
   Death: 0
 --- !u!1001 &2750919600532227220
@@ -410,6 +412,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2750919601040052954}
     m_Modifications:
+    - target: {fileID: 7559391100258719973, guid: cb8299a9763bba74795eb67097482c52, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1879153788, guid: 2ae22d306e8b392458bf813b4869231e, type: 3}
     - target: {fileID: 7559391100258719973, guid: cb8299a9763bba74795eb67097482c52, type: 3}
       propertyPath: m_Color.b
       value: 0
@@ -430,6 +436,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7559391100287772307, guid: cb8299a9763bba74795eb67097482c52, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1132717525, guid: 08d1b5cf95f01a0469b1a8e49496bbe3, type: 3}
     - target: {fileID: 7559391100287772307, guid: cb8299a9763bba74795eb67097482c52, type: 3}
       propertyPath: m_Color.b
       value: 1

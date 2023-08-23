@@ -34,7 +34,10 @@ public class Player_HealthManager : HealthManager
             UI_Hpbar.UpdateSlider();
 
         //damage effects (sanity drain, pet attack etc)
-        Player_Controller.Instance.OnHitByEnemy(attacker);
+        if(attacker.GetComponent<EnergyManager>() == null) 
+        {
+            Player_Controller.Instance.OnHitByEnemy(attacker);
+        }
     }
 
     public override void Heal(float amt) {
@@ -47,7 +50,7 @@ public class Player_HealthManager : HealthManager
 
     public override void OnDeath() {
         PlayerData.CurrHP = 0;
-        UI_Hpbar.SetBarDisplay(false);
+        //UI_Hpbar.SetBarDisplay(false);
         Death = true;
         //play death anim
         if (ar != null)
