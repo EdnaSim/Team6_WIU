@@ -14,7 +14,7 @@ public class InventoryManager : MonoBehaviour
     public GameObject[] items;
     public GameObject inventoryItemPrefab;
 
-    private int MaxStackedItems = 20;
+    [HideInInspector] public int MaxStackedItems = 20;
 
     public ItemStats[] itemStats;
 
@@ -232,7 +232,6 @@ public class InventoryManager : MonoBehaviour
                 {
                     Destroy(slot.transform.GetChild(0).gameObject);
                 }
-
             }
 
         }

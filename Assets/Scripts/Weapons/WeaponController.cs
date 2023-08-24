@@ -237,10 +237,12 @@ public class WeaponController : MonoBehaviour
     public void SaveLists() {
         InvData.SavedRangedWeapons = OwnedRangedList;
         InvData.SavedMeleeWeapons = OwnedMeleeList;
+        InvData.EquippedArmour = ArmourDetails.Instance.EquippedArmour;
     }
 
     public void LoadLists() {
         OwnedRangedList = InvData.SavedRangedWeapons;
         OwnedMeleeList = InvData.SavedMeleeWeapons;
+        ArmourDetails.Instance.EquipArmour(InvData.EquippedArmour);
     }
 }

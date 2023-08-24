@@ -8,6 +8,7 @@ public class Player_HealthManager : HealthManager
 
     private void Awake() {
         Instance = this;
+        AccumulatedDM = DamageMultiplier;
     }
 
     // Start is called before the first frame update
@@ -19,7 +20,6 @@ public class Player_HealthManager : HealthManager
             PlayerData.CurrHP = PlayerData.MaxHp;
 
         UI_Hpbar.UpdateSlider();
-        AccumulatedDM = DamageMultiplier;
     }
 
     protected override void Update() {

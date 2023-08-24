@@ -18,7 +18,8 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     GameObject consumeButton;
 
     [HideInInspector] public Transform parentAfterDrag;
-
+    [HideInInspector] public bool CheckIfStack = false;
+    [HideInInspector] public Transform PrevParentAfterDrag;
 
     private void Start()
     {
@@ -46,7 +47,12 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        GetComponent<CanvasGroup>().blocksRaycasts = false;
+        for (int i=0; i < inventorySlots.Length; i++) {
+            InventoryItem invi = inventorySlots[i].GetComponentInChildren<InventoryItem>();
+            if (invi == null) continue;
+            invi.GetComponent<CanvasGroup>().blocksRaycasts = false;
+        }
+        //GetComponent<CanvasGroup>().blocksRaycasts = false;
         image.raycastTarget = false;
         parentAfterDrag = transform.parent;
         transform.SetParent(transform.root);
@@ -60,14 +66,35 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        Debug.Log("OnEndDrag");
-        GetComponent<CanvasGroup>().blocksRaycasts = true;
+        for (int i = 0; i < inventorySlots.Length; i++) {
+            InventoryItem invi = inventorySlots[i].GetComponentInChildren<InventoryItem>();
+            if (invi == null) continue;
+            invi.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        }
+        GetComponent<CanvasGroup>().blocksRaycasts = true; //this one is not set in the for loop
         image.raycastTarget = true;
-        //for(int i=0; i < inventorySlots.Length; i++) {
-        //    if (inventorySlots[i].transform == parentAfterDrag && item == parentAfterDrag.GetComponentInChildren<InventoryItem>().item)){
-        //    Debug.Log("")
-        //}
-        
+        if (CheckIfStack) {
+            for (int i = 0; i < inventorySlots.Length; i++) {
+                //dropped on a slot that already has an item
+                if (inventorySlots[i].transform == PrevParentAfterDrag) {
+                    //check if same as the existing item
+                    InventoryItem itemInSlot = inventorySlots[i].GetComponentInChildren<InventoryItem>();
+                    if (itemInSlot != null && item.itemName == itemInSlot.item.itemName) {
+                        for (int ii = 0; ii < count; ii++) {
+                            if (itemInSlot.count < InventoryManager.Instance.MaxStackedItems
+                                && itemInSlot.item.stackable) {
+                                itemInSlot.count++;
+                                itemInSlot.updateCount();
+                                Destroy(gameObject);
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+            CheckIfStack = false;
+        }
+
         transform.SetParent(parentAfterDrag);
 
         //if the armour is equipped, and now dragging off the armour slot

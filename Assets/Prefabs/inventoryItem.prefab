@@ -310,8 +310,9 @@ MonoBehaviour:
   count: 1
   indicator: {fileID: 3861659355220128494}
   selected: 0
-  consumeButton: {fileID: 7486824017777486205, guid: 6b1bd7712da5e6d4888c6c86e30cae2d, type: 3}
   parentAfterDrag: {fileID: 0}
+  CheckIfStack: 0
+  PrevParentAfterDrag: {fileID: 0}
 --- !u!114 &3679492848427497305
 MonoBehaviour:
   m_ObjectHideFlags: 0

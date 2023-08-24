@@ -19,6 +19,8 @@ public class ArmourDetails : MonoBehaviour
         Instance = this;
     }
     public void EquipArmour(Item armour) {
+        if (armour == null) return;
+
         EquippedArmour = armour;
 
         switch (armour.itemName) {

@@ -5,7 +5,6 @@ using UnityEngine;
 [CreateAssetMenu]
 public class Item : ScriptableObject
 {
-
     public enum itemType
     {
         ores,

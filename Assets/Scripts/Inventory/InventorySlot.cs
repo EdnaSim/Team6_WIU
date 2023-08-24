@@ -8,10 +8,15 @@ public class InventorySlot : MonoBehaviour, IDropHandler
 {
     public void OnDrop(PointerEventData eventData)
     {
+        InventoryItem inventoryItem = eventData.pointerDrag.GetComponent<InventoryItem>();
         if (transform.childCount == 0)
         {
-            InventoryItem inventoryItem = eventData.pointerDrag.GetComponent<InventoryItem>();
+            inventoryItem.CheckIfStack = false;
             inventoryItem.parentAfterDrag = transform;
+        }
+        else {
+            inventoryItem.CheckIfStack = true;
+            inventoryItem.PrevParentAfterDrag = transform;
         }
     }
 
