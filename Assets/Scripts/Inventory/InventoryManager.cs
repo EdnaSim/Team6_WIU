@@ -39,24 +39,24 @@ public class InventoryManager : MonoBehaviour
 
     //TEMP, FOR SAVE TESTING
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.J))
+        if (Input.GetKeyDown(KeyCode.J)) {
             SaveInvSlotData();
+            WeaponController.Instance.SaveLists();
+        }
     }
 
     public bool addItem(Item _item)
     {
         List<MeleeWeaponData> mwl = Player_Controller.Instance.wc.WeaponList.MeleeWeaponlist;
         List<RangedWeaponData> rwl = Player_Controller.Instance.wc.WeaponList.RangedWeaponList;
-        for (int i = 0; i < inventorySlots.Length; i++)
-        {
+        for (int i = 0; i < inventorySlots.Length; i++) {
             InventorySlot slot = inventorySlots[i];
             InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
             if (itemInSlot != null
                 && itemInSlot.item == _item
                 && itemInSlot.count < MaxStackedItems
-                && itemInSlot.item.stackable == true)
-            {
-                
+                && itemInSlot.item.stackable == true) {
+
                 itemInSlot.count++;
                 itemInSlot.updateCount();
                 return true;
@@ -293,32 +293,32 @@ public class InventoryManager : MonoBehaviour
         return "";
     }
 
-    public bool SaveInvSlotData() {
-        //clear the data to override
+    public void SaveInvSlotData() {
+        //clear the data
         InvData.SavedInvSlots.Clear();
         //for each slot, create new struct and add to the list
         for (int i=0; i < inventorySlots.Length; i++) {
             InventoryItem item = inventorySlots[i].GetComponentInChildren<InventoryItem>();
             //Ternary operator: (x ? if true : if false) - check and fill in empty slots in 1 line
-            InvData.SavedInvSlots.Add(new SavedInvSlot((item==null ? "" : item.item.itemName), (item==null ? 0 : item.count)));
+            InvData.SavedInvSlots.Add(new SavedInvSlot(item==null ? "" : item.item.itemName, item==null ? 0 : item.count));
         }
         //IMPORTANT: LoadInvSlotData assumes that armour is the last added item. pls change if you modified
         InventoryItem armour = armorSlot.GetComponentInChildren<InventoryItem>();
-        InvData.SavedInvSlots.Add(new SavedInvSlot((armour == null ? "" : armour.item.itemName), (armour == null ? 0 : 1)));
-
-        return true;
+        InvData.SavedInvSlots.Add(new SavedInvSlot(armour == null ? "" : armour.item.itemName, armour == null ? 0 : 1));
     }
 
+    //loads items in the slots based on their index in the SavedInvSlots list.
     public void LoadInvSlotData() {
         for (int i=0; i < inventorySlots.Length; i++) {
             if (i >= InvData.SavedInvSlots.Count)
-                break; //in case
+                break;
 
             Item item = null;
             for (int ii=0; ii < items.Length; ii++) {
                 //search for item prefab
                 Item itempickup = items[ii].GetComponent<ItemPickUp>().item;
                 if (itempickup.itemName == InvData.SavedInvSlots[i].ItemName) {
+                    //found, break out of loop
                     item = itempickup;
                     break;
                 }
@@ -333,7 +333,8 @@ public class InventoryManager : MonoBehaviour
         //find and equip armour (if wearing)
         if (InvData.SavedInvSlots.Count - 1 < 0)
             return;
-        if (InvData.SavedInvSlots[InvData.SavedInvSlots.Count - 1].ItemCount > 0) {
+        //IMPORTANT: assumes the armour was the last added item (count - 1)
+        if (InvData.SavedInvSlots[InvData.SavedInvSlots.Count - 1].ItemCount > 0) { //if have armour in armourSlot
             //armour was recorded to be equipped, find it
             for (int j = 0; j < items.Length; j++) {
                 //search for item prefab

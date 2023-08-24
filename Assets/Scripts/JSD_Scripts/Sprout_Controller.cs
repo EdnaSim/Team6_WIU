@@ -178,7 +178,7 @@ public class Sprout_Controller : MonoBehaviour
             //Switch to Cooldown
             if (!StartATKTimer)
             {
-                Player_HealthManager.Player_hm.TakeDamage(20f, gameObject);
+                Player_HealthManager.Instance.TakeDamage(20f, gameObject);
                 StartATKTimer = true;
                 StartCoroutine(AttackCooldown());
             }

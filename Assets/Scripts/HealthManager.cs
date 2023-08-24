@@ -24,6 +24,7 @@ public class HealthManager : MonoBehaviour
 
     [Header("Modifiers")]
     public float DamageMultiplier = 1;
+    protected float AccumulatedDM;
 
     [HideInInspector] public bool Death = false;
     protected GameObject killer;
@@ -41,6 +42,7 @@ public class HealthManager : MonoBehaviour
         ar = transform.GetComponentInChildren<Animator>();
 
         killer = null;
+        AccumulatedDM = DamageMultiplier;
     }
     protected virtual void Update() {
         if (OnlyShowBarWhenDamaged) {
@@ -83,11 +85,16 @@ public class HealthManager : MonoBehaviour
         //UI_Hpbar.UpdateSlider();
     }
 
-    public void ChangeDamageModifier(float amt) {
+    public void ChangeDamageMultiplier(float byAmt) {
         // +ve: take more damage
         // -ve: take less damage
-        DamageMultiplier += amt;
-        if (DamageMultiplier < 0)
+
+        //using AccumulatedDM since there may be multiple sources of DM acting at once,
+        //.. so need to record all of it instead of starting from 0 (cuz DM must not be < 0)
+        AccumulatedDM += byAmt;
+        DamageMultiplier = AccumulatedDM;
+        //DM must not go below 0
+        if (AccumulatedDM < 0)
             DamageMultiplier = 0;
     }
 

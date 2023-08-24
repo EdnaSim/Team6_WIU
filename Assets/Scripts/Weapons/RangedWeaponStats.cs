@@ -16,10 +16,6 @@ public class RangedWeaponStats
     public float FallOffDist; //dist to start damage falloff
 
     [Header("Ammo")]
-    [Tooltip("Current ammo in the inventory")]
-    public int TotalStoredAmmo; //TEMP, USE GetAmmo FROM RACHEL
-    [Tooltip("Total ammo of this type that can be carried in inventory")]
-    public int MaxAmmo;
     [Tooltip("Ammo currently in the magazine. Once this number reaches 0, need to reload. Not counted as in the inventory")]
     public int AmmoInTheMag;
     [Tooltip("How many bullets that can be fired before needing to reload")]
@@ -58,8 +54,6 @@ public class RangedWeaponStats
         ProjSpeed = 10;
         FallOffDist = 5;
 
-        TotalStoredAmmo = 0;
-        MaxAmmo = 100;
         AmmoPerMag = 10;
         AmmoInTheMag = 0;
         ReloadTime = 1.5f;
@@ -90,8 +84,6 @@ public class RangedWeaponStats
         ProjSpeed = copy.ProjSpeed;
         FallOffDist = copy.FallOffDist;
 
-        TotalStoredAmmo = copy.TotalStoredAmmo;
-        MaxAmmo = copy.MaxAmmo;
         AmmoPerMag = copy.AmmoPerMag;
         AmmoInTheMag = copy.AmmoInTheMag;
         ReloadTime = copy.ReloadTime;

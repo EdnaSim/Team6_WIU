@@ -60,9 +60,20 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        Debug.Log("OnEndDrag");
         GetComponent<CanvasGroup>().blocksRaycasts = true;
         image.raycastTarget = true;
+        //for(int i=0; i < inventorySlots.Length; i++) {
+        //    if (inventorySlots[i].transform == parentAfterDrag && item == parentAfterDrag.GetComponentInChildren<InventoryItem>().item)){
+        //    Debug.Log("")
+        //}
+        
         transform.SetParent(parentAfterDrag);
+
+        //if the armour is equipped, and now dragging off the armour slot
+        if (item == ArmourDetails.Instance.EquippedArmour && parentAfterDrag != InventoryManager.Instance.armorSlot.transform) {
+            ArmourDetails.Instance.UnequipArmour();
+        }
     }
 
     public void showDescription()

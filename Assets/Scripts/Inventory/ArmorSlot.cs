@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 
 public class ArmorSlot : MonoBehaviour, IDropHandler
 {
-    
     public void OnDrop(PointerEventData eventData)
     {
         if (transform.childCount == 0 )
@@ -14,10 +13,9 @@ public class ArmorSlot : MonoBehaviour, IDropHandler
             if (inventoryItem.item.type == Item.itemType.equipment)
             {
                 inventoryItem.parentAfterDrag = transform;
+                ArmourDetails.Instance.EquipArmour(inventoryItem.item);
             }
-            
         }
-        
     }
 
     public string getArmorName()
@@ -29,6 +27,4 @@ public class ArmorSlot : MonoBehaviour, IDropHandler
         }
         return "";
     }
-
-    
 }

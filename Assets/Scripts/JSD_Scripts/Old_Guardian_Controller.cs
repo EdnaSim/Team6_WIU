@@ -312,7 +312,7 @@ public class Old_Guardian_Controller : MonoBehaviour
     IEnumerator AttackTimer()
     {
         yield return new WaitForSeconds(0.75f);
-        Player_HealthManager.Player_hm.TakeDamage(10f, gameObject);
+        Player_HealthManager.Instance.TakeDamage(10f, gameObject);
         Debug.Log("PlayerDamaged");
         StartATKTimer = false;
         isAttacking = false;

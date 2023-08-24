@@ -6,16 +6,16 @@ using TMPro;
 //weapon class that holds what proj it fires
 public class WeaponController : MonoBehaviour
 {
+    public static WeaponController Instance;
     public GameObject owner;
     public SO_WeaponList WeaponList;
+    public SO_SavedInvData InvData;
 
     [Header("Projectile")]
-    [SerializeField] RangedWeaponData BaseRangedData; //starting weapon type, DO NOT MODIFY BASEDATA.STATS
-    public RangedWeaponStats RangedStats; //MODIFY THIS
+    public RangedWeaponStats RangedStats;
     public static List<RangedWeaponStats> OwnedRangedList;
 
     [Header("Melee")]
-    [SerializeField] MeleeWeaponData BaseMeleeData;
     public MeleeWeaponStats MeleeStats;
     public static List<MeleeWeaponStats> OwnedMeleeList;
 
@@ -25,20 +25,15 @@ public class WeaponController : MonoBehaviour
     float ReloadFlashTimer = 0;
 
     private void Awake() {
+        Instance = this;
+    }
+    private void Start() {
         if (owner == null) {
             owner = gameObject;
         }
         OwnedRangedList = new List<RangedWeaponStats>();
         OwnedMeleeList = new List<MeleeWeaponStats>();
-        //get stats from the base weapon type, as a copy.
-        if (BaseRangedData != null) {
-            RangedStats = new RangedWeaponStats(BaseRangedData.Stats);
-            OwnedRangedList.Add(RangedStats);
-        }
-        if (BaseMeleeData != null) {
-            MeleeStats = new MeleeWeaponStats(BaseMeleeData.Stats);
-            OwnedMeleeList.Add(MeleeStats);
-        }
+        LoadLists();
 
         ReloadingText.enabled = false;
         NoAmmoText.enabled = false;
@@ -231,12 +226,21 @@ public class WeaponController : MonoBehaviour
         }
     }
 
-    //TEMP, should be controlled by inventory
     public void AddRangedWeapon(RangedWeaponStats stat) {
         //add copy
         OwnedRangedList.Add(new RangedWeaponStats(stat));
     }
     public void AddMeleeWeapon(MeleeWeaponStats stat) {
         OwnedMeleeList.Add(new MeleeWeaponStats(stat));
+    }
+
+    public void SaveLists() {
+        InvData.SavedRangedWeapons = OwnedRangedList;
+        InvData.SavedMeleeWeapons = OwnedMeleeList;
+    }
+
+    public void LoadLists() {
+        OwnedRangedList = InvData.SavedRangedWeapons;
+        OwnedMeleeList = InvData.SavedMeleeWeapons;
     }
 }

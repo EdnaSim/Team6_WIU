@@ -191,7 +191,7 @@ public class SproutMinion_Controller : MonoBehaviour
             //Switch to Cooldown
             if (!StartATKTimer)
             {
-                Player_HealthManager.Player_hm.TakeDamage(3f, gameObject);
+                Player_HealthManager.Instance.TakeDamage(3f, gameObject);
                 StartATKTimer = true;
                 StartCoroutine(AttackCooldown());
             }

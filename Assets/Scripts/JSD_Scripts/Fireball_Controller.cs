@@ -39,7 +39,7 @@ public class Fireball_Controller : MonoBehaviour
         if(collision.gameObject.tag == "Player")
         {
             anim.Play("Fireball_Explosion");
-            Player_HealthManager.Player_hm.TakeDamage(5f, gameObject);
+            Player_HealthManager.Instance.TakeDamage(5f, gameObject);
             Destroy(gameObject, 0.6f);
         }
     }

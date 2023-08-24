@@ -62,7 +62,7 @@ public class Player_Controller : MonoBehaviour
     void Update()
     {
         //stuff that cant be done when paused
-        if (!isPaused || !Player_HealthManager.Player_hm.Death) {
+        if (!isPaused || !Player_HealthManager.Instance.Death) {
             //get input for moving
             MoveDir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
             //holding down sprint key

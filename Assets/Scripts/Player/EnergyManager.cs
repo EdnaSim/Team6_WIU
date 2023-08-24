@@ -38,7 +38,7 @@ public class EnergyManager : MonoBehaviour
 
         if(staminaAmt <= 0)
         {
-            Player_HealthManager.Player_hm.TakeDamage(1f, gameObject);
+            Player_HealthManager.Instance.TakeDamage(1f, gameObject);
         }
     }
 
@@ -61,8 +61,8 @@ public class EnergyManager : MonoBehaviour
     {
         if(CanDrain)
         {
-            Player_HealthManager.Player_hm.ChangeDamageModifier(-0.5f);
-            Player_HealthManager.Player_hm.Heal(25f);
+            Player_HealthManager.Instance.ChangeDamageMultiplier(-0.5f);
+            Player_HealthManager.Instance.Heal(25f);
             Player_Controller.Instance.MovementSpeed += 25f;
             StartCoroutine(InvulnerableTimer());
             CanDrain = false;
@@ -72,7 +72,7 @@ public class EnergyManager : MonoBehaviour
     IEnumerator InvulnerableTimer()
     {
         yield return new WaitForSeconds(5f);
-        Player_HealthManager.Player_hm.ChangeDamageModifier(+0.5f);
+        Player_HealthManager.Instance.ChangeDamageMultiplier(+0.5f);
         Player_Controller.Instance.MovementSpeed = Player_Controller.Instance.Base_MovementSpeed;
         CanDrain = true;
     }

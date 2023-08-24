@@ -32,8 +32,8 @@ public class Pet_Bird : Pet
         }
         else {
             regenTimer = 0f;
-            if (Player_HealthManager.Player_hm != null)
-                Player_HealthManager.Player_hm.Heal(RegenAmount);
+            if (Player_HealthManager.Instance != null)
+                Player_HealthManager.Instance.Heal(RegenAmount);
         }
     }
 }
