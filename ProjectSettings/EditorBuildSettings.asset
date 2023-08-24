@@ -5,7 +5,37 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/MapScene.unity
+    guid: 801ec43590354e545846106ac1f1e53b
+  - enabled: 1
+    path: Assets/Scenes/Base.unity
+    guid: 323527ddb18aabd46bc1627d481b710a
+  - enabled: 1
+    path: Assets/Scenes/GroceryStore.unity
+    guid: 1a9b3e641ca1e7e45955e497189c93b1
+  - enabled: 1
+    path: Assets/Scenes/Farm.unity
+    guid: 92705272c675fa042a3b0e85fd6af030
+  - enabled: 1
+    path: Assets/Scenes/HardwareStore.unity
+    guid: 5927e3781fc3374469a6f4d68d23e3c5
+  - enabled: 1
+    path: Assets/Scenes/HighSchool.unity
+    guid: 202f7e77429a72b418b2bd1f40fa424d
+  - enabled: 1
+    path: Assets/Scenes/MilitaryCheckpoint.unity
+    guid: 53a4550b4dbe83d4f8d2bd73329edd9b
+  - enabled: 1
+    path: Assets/Scenes/Pharmacy.unity
+    guid: c9913cccf0bcba449bce3d782cf259b7
+  - enabled: 1
+    path: Assets/Scenes/PoliceStation.unity
+    guid: 534aa327cda316243958940cc03bcafd
+  - enabled: 1
+    path: Assets/Scenes/Trader.unity
+    guid: 549bbbb8d6487fc49b9cd9f8a9420861
   m_configObjects: {}

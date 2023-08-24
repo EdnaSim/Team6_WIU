@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f87e25102c1e034096a9d24540c7e3d, type: 3}
+  m_Name: Travel_OnHorse
+  m_EditorClassIdentifier: 
+  BaseToFarm: 1.5
+  BaseToGroceryStore: 0.5
+  BaseToPoliceStation: 0.75
+  BaseToHardwareStore: 1
+  BaseToPharmacy: 1
+  BaseToMilitaryCheckpoint: 1.5
+  BaseToHighSchool: 1.5
+  BaseToTrader: 1.25
+  FarmToBase: 1.5
+  FarmToGroceryStore: 2
+  FarmToPoliceStation: 2.25
+  FarmToHardwareStore: 2.5
+  FarmToPharmacy: 2.5
+  FarmToMilitaryCheckpoint: 3
+  FarmToHighSchool: 1.5
+  FarmToTrader: 2
+  GroceryStoreToBase: 0.5
+  GroceryStoreToFarm: 2
+  GroceryStoreToPoliceStation: 0.25
+  GroceryStoreToHardwareStore: 0.5
+  GroceryStoreToPharmacy: 0.5
+  GroceryStoreToMilitaryCheckpoint: 1
+  GroceryStoreToHighSchool: 1
+  GroceryStoreToTrader: 1
+  PoliceStationToBase: 0.75
+  PoliceStationToFarm: 2.25
+  PoliceStationToGroceryStore: 0.25
+  PoliceStationToHardwareStore: 0.75
+  PoliceStationToPharmacy: 0.5
+  PoliceStationToMilitaryCheckpoint: 1
+  PoliceStationToHighSchool: 1.25
+  PoliceStationToTrader: 0.75
+  HardwareStoreToBase: 1
+  HardwareStoreToFarm: 2.5
+  HardwareStoreToGroceryStore: 0.5
+  HardwareStoreToPoliceStation: 0.75
+  HardwareStoreToPharmacy: 0.25
+  HardwareStoreToMilitaryCheckpoint: 0.75
+  HardwareStoreToHighSchool: 1.25
+  HardwareStoreToTrader: 1.5
+  PharmacyToBase: 1
+  PharmacyToFarm: 2.5
+  PharmacyToGroceryStore: 0.5
+  PharmacyToPoliceStation: 0.5
+  PharmacyToHardwareStore: 0.25
+  PharmacyToMilitaryCheckpoint: 0.5
+  PharmacyToHighSchool: 1.5
+  PharmacyToTrader: 1.25
+  MilitaryCheckpointToBase: 1.5
+  MilitaryCheckpointToFarm: 3
+  MilitaryCheckpointToGroceryStore: 1
+  MilitaryCheckpointToPoliceStation: 1
+  MilitaryCheckpointToHardwareStore: 0.75
+  MilitaryCheckpointToPharmacy: 0.5
+  MilitaryCheckpointToHighSchool: 2
+  MilitaryCheckpointToTrader: 1.5
+  HighSchoolToBase: 1.5
+  HighSchoolToFarm: 1.5
+  HighSchoolToGroceryStore: 1
+  HighSchoolToPoliceStation: 1.25
+  HighSchoolToHardwareStore: 1.25
+  HighSchoolToPharmacy: 1.5
+  HighSchoolToMilitaryCheckpoint: 2
+  HighSchoolToTrader: 2
+  TraderToBase: 1.25
+  TraderToFarm: 2
+  TraderToGroceryStore: 1
+  TraderToPoliceStation: 0.75
+  TraderToHardwareStore: 1.5
+  TraderToPharmacy: 1.25
+  TraderToMilitaryCheckpoint: 1.5
+  TraderToHighSchool: 2
