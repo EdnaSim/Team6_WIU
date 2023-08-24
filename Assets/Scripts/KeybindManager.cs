@@ -19,10 +19,30 @@ public class KeybindManager : MonoBehaviour
     private Color32 normal = new Color32(39, 171, 249, 255);
     private Color32 selected = new Color32(239, 116, 36, 255);
 
-    private void Start()
+    private void Awake()
     {
+        //PlayerPrefs.DeleteAll();
         // Load default and saved key bindings
         LoadDefaultKeys();
+
+        foreach (var keyButton in keyButtons)
+        {
+            if (System.Enum.IsDefined(typeof(KeyCode), PlayerPrefs.GetString(keyButton.name)) == false)
+            {
+                PlayerPrefs.SetString(keyButton.name, defaultKeys[keyButton.name].ToString());
+                string keyText = PlayerPrefs.GetString(keyButton.name);
+                
+                if (System.Enum.TryParse(keyText, out KeyCode parsedKeyCode))
+                {
+                    // Use the loadedKey variable
+                    KeyCode loadedKey = parsedKeyCode;
+                }
+                else
+                {
+                    Debug.Log("Failed to parse KeyCode: " + keyText);
+                }
+            }
+        }   
         LoadKeys();
     }
 
