@@ -47,8 +47,8 @@ public class InventoryManager : MonoBehaviour
 
     public bool addItem(Item _item)
     {
-        List<MeleeWeaponData> mwl = Player_Controller.Instance.wc.WeaponList.MeleeWeaponlist;
-        List<RangedWeaponData> rwl = Player_Controller.Instance.wc.WeaponList.RangedWeaponList;
+        List<MeleeWeaponData> mwl = WeaponController.Instance.WeaponList.MeleeWeaponlist;
+        List<RangedWeaponData> rwl = WeaponController.Instance.WeaponList.RangedWeaponList;
         for (int i = 0; i < inventorySlots.Length; i++) {
             InventorySlot slot = inventorySlots[i];
             InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
