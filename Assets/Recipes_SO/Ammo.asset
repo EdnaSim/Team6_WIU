@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d685b022d60e05469bc5abc47ae06c0, type: 3}
+  m_Name: Ammo
+  m_EditorClassIdentifier: 
+  firstMaterial: {fileID: 11400000, guid: 90cc09c5aee01c8428c646c370fcd1a4, type: 2}
+  secondMaterial: {fileID: 11400000, guid: c0ece1b2b9dbda248b8a3d4736b8c6c0, type: 2}
+  finalMaterial: {fileID: 11400000, guid: 7e3efb43da895894283da4f122e3b7e2, type: 2}
+  amtOfFirst: 1
+  amtOfSecond: 3
+  amtOfFinal: 16

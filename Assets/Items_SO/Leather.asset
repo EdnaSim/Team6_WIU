@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Leather
   type: 1
   image: {fileID: 787349585, guid: c1895e08fcf5de5428b0e19972603722, type: 3}
-  description: 'Oo, animal skin!
+  description: 'A piece of animal skin.
 
     Craft a Leather Vest with this.'
   amount: 0

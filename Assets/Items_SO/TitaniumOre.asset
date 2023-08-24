@@ -15,9 +15,7 @@ MonoBehaviour:
   itemName: Titanium Ore
   type: 0
   image: {fileID: 1480984203, guid: c1895e08fcf5de5428b0e19972603722, type: 3}
-  description: 'Shiny Silver Rock
-
-    Craft this with the same ores to get Titanium
-    Ingot.'
+  description: "Yes, it's titanium. \nCraft this with the same ores to get Titanium
+    Ingot."
   amount: 0
   stackable: 1

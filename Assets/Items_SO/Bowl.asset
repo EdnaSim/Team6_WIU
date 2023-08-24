@@ -15,8 +15,9 @@ MonoBehaviour:
   itemName: Bowl
   type: 1
   image: {fileID: 21300000, guid: f24702ef4810d2f4392ab8f29d30aad6, type: 3}
-  description: 'To store cooked soup.
+  description: 'A bowl for making soup with.
 
-    Use this with items to make soup.'
+    Craft with different foods to create
+    different soups.'
   amount: 0
   stackable: 0

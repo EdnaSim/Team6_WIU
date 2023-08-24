@@ -15,8 +15,9 @@ MonoBehaviour:
   itemName: Mushroom Soup
   type: 2
   image: {fileID: 21300000, guid: fd183604599db8e4dbe63db313622a5c, type: 3}
-  description: 'Taste funny.
+  description: 'Doesn''t leave "mushroom" for critique.
 
-    Consume this to regain health.'
+    Consume this to regain
+    health.'
   amount: 0
   stackable: 0

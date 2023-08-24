@@ -15,6 +15,9 @@ MonoBehaviour:
   itemName: Civilian Vest
   type: 4
   image: {fileID: 21300000, guid: c90f2b16d41b728478d23fa2b79ec6cc, type: 3}
-  description: 
+  description: 'An armor vest for paranoid civilians.
+
+    Equip it to reduce any
+    damage taken.'
   amount: 0
   stackable: 0

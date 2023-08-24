@@ -15,6 +15,6 @@ MonoBehaviour:
   itemName: Meteorite
   type: 1
   image: {fileID: -544884222, guid: c1895e08fcf5de5428b0e19972603722, type: 3}
-  description: 
+  description: Shiny Space Stone!
   amount: 0
   stackable: 1

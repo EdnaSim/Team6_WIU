@@ -15,6 +15,9 @@ MonoBehaviour:
   itemName: Steel Dagger
   type: 3
   image: {fileID: 21300000, guid: aa9d8bffcb33e2d468c6ab6c271d8a20, type: 3}
-  description: 
+  description: 'Your old dagger, upgraded with a steel blade.
+
+    Fast attacking
+    speed but deals less damage than most weapons.'
   amount: 0
   stackable: 0

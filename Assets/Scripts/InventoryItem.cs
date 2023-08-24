@@ -48,8 +48,14 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         GetComponent<CanvasGroup>().blocksRaycasts = false;
         image.raycastTarget = false;
+        if (transform.parent.gameObject.tag == "finalProduct")
+        {
+            Debug.Log("hei");
+            CraftingManager.Instance.destroyMaterials();
+        }
         parentAfterDrag = transform.parent;
         transform.SetParent(transform.root);
+
         
     }
 
@@ -60,17 +66,17 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnEndDrag(PointerEventData eventData)
     {
+
         GetComponent<CanvasGroup>().blocksRaycasts = true;
         image.raycastTarget = true;
         transform.SetParent(parentAfterDrag);
         Debug.Log(parentAfterDrag);
+        
     }
 
     public void showDescription()
     {
-        Debug.Log("Oi");
         description_UI.SetActive(true);
-        Debug.Log(description_UI.activeSelf);
         TMP_Text descriptionName = description_UI.transform.Find("name").GetComponent<TMP_Text>();
         descriptionName.text = item.itemName.ToString();
         TMP_Text description = description_UI.transform.Find("description").GetComponent<TMP_Text>();
@@ -94,7 +100,6 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             }
             
         }
-        Debug.Log("oiiiiiiiiiiiiiiiiiiii");
         indicator.SetActive(true);
         selected = true;
         if(item.type == Item.itemType.food)
@@ -108,7 +113,11 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         indicator.SetActive(false);
         selected = false;
-        consumeButton.SetActive(false);
+        if(consumeButton != null)
+        {
+            consumeButton.SetActive(false);
+        }
+       
 
     }
 

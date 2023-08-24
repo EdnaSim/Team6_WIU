@@ -29,6 +29,7 @@ public class InventoryManager : MonoBehaviour
         Desc_UI_Container.SetActive(false);
         consumeButton.SetActive(false);
     }
+
     public bool addItem(Item _item)
     {
         for (int i = 0; i < inventorySlots.Length; i++)
@@ -60,6 +61,7 @@ public class InventoryManager : MonoBehaviour
         return false;
     }
 
+
     public bool removeItem(Item _item, int amount)
     {
         for (int i = 0; i < inventorySlots.Length; i++)
@@ -83,6 +85,21 @@ public class InventoryManager : MonoBehaviour
 
         return false;
     }
+
+    public InventorySlot getEmptySlot()
+    {
+        for (int i = 0; i < inventorySlots.Length; i++)
+        {
+            InventorySlot slot = inventorySlots[i];
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+            if (itemInSlot == null)
+            {
+
+                return slot;
+            }
+        }
+        return null;
+    }
     public string getSelected()
     {
         for (int i = 0; i < inventorySlots.Length; i++)
@@ -103,17 +120,10 @@ public class InventoryManager : MonoBehaviour
     }
     void SpawnNewItem(Item _item , InventorySlot slot)
     {
-        
         GameObject newItemGo = Instantiate(inventoryItemPrefab, slot.transform);
-        
         InventoryItem inventoryItem = newItemGo.GetComponent<InventoryItem>();
         inventoryItem.InitializeItem(_item);
         newItemGo.transform.SetParent(slot.transform);
-    }
-
-    private void Update()
-    {
-        //Debug.Log("armor" + getArmour());
     }
 
     public void resetSelected()

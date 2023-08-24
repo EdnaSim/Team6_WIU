@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc66993ebe8c3c34cbb38d75ebc4a416, type: 3}
   m_Name: RocketLauncher
   m_EditorClassIdentifier: 
-  itemName: Rocket Laucher
+  itemName: Rocket Launcher
   type: 3
   image: {fileID: 21300000, guid: fcc4f3b279299ea499919314e1dffbf3, type: 3}
-  description: 
+  description: 'A rocket launcher from the Military Checkpoint.
+
+    Fire a rocket
+    to deal massive damage to multiple enemies.'
   amount: 1
   stackable: 0

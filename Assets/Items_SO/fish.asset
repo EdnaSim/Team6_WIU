@@ -15,11 +15,11 @@ MonoBehaviour:
   itemName: Fish
   type: 1
   image: {fileID: -152005320, guid: 8423e22983c1e804ebdc5f61db986712, type: 3}
-  description: 'Animal of the Sea.
+  description: 'Blub blub.
 
-    Cook this with either a Bowl or Sticks to
-    make food for consumption.
+    Cook this with either a Bowl or Sticks to make food
+    for consumption.
 
     Also used to feed your pet Cat.'
-  amount: 0
+  amount: 3
   stackable: 1

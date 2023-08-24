@@ -15,6 +15,9 @@ MonoBehaviour:
   itemName: Army Vest
   type: 4
   image: {fileID: 21300000, guid: 49e3195f57f4a034683d0dbba101c9b0, type: 3}
-  description: 
+  description: 'An armor vest don by soldiers in active duty.
+
+    Equip it to reduce
+    any damage taken.'
   amount: 0
   stackable: 0

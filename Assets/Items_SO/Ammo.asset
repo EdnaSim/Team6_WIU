@@ -15,6 +15,9 @@ MonoBehaviour:
   itemName: Ammo
   type: 3
   image: {fileID: -1249268724, guid: f63c5bc210f99c348af612c12087ad14, type: 3}
-  description: 
+  description: 'Civilian and military grade ammunition all rolled into one.
+
+    You
+    can reload your guns with these.'
   amount: 0
   stackable: 1

@@ -15,6 +15,9 @@ MonoBehaviour:
   itemName: Steel Sword
   type: 3
   image: {fileID: 21300000, guid: 2cce4db34ed862548a06ca0588415e06, type: 3}
-  description: 
+  description: 'A sword from the Hardware Store, upgraded with a steel blade.
+
+    Capable
+    of striking multiple enemies at once.'
   amount: 0
   stackable: 0

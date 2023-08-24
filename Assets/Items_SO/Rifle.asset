@@ -15,6 +15,9 @@ MonoBehaviour:
   itemName: Rifle
   type: 3
   image: {fileID: 21300000, guid: a7376f9a367c85245bc3e5e47bff9d89, type: 3}
-  description: 
+  description: 'A rifle taken from the Police Station''s armory.
+
+    Fire at enemies
+    to deal damage. Faster fire rate. Contains twenty shots.'
   amount: 0
   stackable: 0

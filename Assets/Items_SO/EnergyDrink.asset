@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Energy Drink
   type: 2
   image: {fileID: 21300000, guid: 88a337dafce2ed44e8880cc9136b9d89, type: 3}
-  description: 'Red Bull knock-off
+  description: 'Energize your day!
 
     Drink to restore Stamina.'
   amount: 0

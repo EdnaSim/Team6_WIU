@@ -15,8 +15,9 @@ MonoBehaviour:
   itemName: Potato
   type: 1
   image: {fileID: 1714775623, guid: 8423e22983c1e804ebdc5f61db986712, type: 3}
-  description: 'Potato potAto.
+  description: 'Potato. Might contain electricity.
 
-    Use this item with a Bowl to make Stew.'
+    Use this item with a Bowl
+    to make Stew.'
   amount: 0
   stackable: 1

@@ -15,8 +15,8 @@ MonoBehaviour:
   itemName: Mushroom
   type: 1
   image: {fileID: -366960222, guid: 8423e22983c1e804ebdc5f61db986712, type: 3}
-  description: 'Fungi of the Wild.
+  description: 'Edible Fungi.
 
     Cook with a bowl to make Mushroom Soup.'
-  amount: 0
+  amount: 1
   stackable: 1

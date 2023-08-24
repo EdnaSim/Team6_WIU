@@ -15,8 +15,9 @@ MonoBehaviour:
   itemName: Steel Ingot
   type: 0
   image: {fileID: -1040298921, guid: c1895e08fcf5de5428b0e19972603722, type: 3}
-  description: 'Told you its not titanium.
+  description: 'Told you it''s not titanium.
 
-    Use this to upgrade your Brass weapons.'
+    Use this to upgrade your Brass
+    weapons.'
   amount: 0
   stackable: 1

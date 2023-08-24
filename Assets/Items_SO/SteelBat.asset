@@ -15,6 +15,9 @@ MonoBehaviour:
   itemName: Steel Bat
   type: 3
   image: {fileID: 21300000, guid: aa76ed5dd66a2824ab60be8f11a28171, type: 3}
-  description: 
+  description: 'A baseball bat from the High School, upgraded with steel.
+
+    Slower
+    than other melee weapon types but deals more damage.'
   amount: 0
   stackable: 0

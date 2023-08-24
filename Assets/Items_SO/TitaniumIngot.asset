@@ -15,9 +15,9 @@ MonoBehaviour:
   itemName: Titanium Ingot
   type: 0
   image: {fileID: -1153505526, guid: c1895e08fcf5de5428b0e19972603722, type: 3}
-  description: 'Shiny Silver Rock but stronger.
+  description: 'You won''t find a stronger metal out here.
 
-    Use this to upgrade your steel
-    weapons.'
+    Use this to upgrade
+    your steel weapons.'
   amount: 0
   stackable: 1

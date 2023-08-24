@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Fish Soup
   type: 2
   image: {fileID: 21300000, guid: 781c4cc813c6404419771bbb4ccac20d, type: 3}
-  description: 'Fishy.
+  description: 'Gives off a fishy feeling.
 
     Consume this to regain health.'
   amount: 0

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d685b022d60e05469bc5abc47ae06c0, type: 3}
+  m_Name: ZincIngot
+  m_EditorClassIdentifier: 
+  firstMaterial: {fileID: 11400000, guid: ff7364e93ba979143bba38ffcbad2da5, type: 2}
+  secondMaterial: {fileID: 0}
+  finalMaterial: {fileID: 11400000, guid: c5395323327170045ad824f9c175d396, type: 2}
+  amtOfFirst: 3
+  amtOfSecond: 0
+  amtOfFinal: 1

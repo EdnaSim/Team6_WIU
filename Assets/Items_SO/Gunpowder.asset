@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Gunpowder
   type: 1
   image: {fileID: -103150824, guid: a4e96754f04da524d9ef34ae22754a44, type: 3}
-  description: 'might go BOOM.
+  description: 'Make your guns go BOOM.
 
     Craft ammos with brass ingots. '
   amount: 0
