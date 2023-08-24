@@ -8,107 +8,63 @@ using TMPro;
 public class MenuManager : MonoBehaviour
 {
     private GameObject activeMenu; // Reference to the currently active menu
-    //public PlayerData playerData; // Reference to the PlayerData scriptable object
-
-    public AudioVolumeManager audioVolumeManager;
-    public Slider masterSlider; // Reference to the master slider in the UI
-    public Slider musicSlider; // Reference to the music slider in the UI
-    public Slider sfxSlider; // Reference to the SFX slider in the UI
+    private Slideshow slideshow; // Reference to the Slideshow component
 
     public GameObject winMenu; // Reference to the "Win Menu" GameObject
     public GameObject loseMenu; // Reference to the "Lose Menu" GameObject
 
     public GameObject loadingScreen; // Reference to the loading screen GameObject
-    public Slider loadingSlider; // Reference to the loading slider in the loading screen
-    public TMP_Text loadingPercentageText; // Reference to the text showing loading percentage
-    private float targetProgress;
+    private Slider loadingSlider; // Reference to the loading slider in the loading screen
+    private TMP_Text loadingPercentageText; // Reference to the text showing loading percentage
+    private float targetProgress; // The target progress for loading
 
-    private Slideshow slideshow;
-
-    public string SceneToLoad;
-
-    [SerializeField] GameObject tempNewGame;
+    public AudioVolumeManager audioVolumeManager; // Reference to the AudioVolumeManager script
+    public Slider masterSlider; // Reference to the master slider in the UI
+    public Slider musicSlider; // Reference to the music slider in the UI
+    public Slider sfxSlider; // Reference to the SFX slider in the UI
 
     private void Start()
     {
         HideMenu(); // Ensure the menu is hidden when the scene starts
-        loadingScreen.SetActive(false); // Hide the loading screen initially
 
-        // Load player data when the game starts
-        //playerData.Load();
+        // Find the Slideshow component in the scene
+        slideshow = FindObjectOfType<Slideshow>();
 
+        if (loadingScreen != null)
+        {
+            // Get the TMP_Text and Slider components as children of loadingScreen
+            loadingPercentageText = loadingScreen.GetComponentInChildren<TMP_Text>();
+            loadingSlider = loadingScreen.GetComponentInChildren<Slider>();
+            loadingScreen.SetActive(false); // Hide the loading screen initially
+        }
+
+        // Load and set master, music and SFX slider values from PlayerPrefs
         masterSlider.value = PlayerPrefsManager.Load("MasterVolume");
-        // Load and set music and SFX slider values from PlayerPrefs
         musicSlider.value = PlayerPrefsManager.Load("MusicVolume");
         sfxSlider.value = PlayerPrefsManager.Load("SFXVolume");
 
+        // Add listeners to master, music and SFX sliders to update mixer volumes
         masterSlider.onValueChanged.AddListener(UpdateMasterVolume);
-        // Add listeners to music and SFX sliders to update mixer volumes
         musicSlider.onValueChanged.AddListener(UpdateMusicVolume);
         sfxSlider.onValueChanged.AddListener(UpdateSFXVolume);
-        slideshow = GetComponentInChildren<Slideshow>();
 
-        if (tempNewGame != null)
-            DontDestroyOnLoad(tempNewGame);
-    }
-
-    private void UpdateMasterVolume(float volume)
-    {
-        audioVolumeManager.SetMasterVolume(volume);
-    }
-
-    private void UpdateMusicVolume(float volume)
-    {
-        audioVolumeManager.SetMusicVolume(volume);
-    }
-
-    private void UpdateSFXVolume(float volume)
-    {
-        audioVolumeManager.SetSFXVolume(volume);
-        // If there is an active menu, hide it before showing the "Win Menu"
-        if (activeMenu != null)
-        {
-            // Stop the SFX audio
-            audioVolumeManager.StopSFXAudio();
-        }
-    }
-
-    public void PlayGame()
-    {
-        ShowLoadingScreen(SceneToLoad); // Replace with the name of your game scene
-
-        // Reset the time scale to 1 before loading the next scene
-        Time.timeScale = 1f;
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        //slideshow.OpenSlideshow();
-    }
-
-    // Function to reset the player data and s
-    public void NewGame()
-    {
-        ShowLoadingScreen(SceneToLoad); // Replace with the name of your game scene
-        //playerData.Reset();
-        // Reset the time scale to 1 before loading the next scene
-        Time.timeScale = 1f;
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        //slideshow.isSlideActive = true;
-        GetNewGame.isNewGame = true;
-        Debug.Log("whyyyyyyyyyyyyyyyyyyy");
+        // Load player data when the game starts
+        //playerData.Load();
     }
 
     private void ShowLoadingScreen(string sceneName)
     {
-        loadingSlider.value = 0f;
-        targetProgress = 0f;
-
+        if (loadingScreen != null)
+        {
+            loadingSlider.value = 0f;
+            targetProgress = 0f;
+            loadingScreen.SetActive(true); // Show the loading screen
+        }
         StartCoroutine(LoadSceneWithLoadingScreen(sceneName));
     }
 
     IEnumerator LoadSceneWithLoadingScreen(string sceneName)
     {
-        // Activate the loading screen
-        loadingScreen.SetActive(true);
-
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
         operation.allowSceneActivation = false; // Prevent the scene from activating automatically
 
@@ -126,11 +82,57 @@ public class MenuManager : MonoBehaviour
             {
                 operation.allowSceneActivation = true;
             }
-
             yield return null;
         }
     }
 
+    private void UpdateMasterVolume(float volume)
+    {
+        audioVolumeManager.SetMasterVolume(volume);
+    }
+
+    private void UpdateMusicVolume(float volume)
+    {
+        audioVolumeManager.SetMusicVolume(volume);
+    }
+
+    private void UpdateSFXVolume(float volume)
+    {
+        audioVolumeManager.SetSFXVolume(volume);
+
+        // If there is an active menu, hide it before showing the "Win Menu"
+        if (activeMenu != null)
+        {
+            // Stop the SFX audio
+            audioVolumeManager.StopSFXAudio();
+        }
+    }
+
+    // Function to start a new game
+    public void NewGame()
+    {
+        // Reset the time scale to 1 before loading the next scene
+        Time.timeScale = 1f;
+        ShowLoadingScreen("SampleScene");
+        //playerData.Reset();
+        GetNewGame.isNewGame = true;
+
+        if (slideshow != null)
+        {
+            // Find the Slideshow component in the scene and activate it
+            slideshow.ActivateSlideshow();
+        }
+    }
+
+    // Function to play the game
+    public void PlayGame()
+    {
+        // Reset the time scale to 1 before loading the next scene
+        Time.timeScale = 1f;
+        ShowLoadingScreen("SampleScene");
+    }
+
+    // Function to show a specific menu
     public void ShowMenu(GameObject menu)
     {
         // If there is an active menu, hide it before showing the new one
@@ -150,6 +152,30 @@ public class MenuManager : MonoBehaviour
         activeMenu = menu;
     }
 
+    // Function to hide the active menu
+    public void HideMenu()
+    {
+        // Hide the active menu (if any)
+        if (activeMenu != null)
+        {
+            // Save master, music and SFX slider values to PlayerPrefs
+            PlayerPrefsManager.Save("MasterVolume", masterSlider.value);
+            PlayerPrefsManager.Save("MusicVolume", musicSlider.value);
+            PlayerPrefsManager.Save("SFXVolume", sfxSlider.value);
+
+            // Resume the game by setting time scale back to 1
+            Time.timeScale = 1f;
+
+            // Resume the SFX audio
+            audioVolumeManager.ResumeSFXAudio();
+
+            // Deactivate the active menu
+            activeMenu.SetActive(false);
+            activeMenu = null;
+        }
+    }
+
+    // Function to show the "Win Menu"
     public void ShowWinMenu()
     {
         // If there is an active menu, hide it before showing the "Win Menu"
@@ -169,6 +195,7 @@ public class MenuManager : MonoBehaviour
         activeMenu = winMenu;
     }
 
+    // Function to show the "Lose Menu"
     public void ShowLoseMenu()
     {
         // If there is an active menu, hide it before showing the "Lose Menu"
@@ -188,49 +215,22 @@ public class MenuManager : MonoBehaviour
         activeMenu = loseMenu;
     }
 
-    public void HideMenu()
-    {
-        // Hide the active menu (if any)
-        if (activeMenu != null)
-        {
-            PlayerPrefsManager.Save("MasterVolume", masterSlider.value);
-            // Save music and SFX slider values to PlayerPrefs
-            PlayerPrefsManager.Save("MusicVolume", musicSlider.value);
-            PlayerPrefsManager.Save("SFXVolume", sfxSlider.value);
-
-            activeMenu.SetActive(false);
-            activeMenu = null;
-            // Resume the game by setting time scale back to 1
-            Time.timeScale = 1f;
-
-            // Stop the SFX audio
-            audioVolumeManager.ResumeSFXAudio();
-        }
-    }
-
+    // Function to exit the game and go back to the main menu
     public void ExitGame()
     {
-        // Reset the time scale to 1 before loading the next scene
+        // Reset the time scale to 1 before loading the main menu scene
         Time.timeScale = 1f;
 
-        // Stop the SFX audio
+        // Resume the SFX audio
         audioVolumeManager.ResumeSFXAudio();
 
-        // Save player data before exiting the game
-        //playerData.Save();
-
-        // Load the first scene (index 0 in the build settings)
+        // Load the first scene (index 0 in the build settings), which is the main menu
         SceneManager.LoadScene(0);
     }
 
+    // Function to quit the application
     public void QuitGame()
     {
         Application.Quit();
     }
-
-    // Function to save the player data
-    //public void SavePlayerData()
-    //{
-        //playerData.Save();
-    //}
 }
