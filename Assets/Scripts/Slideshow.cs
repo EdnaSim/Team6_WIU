@@ -7,28 +7,20 @@ public class Slideshow : MonoBehaviour
 {
     public GameObject[] slides; // An array of slide GameObjects
     private int currentSlideIndex = 0; // Index of the currently displayed slide
-
     private bool isSlideshowActive = false; // Whether the slideshow is currently active
-
-    public bool isSlideActive = false;
 
     private void Start()
     {
-        foreach (GameObject slide in slides){
+        // Deactivate all slides when the slideshow starts
+        foreach (GameObject slide in slides)
+        {
             slide.SetActive(false);
         }
     }
 
     private void Update()
     {
-        // Check for 'G' key input to open/close the slideshow
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            ToggleSlideshow();
-        }
-
-        
-
+        // Check if the slideshow is active or if it's a new game
         if (isSlideshowActive == true || GetNewGame.isNewGame)
         {
             // Show the current slide and hide others
@@ -55,17 +47,9 @@ public class Slideshow : MonoBehaviour
         }
     }
 
-    public void ToggleSlideshow()
+    public void ActivateSlideshow()
     {
-        Debug.Log("oi");
-        isSlideshowActive = !isSlideshowActive;
-
-        // Reset the current slide index if the slideshow is turned off
-        if (!isSlideshowActive)
-        {
-            currentSlideIndex = 0;
-            //slide.SetActive(true);
-        }
+        isSlideshowActive = true;
     }
 
     public void ShowNextSlide()
@@ -87,13 +71,13 @@ public class Slideshow : MonoBehaviour
     }
 
     public void ExitSlideshow()
-{
-    // Destroy all slide GameObjects and clear the slides array
-    foreach (GameObject slide in slides)
     {
-        Destroy(slide);
+        // Destroy all slide GameObjects and clear the slides array
+        foreach (GameObject slide in slides)
+        {
+            Destroy(slide);
+        }
+        slides = new GameObject[0]; // Clear the slides array
+        currentSlideIndex = 0;
     }
-    slides = new GameObject[0]; // Clear the slides array
-    currentSlideIndex = 0;
-}
 }

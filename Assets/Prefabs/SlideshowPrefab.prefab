@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7422805310760992662}
   - component: {fileID: 7422805310760992663}
   m_Layer: 0
-  m_Name: temp
+  m_Name: SlideshowPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,7 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slides:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  isSlideActive: 0
+  - {fileID: 3794304449840096921, guid: e7f26b9adf204cd4f9c2e111b4e511ad, type: 3}
+  - {fileID: 4315480311493105767, guid: d4c8f76003b14ca4481305081f636077, type: 3}
+  - {fileID: 2598227973473174042, guid: b911b281f28138e429feccfcb458c405, type: 3}
