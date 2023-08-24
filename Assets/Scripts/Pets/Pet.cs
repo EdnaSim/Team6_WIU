@@ -47,7 +47,7 @@ public abstract class Pet : MonoBehaviour
     }
 
     protected virtual void FixedUpdate() {
-        if (target == null)
+        if (target == null || transform == null || player == null)
             return;
 
         //calculate where to go and move towards it
@@ -57,7 +57,7 @@ public abstract class Pet : MonoBehaviour
         facing = (target.transform.position - gameObject.transform.position).normalized;
 
         //target dead, return to player
-        if (!target.gameObject.activeSelf || target.GetComponent<HealthManager>().Death) {
+        if (!target.gameObject.activeSelf || (target.GetComponent<HealthManager>() && target.GetComponent<HealthManager>().Death)) {
             target = player.transform;
         }
 

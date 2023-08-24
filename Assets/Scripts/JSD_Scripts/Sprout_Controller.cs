@@ -229,22 +229,28 @@ public class Sprout_Controller : MonoBehaviour
 
         else if (detectedUnits.Length != 0)
         {
-            SummonTimer -= Time.deltaTime;
-            if (!isAttacking && !StartSummonTimer)
+            foreach (Collider2D col in detectedUnits)
             {
-                //Debug.Log("MOVE");
-                ChangeState(State.CHARGE);
-            }
+                if (col.gameObject.tag == "Player")
+                {
+                    SummonTimer -= Time.deltaTime;
+                    if (!isAttacking && !StartSummonTimer)
+                    {
+                        //Debug.Log("MOVE");
+                        ChangeState(State.CHARGE);
+                    }
 
-            if (SummonTimer <= 0)
-            {
-                StartSummonTimer = true;
-                aiPath.canMove = false;
-                ChangeState(State.SUMMON);
-                SummonTimer = Random.Range(MinSummonTime, MaxSummonTime);
+                    if (SummonTimer <= 0)
+                    {
+                        StartSummonTimer = true;
+                        aiPath.canMove = false;
+                        ChangeState(State.SUMMON);
+                        SummonTimer = Random.Range(MinSummonTime, MaxSummonTime);
+                    }
+                    //inRange = true;
+                    //ChasePlayerTimer = 3f;
+                }
             }
-            //inRange = true;
-            //ChasePlayerTimer = 3f;
         }
 
         else

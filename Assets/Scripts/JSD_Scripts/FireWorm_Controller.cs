@@ -184,13 +184,19 @@ public class FireWorm_Controller : MonoBehaviour
 
         else if (detectedUnits.Length != 0)
         {
-            if (!isAttacking)
+            foreach (Collider2D col in detectedUnits)
             {
-                //Debug.Log("MOVE");
-                ChangeState(State.CHARGE);
+                if (col.gameObject.tag == "Player")
+                {
+                    if (!isAttacking)
+                    {
+                        //Debug.Log("MOVE");
+                        ChangeState(State.CHARGE);
+                    }
+                    //inRange = true;
+                    //ChasePlayerTimer = 3f;
+                }
             }
-            //inRange = true;
-            //ChasePlayerTimer = 3f;
         }
 
         else

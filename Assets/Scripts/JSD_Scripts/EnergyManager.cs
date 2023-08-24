@@ -40,7 +40,7 @@ public class EnergyManager : MonoBehaviour
     {
         if(CanDrain)
         {
-            LoseEnergy(5f * Time.deltaTime);
+            LoseEnergy(1f * Time.deltaTime);
         }
 
         if(staminaAmt <= 0)
