@@ -116,8 +116,13 @@ public class KeybindManager : MonoBehaviour
         // Show the current keybinds in the UI
         foreach (var keyButton in keyButtons)
         {
-            KeyCode loadedKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), keyButton.GetComponentInChildren<TMP_Text>().text = PlayerPrefs.GetString(keyButton.name));
-            keyButton.GetComponentInChildren<TMP_Text>().text = GetKeyDisplayName(loadedKey);
+            Debug.Log(PlayerPrefs.GetString(keyButton.name));
+            if (System.Enum.IsDefined(typeof(KeyCode), PlayerPrefs.GetString(keyButton.name)))
+            {
+                Debug.Log("hehe");
+                KeyCode loadedKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), keyButton.GetComponentInChildren<TMP_Text>().text = PlayerPrefs.GetString(keyButton.name));
+                keyButton.GetComponentInChildren<TMP_Text>().text = GetKeyDisplayName(loadedKey);
+            }
         }
     }
 
@@ -214,11 +219,11 @@ public class KeybindManager : MonoBehaviour
         }
         else if (hasChangedKey)
         {
-            Debug.Log("The configuration is valid.");
+            //Debug.Log("The configuration is valid.");
         }
         else
         {
-            Debug.Log("No keys were changed, so nothing to validate.");
+            //Debug.Log("No keys were changed, so nothing to validate.");
         }
     }
 
