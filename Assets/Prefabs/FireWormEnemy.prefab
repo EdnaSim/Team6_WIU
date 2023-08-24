@@ -354,9 +354,9 @@ GameObject:
   - component: {fileID: 8506988916278058202}
   - component: {fileID: 8506988916278058205}
   - component: {fileID: 8506988916278058204}
-  - component: {fileID: 8506988916278058200}
   - component: {fileID: 1468555430}
   - component: {fileID: 1468555429}
+  - component: {fileID: 3655850613399697874}
   m_Layer: 7
   m_Name: FireWormEnemy
   m_TagString: Untagged
@@ -466,36 +466,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   target: {fileID: 0}
---- !u!114 &8506988916278058200
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8506988916278058207}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92b4b6d41401a7d4b85c1b334f2dee0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentState: 0
-  anim: {fileID: 8506988916186459181}
-  aiPath: {fileID: 8506988916278058205}
-  FirePoint: {fileID: 8506988914811638609}
-  FireBall: {fileID: 5220381353089655413, guid: fa1e876f71a47c44683f498d63685f63, type: 3}
-  FireballSpeed: 10
-  ChasePlayerTimer: 0
-  Player:
-    serializedVersion: 2
-    m_Bits: 64
-  FOVradius: 10
-  ATKradius: 7
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 64
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!61 &1468555430
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -542,6 +512,36 @@ MonoBehaviour:
   TimeToShowHPbar: 2
   DamageMultiplier: 1
   Death: 0
+--- !u!114 &3655850613399697874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8506988916278058207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92b4b6d41401a7d4b85c1b334f2dee0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentState: 0
+  anim: {fileID: 8506988916186459181}
+  aiPath: {fileID: 8506988916278058205}
+  FirePoint: {fileID: 8506988914811638609}
+  FireBall: {fileID: 5220381353089655413, guid: fa1e876f71a47c44683f498d63685f63, type: 3}
+  FireballSpeed: 10
+  ChasePlayerTimer: 0
+  Player:
+    serializedVersion: 2
+    m_Bits: 64
+  FOVradius: 10.11
+  ATKradius: 6.86
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 64
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1001 &8506988916366289557
 PrefabInstance:
   m_ObjectHideFlags: 0

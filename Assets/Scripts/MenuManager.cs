@@ -113,7 +113,7 @@ public class MenuManager : MonoBehaviour
     {
         // Reset the time scale to 1 before loading the next scene
         Time.timeScale = 1f;
-        ShowLoadingScreen("TestSceneJSD");
+        ShowLoadingScreen("TestSceneJSDOfficial");
         //playerData.Reset();
         GetNewGame.isNewGame = true;
 
@@ -129,7 +129,7 @@ public class MenuManager : MonoBehaviour
     {
         // Reset the time scale to 1 before loading the next scene
         Time.timeScale = 1f;
-        ShowLoadingScreen("TestSceneJSD");
+        ShowLoadingScreen("TestSceneJSDOfficial");
     }
 
     // Function to show a specific menu

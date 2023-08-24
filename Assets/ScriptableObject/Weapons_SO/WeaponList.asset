@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51e87cd0b8b229443a60e449261f698c, type: 3}
+  m_Name: WeaponList
+  m_EditorClassIdentifier: 
+  RangedWeaponList:
+  - {fileID: 11400000, guid: f7b197495a680344e9663394cdc456d7, type: 2}
+  - {fileID: 11400000, guid: 50652259efb6f8440a34ed1ae53e4de3, type: 2}
+  - {fileID: 11400000, guid: 89e938b6398095e4b9c58da9db0b0e81, type: 2}
+  - {fileID: 11400000, guid: 3055c641df95ea1419b91ac1a6d5f116, type: 2}
+  MeleeWeaponlist:
+  - {fileID: 11400000, guid: 58092f24a34a403438daf5f49e1d980d, type: 2}
+  - {fileID: 11400000, guid: 6a907274aa5a84240a79d9ddbbba78ff, type: 2}
+  - {fileID: 11400000, guid: b1367f44e7e647745bdedb8318e292bb, type: 2}
+  - {fileID: 11400000, guid: 636db8d514466134b94d4d38d478742b, type: 2}
+  - {fileID: 11400000, guid: db9bb2e0671075144928e762717389d7, type: 2}
+  - {fileID: 11400000, guid: 0422fc4ac762a494c87b43989bbe6c9d, type: 2}
+  - {fileID: 11400000, guid: c69cd8fdcdb1ba24f859afe50243f8dc, type: 2}
+  - {fileID: 11400000, guid: 27b973333d66fa9478a8c58ea35b6c3d, type: 2}
+  - {fileID: 11400000, guid: a7de854b8e26b3e4f914d50a2f1c975b, type: 2}
+  - {fileID: 11400000, guid: c5fe85d4e4dd3d047a29b4130eac8abd, type: 2}
+  - {fileID: 11400000, guid: 1321da13d839b314a9bd7283421779fe, type: 2}
+  - {fileID: 11400000, guid: 1e752e16f6e15814cb98758ab5aac544, type: 2}

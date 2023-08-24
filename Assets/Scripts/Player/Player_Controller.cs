@@ -12,36 +12,35 @@ public class Player_Controller : MonoBehaviour
     SpriteRenderer sr;
     [HideInInspector] public WeaponController wc;
     [SerializeField] SO_WeaponList wl;
+    Vector2 PrevMoveDir;
 
     public bool isPaused = false;
 
     [Header("Movement")]
     public float Base_MovementSpeed;
-    public float MovementSpeed;
+    [HideInInspector] public float MovementSpeed;
     [SerializeField] float SprintIncrease;
-    float dirH;
-    float dirV;
+    [HideInInspector] public Vector2 MoveDir;
     Vector2 facing;
 
     bool isAttacking = false; //check if bound to an attack anim (set by anim trigger)
     [Header("Attack")]
     [SerializeField] Transform MeleeOrigin;
-    public static List<MeleeWeaponStats> TempMeleeInv; // TEMP
-    bool CanMelee = true;
+    [HideInInspector] public bool CanMelee = true;
 
     [Header("Ranged attack")]
-    public static List<RangedWeaponStats> TempInventory; //TEMP
-    int weaponListIndex = 0; //TEMP
-    bool CanRange = true;
+    [HideInInspector] public bool CanRange = true;
 
     [Header("Pet")]
     [SerializeField] SO_PetDetails PetDetails;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
     // Start is called before the first frame update
     void Start()
     {
-        Instance = this;
-
         rb = GetComponent<Rigidbody2D>();
         ar = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
@@ -50,13 +49,13 @@ public class Player_Controller : MonoBehaviour
 
         wc = GetComponent<WeaponController>();
 
-        //TEMP - add weapon instance for each type
-        for (int i = 0; i < wl.RangedWeaponList.Count; i++) {
-            TempInventory.Add(new RangedWeaponStats(wl.RangedWeaponList[i].Stats));
-        }
-        for (int i=0; i < wl.MeleeWeaponlist.Count; i++) {
-            TempMeleeInv.Add(new MeleeWeaponStats(wl.MeleeWeaponlist[i].Stats));
-        }
+        ////TEMP - add weapon instance for each type
+        //for (int i = 0; i < wl.RangedWeaponList.Count; i++) {
+        //    TempInventory.Add(new RangedWeaponStats(wl.RangedWeaponList[i].Stats));
+        //}
+        //for (int i=0; i < wl.MeleeWeaponlist.Count; i++) {
+        //    TempMeleeInv.Add(new MeleeWeaponStats(wl.MeleeWeaponlist[i].Stats));
+        //}
 
         Physics2D.IgnoreLayerCollision(gameObject.layer, gameObject.layer);
     }
@@ -65,10 +64,9 @@ public class Player_Controller : MonoBehaviour
     void Update()
     {
         //stuff that cant be done when paused
-        if (!isPaused) {
+        if (!isPaused && !Player_HealthManager.Instance.Death) {
             //get input for moving
-            dirH = Input.GetAxis("Horizontal");
-            dirV = Input.GetAxis("Vertical");
+            MoveDir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
             //holding down sprint key
             if (Input.GetKey(KeyCode.LeftShift)) {
                 //Sprint
@@ -90,44 +88,53 @@ public class Player_Controller : MonoBehaviour
                 
                 //TEMP - Find weapon name to switch to it
                 //wc.ChangeRangedWeapon(TempInventory.Find((RangedWeaponStats w) => w.WeaponName == "Triangle"));
-                wc.ChangeRangedWeapon(TempInventory[weaponListIndex]);
-                Debug.Log("Current Weapon: " + TempInventory[weaponListIndex].WeaponName);
-                weaponListIndex++;
-                if (weaponListIndex >= TempInventory.Count) weaponListIndex = 0;
+                //wc.ChangeRangedWeapon(TempInventory[weaponListIndex]);
+                //Debug.Log("Current Weapon: " + TempInventory[weaponListIndex].WeaponName);
+                //weaponListIndex++;
+                //if (weaponListIndex >= TempInventory.Count) weaponListIndex = 0;
 
-                if (wc.MeleeStats.WeaponName == "Fists")
-                    wc.ChangeMeleeWeapon(TempMeleeInv.Find((MeleeWeaponStats w) => w.WeaponName == "Sword"));
-                else
-                    wc.ChangeMeleeWeapon(TempMeleeInv.Find((MeleeWeaponStats w) => w.WeaponName == "Fists"));
+                ////if (wc.MeleeStats.WeaponName == "Fists")
+                ////    wc.ChangeMeleeWeapon(TempMeleeInv.Find((MeleeWeaponStats w) => w.WeaponName == "Sword"));
+                ////else
+                ////    wc.ChangeMeleeWeapon(TempMeleeInv.Find((MeleeWeaponStats w) => w.WeaponName == "Fists"));
+                //wc.ChangeMeleeWeapon(TempMeleeInv[meleeListIndex]);
+                //Debug.Log("Current Melee: " + TempMeleeInv[meleeListIndex].WeaponName);
+                //meleeListIndex++;
+                //if (meleeListIndex >= TempMeleeInv.Count) meleeListIndex = 0;
             }
-            if (Input.GetMouseButtonDown(0)) {
-                //Attack (left click)
-                if (EventSystem.current.IsPointerOverGameObject())
-                    return; //if clicked UI
+            //TEMP:
+            //LMB FOR BOTH MELEE AND RANGED, USING INV INDICATOR TO CHECK IF INDICATOR IS ON A WEAPON.
+            if (Input.GetMouseButton(0)) {
+                //if clicked on UI / no object selected
+                if (!EventSystem.current.IsPointerOverGameObject() && InventoryManager.Instance.getSelected() != null) {
 
-                if (CanMelee && !isAttacking) {
-                    CanMelee = false;
-                    //isAttacking = true;
-                    //ar.SetTrigger("Melee");
-                    StartMelee();
-                    StartCoroutine(StartMeleeCooldown());
+                    if (InventoryManager.Instance.getSelected().type == Item.itemType.melee) {
+                        //melee attack
+                        if (!isAttacking && wc.CanMelee()) {
+                            ChangeIsAttacking(true);
+                            ar.SetFloat("MouseX", facing.x);
+                            ar.SetFloat("MouseY", facing.y);
+                            ar.SetTrigger("Melee");
 
-                    //make pet target enemy "attacked"
-                    //using radiusX since its the height from the player to the tip of the box
-                    MakePetTargetAttackedEnemy(wc.MeleeStats.RadiusX + 1);
+                            //make pet target enemy "attacked"
+                            //using radiusX since its the height from the player to the tip of the box
+                            MakePetTargetAttackedEnemy(wc.MeleeStats.RadiusX + 1);
+                        }
+                    }
+                    else if (InventoryManager.Instance.getSelected().type == Item.itemType.ranged) {
+                        //ranged attack
+                        if (!isAttacking && wc.CanRanged()) {
+                            ChangeIsAttacking(true);
+                            ar.SetFloat("MouseX", facing.x);
+                            ar.SetFloat("MouseY", facing.y);
+                            ar.SetTrigger("Ranged");
+
+                            //make pet target enemy "attacked"
+                            MakePetTargetAttackedEnemy(wc.RangedStats.MaxRange);
+                        }
+                    }
                 }
-            }
-            if (Input.GetMouseButton(1)) {
-                //Ranged attack (right click)
-                if (CanRange && !isAttacking) {
-                    CanRange = false;
-                    //isAttacking = true;
-                    StartRanged();
-                    StartCoroutine(StartRangedCooldown());
-
-                    //make pet target enemy "attacked"
-                    MakePetTargetAttackedEnemy(wc.RangedStats.MaxRange);
-                }
+                
             }
 
             //Play audio
@@ -140,7 +147,7 @@ public class Player_Controller : MonoBehaviour
 
     }
     private void FixedUpdate() {//move player
-        rb.AddForce(new Vector2(dirH * MovementSpeed, dirV * MovementSpeed));
+        rb.AddForce(MoveDir * MovementSpeed);
         //cap velocity to MovementSpeed
         rb.velocity = new Vector2(Mathf.Min(MovementSpeed, rb.velocity.x), Mathf.Min(MovementSpeed, rb.velocity.y));
     }
@@ -188,44 +195,50 @@ public class Player_Controller : MonoBehaviour
     }
 
     //called by animation event trigger ("Melee")
-    private void StartMelee() {
+    public void StartMelee() {
         //AOE
         wc.Melee(MeleeOrigin.position, facing);
-    }
-    IEnumerator StartMeleeCooldown() {
-        yield return new WaitForSeconds(wc.MeleeStats.Cooldown);
-        CanMelee = true;
+        //play audio
     }
 
-    private void StartRanged() {
-        wc.Fire(facing);
-    }
-    IEnumerator StartRangedCooldown() {
-        yield return new WaitForSeconds(wc.RangedStats.FireRate);
-        CanRange = true;
+    public void StartRanged() {
+        if (wc.Fire(facing)) {
+
+            //play audio
+        }
     }
 
     private void UpdateAnimation() {
         if (ar == null)
             return;
 
+        //ac.SetDirection(MoveDir);
+        
         //update if current anim ends (normalizedTime>1 means 1 cycle completed)
         if (ar.GetCurrentAnimatorStateInfo(0).normalizedTime > 1) {
-            //if (Mathf.Abs(rb.velocity.x) <= 0.001f) ar.Play("Player_Idle");
-            //if (Mathf.Abs(rb.velocity.x) > 0.001f) ar.Play("Player_Run");
+            if (Mathf.Abs(rb.velocity.x) <= 0.01f && Mathf.Abs(rb.velocity.y) <= 0.001f) ar.SetBool("Idle", true);
+            if (Mathf.Abs(rb.velocity.x) > 0.01f || Mathf.Abs(rb.velocity.y) > 0.001f) ar.SetBool("Idle", false);
 
-            //if (dirV > 0f) ar.Play("Player_Right");
-            //else if (dirV < 0f) ar.Play("Player_Left");
+
+            if (MoveDir.magnitude != 0) {
+                ar.SetFloat("MoveDirX", MoveDir.x);
+                ar.SetFloat("MoveDirY", MoveDir.y);
+                PrevMoveDir = MoveDir;
+            }
+            if (ar.GetBool("Idle")) {
+                ar.SetFloat("PrevMoveDirX", PrevMoveDir.x);
+                ar.SetFloat("PrevMoveDirY", PrevMoveDir.y);
+            }
         }
     }
 
     private void UpdateSpriteHorizontalDirection() {
-        if (dirH > 0f) {
-            sr.flipX = true;
-        }
-        else if (dirH < 0f) {
-            sr.flipX = false;
-        }
+        //if (MoveDir.x > 0f) {
+        //    sr.flipX = true;
+        //}
+        //else if (MoveDir.y < 0f) {
+        //    sr.flipX = false;
+        //}
 
         //switches the whole gameobject, since the weapon hitboxes will be attached to the GO
         //if (dirH > 0f) transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -240,13 +253,15 @@ public class Player_Controller : MonoBehaviour
     }
 
     //called by anim event triggers when the anim is "over"
-    public void ResetIsAttacking() {
-        isAttacking = false;
+    public void ChangeIsAttacking(bool b) {
+        isAttacking = b;
+        ar.SetBool("isAttacking", b);
     }
 
     public void OnHitByEnemy(GameObject attacker) {
         //drain sanity
-        SanityManager.Instance.ChangeSanity(-SanityManager.Instance.DrainAmtOnHit);
+        if (SanityManager.Instance != null)
+            SanityManager.Instance.ChangeSanity(-SanityManager.Instance.DrainAmtOnHit);
 
         //pet action
         if (PetManager.Pet != null) {

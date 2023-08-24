@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 398ccf5c3c2275b4c94058edb23b68d4, type: 3}
+  m_Name: Ranged_Shotgun
+  m_EditorClassIdentifier: 
+  stats:
+    Damage: 2
+    FireRate: 1.3
+    StaminaCost: 5
+    MaxRange: 5
+    ProjSpeed: 10
+    FallOffDist: 2.5
+    TotalStoredAmmo: 50
+    MaxAmmo: 50
+    AmmoInTheMag: 2
+    AmmoPerMag: 2
+    ReloadTime: 2.5
+    CanReload: 1
+    Spread: 20
+    ShotsPerFire: 5
+    AOE: 0
+    DoesProjDoInitialDamage: 1
+    AOEDamage: 0
+    ProjPrefab: {fileID: 7630813025349190170, guid: 72d7dce6a5a0ae741988b13d73f41e27, type: 3}
+    WeaponName: Shotgun
+    TimerForReload: 0
+    Reloading: 0
+    TimerForFireRate: 0

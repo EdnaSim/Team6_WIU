@@ -16,15 +16,13 @@ public class RangedWeaponStats
     public float FallOffDist; //dist to start damage falloff
 
     [Header("Ammo")]
-    [Tooltip("Current ammo in the inventory")]
-    public int TotalStoredAmmo;
-    [Tooltip("Total ammo of this type that can be carried in inventory")]
-    public int MaxAmmo;
     [Tooltip("Ammo currently in the magazine. Once this number reaches 0, need to reload. Not counted as in the inventory")]
     public int AmmoInTheMag;
     [Tooltip("How many bullets that can be fired before needing to reload")]
     public int AmmoPerMag;
     public float ReloadTime;
+    [Tooltip("Whether to allow reloading")]
+    public bool CanReload;
 
     [Header("Shotgun")]
     [Tooltip("In degrees. How fanned out all the bullets will be")]
@@ -42,6 +40,11 @@ public class RangedWeaponStats
     public GameObject ProjPrefab;
     public string WeaponName;
 
+    //Hidden stuff
+    [HideInInspector] public float TimerForReload;
+    [HideInInspector] public bool Reloading;
+    [HideInInspector] public float TimerForFireRate;
+
     //constructor
     public RangedWeaponStats() {
         Damage = 10;
@@ -51,11 +54,10 @@ public class RangedWeaponStats
         ProjSpeed = 10;
         FallOffDist = 5;
 
-        TotalStoredAmmo = 0;
-        MaxAmmo = 100;
         AmmoPerMag = 10;
         AmmoInTheMag = 0;
         ReloadTime = 1.5f;
+        CanReload = true;
 
         Spread = 0;
         ShotsPerFire = 1;
@@ -66,6 +68,11 @@ public class RangedWeaponStats
 
         ProjPrefab = null;
         WeaponName = "DefaultName";
+
+        //fixed values
+        TimerForReload = 0f;
+        Reloading = false;
+        TimerForFireRate = 0f;
     }
 
     //constructor for a COPY of the weapon, so that modifying the instance wont change the base
@@ -77,11 +84,10 @@ public class RangedWeaponStats
         ProjSpeed = copy.ProjSpeed;
         FallOffDist = copy.FallOffDist;
 
-        TotalStoredAmmo = copy.TotalStoredAmmo;
-        MaxAmmo = copy.MaxAmmo;
         AmmoPerMag = copy.AmmoPerMag;
         AmmoInTheMag = copy.AmmoInTheMag;
         ReloadTime = copy.ReloadTime;
+        CanReload = copy.CanReload;
 
         Spread = copy.Spread;
         ShotsPerFire = copy.ShotsPerFire;

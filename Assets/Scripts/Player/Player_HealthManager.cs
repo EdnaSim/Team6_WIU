@@ -4,19 +4,38 @@ using UnityEngine;
 
 public class Player_HealthManager : HealthManager
 {
-    public static Player_HealthManager Player_hm;
+    public static Player_HealthManager Instance;
+
+    private void Awake() {
+        Instance = this;
+        AccumulatedDM = DamageMultiplier;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        Player_hm = this;
-       
         if (PlayerData.MaxHp <= 0)
             PlayerData.MaxHp = Base_MaxHealth;
         if (PlayerData.CurrHP <= 0)
             PlayerData.CurrHP = PlayerData.MaxHp;
 
-        UI_Hpbar?.UpdateSlider();
+        UI_Hpbar.UpdateSlider();
+    }
+
+    protected override void Update() {
+        if (OnlyShowBarWhenDamaged) {
+            if (HPbarShowTimer > 0f) {
+                UI_Hpbar.SetBarDisplay(true);
+                HPbarShowTimer -= Time.deltaTime;
+            }
+            else {
+                UI_Hpbar.SetBarDisplay(false);
+            }
+        }
+
+        //make the bar go down smoothly
+        float smoothValue = Mathf.SmoothDamp(UI_Hpbar.slider.value, PlayerData.CurrHP, ref currVel, 0.4f);
+        UI_Hpbar.slider.value = smoothValue;
     }
 
     public override void TakeDamage(float damage, GameObject attacker) {
@@ -29,28 +48,20 @@ public class Player_HealthManager : HealthManager
             OnDeath();
             return;
         }
-        //update after taking damage
-        if (UI_Hpbar != null)
-            UI_Hpbar.UpdateSlider();
 
         //damage effects (sanity drain, pet attack etc)
-        if(attacker.GetComponent<EnergyManager>() == null) 
-        {
+        if (attacker.GetComponent<EnergyManager>() == null)
             Player_Controller.Instance.OnHitByEnemy(attacker);
-        }
     }
 
     public override void Heal(float amt) {
         PlayerData.CurrHP += amt;
         if (PlayerData.CurrHP > PlayerData.MaxHp)
             PlayerData.CurrHP = PlayerData.MaxHp;
-
-        UI_Hpbar.UpdateSlider();
     }
 
     public override void OnDeath() {
         PlayerData.CurrHP = 0;
-        //UI_Hpbar.SetBarDisplay(false);
         Death = true;
         //play death anim
         if (ar != null)
@@ -59,6 +70,7 @@ public class Player_HealthManager : HealthManager
             OnDeathAnimEnd();
     }
 
+    //called by animation event trigger (but not invoker, directly called by animation)
     public override void OnDeathAnimEnd() {
         //reset player data
         PlayerData.MaxHp = 0;
@@ -68,7 +80,7 @@ public class Player_HealthManager : HealthManager
 
         //reset pet
         PetManager.Instance.ResetAndRemovePet();
-        //TODO: display gameover screen
+        //TODO: display game over screen
 
     }
 }

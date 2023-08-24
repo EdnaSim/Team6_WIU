@@ -6,5 +6,4 @@ public class Pet_Horse : Pet
 {
     [Tooltip("How much % of travel time is saved with the horse")]
     public float TimeTakenReduction;
-
 }

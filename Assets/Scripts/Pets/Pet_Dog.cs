@@ -13,7 +13,6 @@ public class Pet_Dog : Pet
     protected override void FixedUpdate() {
         base.FixedUpdate();
         
-        if (target == null || player == null || transform == null) { return; }
         //near enemy, attack
         if (target != player.transform && Vector2.Distance((Vector2)target.position, (Vector2)transform.position) < nextWaypointDist) {
             if (CanAttack) {
