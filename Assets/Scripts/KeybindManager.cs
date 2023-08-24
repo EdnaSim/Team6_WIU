@@ -119,7 +119,6 @@ public class KeybindManager : MonoBehaviour
             Debug.Log(PlayerPrefs.GetString(keyButton.name));
             if (System.Enum.IsDefined(typeof(KeyCode), PlayerPrefs.GetString(keyButton.name)))
             {
-                Debug.Log("hehe");
                 KeyCode loadedKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), keyButton.GetComponentInChildren<TMP_Text>().text = PlayerPrefs.GetString(keyButton.name));
                 keyButton.GetComponentInChildren<TMP_Text>().text = GetKeyDisplayName(loadedKey);
             }
