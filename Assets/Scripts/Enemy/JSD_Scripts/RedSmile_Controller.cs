@@ -2,6 +2,7 @@ using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class RedSmile_Controller : MonoBehaviour
 {
@@ -37,6 +38,8 @@ public class RedSmile_Controller : MonoBehaviour
 
     private AIDestinationSetter RedSmiletarget;
 
+    public TMP_Text RUN;
+
     [SerializeField] 
     protected float WaitOutOfFOVtime = 2f; //default time till "give up"
     float OutOfFOVtimer; //the timer that counts down
@@ -69,7 +72,7 @@ public class RedSmile_Controller : MonoBehaviour
         {
             RedSmiletarget.target = GameObject.FindGameObjectWithTag("Player").transform;
         }
-
+        RUN.enabled = false;
         DestSetter = GetComponent<AIDestinationSetter>();
         healthManager = GetComponent<HealthManager>();
         boxCollider = GetComponent<BoxCollider2D>();
@@ -194,7 +197,7 @@ public class RedSmile_Controller : MonoBehaviour
             {
                 Player_HealthManager.Instance.TakeDamage(5f, gameObject);
                 SanityManager.Instance.ChangeSanity(-SanityManager.Instance.DrainAmtOnHit * 2);
-                Debug.Log("BigDrain");
+                //Debug.Log("BigDrain");
                 StartATKTimer = true;
                 StartCoroutine(AttackCooldown());
             }
@@ -203,6 +206,7 @@ public class RedSmile_Controller : MonoBehaviour
 
     private void Death()
     {
+        RUN.enabled = false;
         boxCollider.enabled = false;
         isDead = true;
         //aiPath.canMove = false;
@@ -305,6 +309,9 @@ public class RedSmile_Controller : MonoBehaviour
                     OutOfFOVtimer = WaitOutOfFOVtime; //reset timer
                     DestSetter.target = unit;
                     ChangeState(State.CHARGE);
+
+                    //RUN
+                    RUN.enabled = true;
                     //Debug.Log(unit.gameObject.name + " seen");
                 }
                 else if (canSeeUnit)

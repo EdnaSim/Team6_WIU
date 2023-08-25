@@ -54,6 +54,8 @@ public class SproutMinion_Controller : MonoBehaviour
 
     private BoxCollider2D boxCollider;
 
+    public float DeathTime;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -78,6 +80,8 @@ public class SproutMinion_Controller : MonoBehaviour
         healthManager = GetComponent<HealthManager>();
         boxCollider = GetComponent<BoxCollider2D>();
         spr = GFX.GetComponent<SpriteRenderer>();
+
+        //gameObject.SetActive(true);
     }
 
     // Update is called once per frame
@@ -354,7 +358,7 @@ public class SproutMinion_Controller : MonoBehaviour
 
     IEnumerator Die()
     {
-        yield return new WaitForSeconds(15f);
+        yield return new WaitForSeconds(DeathTime);
         ChangeState(State.DEATH);
     }
 

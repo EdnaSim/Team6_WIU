@@ -21,7 +21,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7253605109377972924
 Transform:
   m_ObjectHideFlags: 0
@@ -155,6 +155,7 @@ MonoBehaviour:
   spr: {fileID: 7253605109570596117}
   GFX: {fileID: 7253605109570596116}
   WaitOutOfFOVtime: 5
+  DeathTime: 15
 --- !u!114 &1343243703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,7 +189,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.00000011920929, y: -0.005777061}
+  m_Offset: {x: -0.014342785, y: -0.0679307}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -199,7 +200,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.5546029, y: 1.9358928}
+  m_Size: {x: 0.7035742, y: 0.9701185}
   m_EdgeRadius: 0
 --- !u!1 &7253605109570596116
 GameObject:
@@ -346,11 +347,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7559391100258719994, guid: cb8299a9763bba74795eb67097482c52, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7559391100258719994, guid: cb8299a9763bba74795eb67097482c52, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7559391100287772307, guid: cb8299a9763bba74795eb67097482c52, type: 3}
       propertyPath: m_Sprite
