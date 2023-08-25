@@ -13,3 +13,6 @@ MonoBehaviour:
   m_Name: InventoryData
   m_EditorClassIdentifier: 
   SavedInvSlots: []
+  SavedRangedWeapons: []
+  SavedMeleeWeapons: []
+  EquippedArmour: {fileID: 0}
