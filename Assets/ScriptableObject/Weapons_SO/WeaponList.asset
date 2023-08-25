@@ -13,20 +13,20 @@ MonoBehaviour:
   m_Name: WeaponList
   m_EditorClassIdentifier: 
   RangedWeaponList:
-  - {fileID: 11400000, guid: d013b4b0235af6a4086eafb58b95305a, type: 2}
-  - {fileID: 11400000, guid: 0698ff28b8fdcef40b2e3d1829e74a08, type: 2}
-  - {fileID: 11400000, guid: 18540a246eb82bc41bee7e13c74ced9c, type: 2}
-  - {fileID: 11400000, guid: 512c85833d442dc42aa24649963970af, type: 2}
+  - {fileID: 11400000, guid: f7b197495a680344e9663394cdc456d7, type: 2}
+  - {fileID: 11400000, guid: 50652259efb6f8440a34ed1ae53e4de3, type: 2}
+  - {fileID: 11400000, guid: 89e938b6398095e4b9c58da9db0b0e81, type: 2}
+  - {fileID: 11400000, guid: 3055c641df95ea1419b91ac1a6d5f116, type: 2}
   MeleeWeaponlist:
-  - {fileID: 11400000, guid: 58092f24a34a403438daf5f49e1d980d, type: 2}
-  - {fileID: 11400000, guid: 6a907274aa5a84240a79d9ddbbba78ff, type: 2}
-  - {fileID: 11400000, guid: b1367f44e7e647745bdedb8318e292bb, type: 2}
-  - {fileID: 11400000, guid: 636db8d514466134b94d4d38d478742b, type: 2}
-  - {fileID: 11400000, guid: db9bb2e0671075144928e762717389d7, type: 2}
-  - {fileID: 11400000, guid: 0422fc4ac762a494c87b43989bbe6c9d, type: 2}
-  - {fileID: 11400000, guid: c69cd8fdcdb1ba24f859afe50243f8dc, type: 2}
-  - {fileID: 11400000, guid: 27b973333d66fa9478a8c58ea35b6c3d, type: 2}
-  - {fileID: 11400000, guid: a7de854b8e26b3e4f914d50a2f1c975b, type: 2}
-  - {fileID: 11400000, guid: c5fe85d4e4dd3d047a29b4130eac8abd, type: 2}
-  - {fileID: 11400000, guid: 1321da13d839b314a9bd7283421779fe, type: 2}
-  - {fileID: 11400000, guid: 1e752e16f6e15814cb98758ab5aac544, type: 2}
+  - {fileID: 11400000, guid: 5441436a9f44fe44d8018b12b843c095, type: 2}
+  - {fileID: 11400000, guid: 15a9b774cbcdd704ea77ac5e0cae664f, type: 2}
+  - {fileID: 11400000, guid: bd99631dacd1fed4d8e0e4ede352be38, type: 2}
+  - {fileID: 11400000, guid: af65947ca97062e4abd0d4fd3ddc005b, type: 2}
+  - {fileID: 11400000, guid: 2aea11a1a37878349b0c5f262ca14793, type: 2}
+  - {fileID: 11400000, guid: 52e708dddd42c3f4bb62abbd2441dab3, type: 2}
+  - {fileID: 11400000, guid: e651a509f070bdc459f96aab5f0513a4, type: 2}
+  - {fileID: 11400000, guid: e7df81a4536f1864596a0c5a66313cc7, type: 2}
+  - {fileID: 11400000, guid: 079e04b52e77f2645832714614a8d1bc, type: 2}
+  - {fileID: 11400000, guid: c13e01905965cfa4c8360e2cbe6e57ce, type: 2}
+  - {fileID: 11400000, guid: 562a0e5ebdc0fa84196c1297839b30f1, type: 2}
+  - {fileID: 11400000, guid: 33725d95eb6c09e458a147adf14a9359, type: 2}

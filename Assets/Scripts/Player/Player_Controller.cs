@@ -34,11 +34,13 @@ public class Player_Controller : MonoBehaviour
     [Header("Pet")]
     [SerializeField] SO_PetDetails PetDetails;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
     // Start is called before the first frame update
     void Start()
     {
-        Instance = this;
-
         rb = GetComponent<Rigidbody2D>();
         ar = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
@@ -46,16 +48,6 @@ public class Player_Controller : MonoBehaviour
         MovementSpeed = Base_MovementSpeed;
 
         wc = GetComponent<WeaponController>();
-
-        ////TEMP - add weapon instance for each type
-        //for (int i = 0; i < wl.RangedWeaponList.Count; i++) {
-        //    TempInventory.Add(new RangedWeaponStats(wl.RangedWeaponList[i].Stats));
-        //}
-        //for (int i=0; i < wl.MeleeWeaponlist.Count; i++) {
-        //    TempMeleeInv.Add(new MeleeWeaponStats(wl.MeleeWeaponlist[i].Stats));
-        //}
-
-        Physics2D.IgnoreLayerCollision(gameObject.layer, gameObject.layer);
     }
 
     // Update is called once per frame
@@ -83,25 +75,7 @@ public class Player_Controller : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.B)) {
                 //Open Inventory
-                
-                //TEMP - Find weapon name to switch to it
-                //wc.ChangeRangedWeapon(TempInventory.Find((RangedWeaponStats w) => w.WeaponName == "Triangle"));
-                //wc.ChangeRangedWeapon(TempInventory[weaponListIndex]);
-                //Debug.Log("Current Weapon: " + TempInventory[weaponListIndex].WeaponName);
-                //weaponListIndex++;
-                //if (weaponListIndex >= TempInventory.Count) weaponListIndex = 0;
-
-                ////if (wc.MeleeStats.WeaponName == "Fists")
-                ////    wc.ChangeMeleeWeapon(TempMeleeInv.Find((MeleeWeaponStats w) => w.WeaponName == "Sword"));
-                ////else
-                ////    wc.ChangeMeleeWeapon(TempMeleeInv.Find((MeleeWeaponStats w) => w.WeaponName == "Fists"));
-                //wc.ChangeMeleeWeapon(TempMeleeInv[meleeListIndex]);
-                //Debug.Log("Current Melee: " + TempMeleeInv[meleeListIndex].WeaponName);
-                //meleeListIndex++;
-                //if (meleeListIndex >= TempMeleeInv.Count) meleeListIndex = 0;
             }
-            //TEMP:
-            //LMB FOR BOTH MELEE AND RANGED, USING INV INDICATOR TO CHECK IF INDICATOR IS ON A WEAPON.
             if (Input.GetMouseButton(0)) {
                 //if clicked on UI / no object selected
                 if (!EventSystem.current.IsPointerOverGameObject() && InventoryManager.Instance.getSelected() != null) {

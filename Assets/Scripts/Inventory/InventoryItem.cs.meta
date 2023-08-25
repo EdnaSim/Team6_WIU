@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/Inventory/InventoryItem.cs.meta
 guid: d2e56873f55bbd14f86cbb079839662c
+========
+guid: 0ab72a2de371c334697971f160730139
+>>>>>>>> origin/JSD:Assets/Scripts/AudioVolumeManager.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

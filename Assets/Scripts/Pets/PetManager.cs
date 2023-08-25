@@ -27,29 +27,34 @@ public class PetManager : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
 
-        //TODO: load saved data into SO_PetDetails
-
         //listener to be invoked when pet starves to death
         if (PetDie == null)
             PetDie = new UnityEvent();
         PetDie.AddListener(OnPetDeath);
 
         NameContainer.SetActive(false);
+        if (GetNewGame.isNewGame) {
+            MenuManager.Instance.ShowMenu(PetSelectorContainer);
+        }
+        else {
+            //load from json to  SO_PetDetails
+            LoadPetDetails();
+        }
     }
 
-    //new save, select pet
+    //new save, on select pet
     public void SelectPet(GetPetTypeEnum petTypeEnum) { //using GetPetTypeEnum class cuz Unity doesnt allow enum values into params
         PetDetails.PetType = petTypeEnum.PetType;
+        //disable the selection page
+        MenuManager.Instance.HideMenu();
         //spawn pet if possible
         if (!SpawnPet()) {
             Debug.LogError("SO_PetDetails PetType is null, or the Prefabs have not been assigned / PetManager.cs (SpawnPet) does not have the pet type included.");
             return;
         }
         if (PetDetails.PetType != SO_PetDetails.PETTYPE.NONE) {
-            NameContainer.SetActive(true);
+            MenuManager.Instance.ShowMenu(NameContainer);
         }
-        //disable the selection page
-        PetSelectorContainer.SetActive(false);
     }
     
     public bool SpawnPet() {
@@ -86,10 +91,12 @@ public class PetManager : MonoBehaviour
             default:
             return false;
         }
-        PetDetails.MaxHunger = Pet.Base_MaxHunger;
-        PetDetails.HungerDrain = Pet.Base_HungerDrain;
-        SanityManager.Instance.PetAlive = true;
-        EnergyManager.Instance.PetAlive = true;
+        if (PetDetails.PetType != SO_PetDetails.PETTYPE.NONE) {
+            PetDetails.MaxHunger = Pet.Base_MaxHunger;
+            PetDetails.HungerDrain = Pet.Base_HungerDrain;
+            SanityManager.Instance.PetAlive = true;
+            EnergyManager.Instance.PetAlive = true;
+        }
 
         return true;
     }
@@ -97,7 +104,7 @@ public class PetManager : MonoBehaviour
     public void NamePet(TMP_InputField input) {
         PetDetails.Name = input.text;
         Pet.Nametag.text = PetDetails.Name;
-        NameContainer.SetActive(false);
+        MenuManager.Instance.HideMenu();
     }
 
     public void OnPetDeath() {
@@ -120,5 +127,10 @@ public class PetManager : MonoBehaviour
         //remove pet
         Destroy(Pet.gameObject);
         Pet = null;
+    }
+
+    public void LoadPetDetails() {
+        //TODO: load details from json to here
+        
     }
 }

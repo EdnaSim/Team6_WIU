@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/Inventory/InventoryManager.cs.meta
 guid: 80f8dce322330a34f8ea7bfc511ffadd
+========
+guid: 5c01668d93f039a4cab0f50b8e626f96
+>>>>>>>> origin/JSD:Assets/Scripts/ChangeButtonAppearance.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

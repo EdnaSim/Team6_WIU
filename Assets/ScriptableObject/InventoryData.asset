@@ -13,6 +13,66 @@ MonoBehaviour:
   m_Name: InventoryData
   m_EditorClassIdentifier: 
   SavedInvSlots: []
-  SavedRangedWeapons: []
+  SavedRangedWeapons:
+  - Damage: 5
+    FireRate: 1
+    StaminaCost: 5
+    MaxRange: 10
+    ProjSpeed: 10
+    FallOffDist: 5
+    AmmoInTheMag: 6
+    AmmoPerMag: 6
+    ReloadTime: 1.5
+    CanReload: 1
+    Spread: 0
+    ShotsPerFire: 1
+    AOE: 0
+    DoesProjDoInitialDamage: 1
+    AOEDamage: 0
+    ProjPrefab: {fileID: 7630813025349190170, guid: 72d7dce6a5a0ae741988b13d73f41e27, type: 3}
+    WeaponName: Pistol
+    TimerForReload: 0
+    Reloading: 0
+    TimerForFireRate: 0
+  - Damage: 5
+    FireRate: 1
+    StaminaCost: 5
+    MaxRange: 12
+    ProjSpeed: 5
+    FallOffDist: 5
+    AmmoInTheMag: 18
+    AmmoPerMag: 20
+    ReloadTime: 2
+    CanReload: 1
+    Spread: 0
+    ShotsPerFire: 1
+    AOE: 0
+    DoesProjDoInitialDamage: 1
+    AOEDamage: 0
+    ProjPrefab: {fileID: 7630813025349190170, guid: 72d7dce6a5a0ae741988b13d73f41e27, type: 3}
+    WeaponName: Rifle
+    TimerForReload: 0
+    Reloading: 0
+    TimerForFireRate: -0.016336003
+  - Damage: 10
+    FireRate: 4
+    StaminaCost: 10
+    MaxRange: 8
+    ProjSpeed: 6
+    FallOffDist: 10
+    AmmoInTheMag: 4
+    AmmoPerMag: 5
+    ReloadTime: 2
+    CanReload: 0
+    Spread: 0
+    ShotsPerFire: 1
+    AOE: 2
+    DoesProjDoInitialDamage: 1
+    AOEDamage: 15
+    ProjPrefab: {fileID: 7630813025349190170, guid: 72d7dce6a5a0ae741988b13d73f41e27, type: 3}
+    WeaponName: Rocket Launcher
+    TimerForReload: 0
+    Reloading: 0
+    TimerForFireRate: -0.00084295496
   SavedMeleeWeapons: []
   EquippedArmour: {fileID: 0}

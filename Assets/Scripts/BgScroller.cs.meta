@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/Inventory/ArmorSlot.cs.meta
+guid: da5ee04f7f348f444809b56f441498b8
+========
+guid: 69673f83b34ede341bad13111087ce66
+>>>>>>>> origin/JSD:Assets/Scripts/BgScroller.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

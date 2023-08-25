@@ -73,22 +73,33 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
         GetComponent<CanvasGroup>().blocksRaycasts = true; //this one is not set in the for loop
         image.raycastTarget = true;
+        //dropped item on a slot with another item alr in it
         if (CheckIfStack) {
             for (int i = 0; i < inventorySlots.Length; i++) {
-                //dropped on a slot that already has an item
+                //found the slot that player tried to drag into
                 if (inventorySlots[i].transform == PrevParentAfterDrag) {
                     //check if same as the existing item
                     InventoryItem itemInSlot = inventorySlots[i].GetComponentInChildren<InventoryItem>();
-                    if (itemInSlot != null && item.itemName == itemInSlot.item.itemName) {
+                    if (itemInSlot != null && item.itemName == itemInSlot.item.itemName && itemInSlot.item.stackable) {
+                        //stackable, start stacking
                         for (int ii = 0; ii < count; ii++) {
-                            if (itemInSlot.count < InventoryManager.Instance.MaxStackedItems
-                                && itemInSlot.item.stackable) {
+                            if (itemInSlot.count < InventoryManager.Instance.MaxStackedItems) {
                                 itemInSlot.count++;
                                 itemInSlot.updateCount();
                                 Destroy(gameObject);
                             }
                         }
                         break;
+                    }
+                    else if (itemInSlot != null) {
+                        //not stackable, try swapping slots
+                        if (parentAfterDrag != PrevParentAfterDrag && parentAfterDrag.childCount == 0) {
+                            //swap parents
+                            Transform newParent = itemInSlot.transform.parent; //need this cuz itemInSlot's parent gets changed
+                            itemInSlot.transform.SetParent(parentAfterDrag);
+                            parentAfterDrag = newParent;
+                            break;
+                        }
                     }
                 }
             }
@@ -136,11 +147,13 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             consumeButton.SetActive(true);
         }
         else if (item.type == Item.itemType.melee) {
-            Player_Controller.Instance.wc.ChangeMeleeWeapon(WeaponController.OwnedMeleeList.Find((MeleeWeaponStats w) => w.WeaponName == item.itemName));
+            WeaponController.Instance.ChangeMeleeWeapon(WeaponController.OwnedMeleeList.Find((MeleeWeaponStats w) => w.WeaponName == item.itemName));
         }
         else if (item.type == Item.itemType.ranged) {
-            Player_Controller.Instance.wc.ChangeRangedWeapon(WeaponController.OwnedRangedList.Find((RangedWeaponStats r) => r.WeaponName == item.itemName));
+            WeaponController.Instance.ChangeRangedWeapon(WeaponController.OwnedRangedList.Find((RangedWeaponStats r) => r.WeaponName == item.itemName));
         }
+
+        WeaponController.Instance.UpdateAmmoDisplay();
     }
     public void deselectItem()
     {

@@ -75,14 +75,17 @@ public class InventoryManager : MonoBehaviour
                 for (int m=0; m < mwl.Count; m++) {
                     if (_item.itemName == mwl[m].Stats.WeaponName) {
                         Player_Controller.Instance.wc.AddMeleeWeapon(mwl[m].Stats);
+                        return true;
                     }
                 }
                 //add to range weapon list, if possible
                 for (int r = 0; r < rwl.Count; r++){
                     if (_item.itemName == rwl[r].Stats.WeaponName) {
                         Player_Controller.Instance.wc.AddRangedWeapon(rwl[r].Stats);
+                        return true;
                     }
                 }
+
                 return true;
             }
         }
@@ -144,8 +147,7 @@ public class InventoryManager : MonoBehaviour
             
     }
     void SpawnNewItem(Item _item , InventorySlot slot)
-    {
-        
+    {   
         GameObject newItemGo = Instantiate(inventoryItemPrefab, slot.transform);
         
         InventoryItem inventoryItem = newItemGo.GetComponent<InventoryItem>();
@@ -268,14 +270,17 @@ public class InventoryManager : MonoBehaviour
                 if (_itemStats.statstype == ItemStats.statsType.health)
                 {
                     // add to player health
+                    Player_HealthManager.Instance.Heal(_itemStats.statsAmount);
                 }
                 else if (_itemStats.statstype == ItemStats.statsType.stamina)
                 {
                     // add to player stamina
+                    EnergyManager.Instance.EnergyRecover(_itemStats.statsAmount);
                 }
                 else if (_itemStats.statstype == ItemStats.statsType.sanity)
                 {
                     // add to player sanity
+                    SanityManager.Instance.ChangeSanity(_itemStats.statsAmount);
                 }
             }
         }

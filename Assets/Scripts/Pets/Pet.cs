@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 using TMPro;
+using UnityEngine.UI;
 
 public abstract class Pet : MonoBehaviour
 {
@@ -19,6 +20,10 @@ public abstract class Pet : MonoBehaviour
     protected Vector2 facing;
     protected Vector2 force;
 
+    [Header("Food")]
+    public List<Item> EdibleFoodList;
+    [SerializeField] float ReplenishAmtFromFood;
+
     [Header("Pathfinding")]
     public Transform target;
     [SerializeField] protected float moveSpeed;
@@ -31,10 +36,10 @@ public abstract class Pet : MonoBehaviour
     [SerializeField] protected bool OriginalSpriteFaceLeft = false;
 
     [Header("UI")]
-    [SerializeField] public TMP_Text Nametag;
+    public TMP_Text Nametag;
+    public Slider HungerBar;
 
-    // Start is called before the first frame update
-    void OnEnable()
+    protected void OnEnable()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         rb = GetComponent<Rigidbody2D>();
@@ -44,6 +49,12 @@ public abstract class Pet : MonoBehaviour
 
         target = player.transform;
         InvokeRepeating("UpdatePath", 0f, 0.5f);
+
+        HungerBar.value = details.CurrentHunger;
+        HungerBar.maxValue = details.MaxHunger;
+
+        UpdateHungerBar();
+        SetHungerBarDisplay(true);
     }
 
     protected virtual void FixedUpdate() {
@@ -65,7 +76,7 @@ public abstract class Pet : MonoBehaviour
         //cap velocity
         rb.velocity = new Vector2(Mathf.Min(rb.velocity.x, moveSpeed), Mathf.Min(rb.velocity.y, moveSpeed * 2));
     }
-    private void LateUpdate() {
+    protected void LateUpdate() {
         UpdateAnimation();
         //teleport back to player if too far
         if (Vector2.Distance(player.transform.position, transform.position) > 10) {
@@ -73,18 +84,31 @@ public abstract class Pet : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D col) {
+    protected void OnTriggerStay2D(Collider2D col) {
         if (col.gameObject.tag == "Player") {
-            //check if player has edible food
-
-            //if true, consume 1
-
-            //gain hunger back
-            ChangeHunger(10);
+            //check if player has edible food and can feed
+            if (Input.GetKeyDown(KeyCode.F) 
+                && EdibleFoodList.Contains(InventoryManager.Instance.getSelected()) 
+                && details.CurrentHunger < details.MaxHunger) {
+                //consume 1
+                InventoryManager.Instance.removeItem(InventoryManager.Instance.getSelected(), 1);
+                //gain hunger back
+                ChangeHunger(ReplenishAmtFromFood);
+            }
+            SetHungerBarDisplay(true);
         }
     }
 
-    void UpdateAnimation() {
+    protected void OnTriggerExit2D(Collider2D collision) {
+        SetHungerBarDisplay(false);
+    }
+
+    public void UpdateHungerBar() {
+        HungerBar.maxValue = details.MaxHunger;
+        HungerBar.value = details.CurrentHunger;
+    }
+
+    protected void UpdateAnimation() {
         if (ar == null)
             return;
 
@@ -108,20 +132,20 @@ public abstract class Pet : MonoBehaviour
         }
     }
 
-    void UpdatePath() {
+    protected void UpdatePath() {
         if (seeker.IsDone() && target != null) {
             seeker.StartPath(rb.position, target.position, OnPathComplete);
         }
     }
 
-    void OnPathComplete(Path p) {
+    protected void OnPathComplete(Path p) {
         if (!p.error) {
             path = p;
             currentWaypoint = 0; //start at beginning of path
         }
     }
 
-    private void FollowPath() {
+    protected void FollowPath() {
         if (path == null)
             return;
 
@@ -145,10 +169,19 @@ public abstract class Pet : MonoBehaviour
 
     public virtual void ChangeHunger(float amt) {
         details.CurrentHunger += amt;
+        if (details.CurrentHunger > details.MaxHunger) {
+            details.CurrentHunger = details.MaxHunger;
+        }
         //starved to death
-        if (details.CurrentHunger <= 0) {
+        else if (details.CurrentHunger <= 0) {
             PetManager.PetDie?.Invoke();
         }
+
+        UpdateHungerBar();
+    }
+
+    public void SetHungerBarDisplay(bool b) {
+        HungerBar.gameObject.SetActive(b);
     }
 
     public virtual void OwnerAttacked(GameObject attacker) {

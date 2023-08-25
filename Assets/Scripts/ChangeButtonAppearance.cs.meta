@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/Inventory/InventoryManager.cs.meta
+guid: d363dd3732ed9d94185b56f69d3fd771
+========
+guid: 5c01668d93f039a4cab0f50b8e626f96
+>>>>>>>> origin/JSD:Assets/Scripts/ChangeButtonAppearance.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

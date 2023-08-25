@@ -79,7 +79,6 @@ public class Projectile : MonoBehaviour
         if(AOE > 0) {
             //damage all enemies in AOE
             foreach (Collider2D c in Physics2D.OverlapCircleAll(transform.position, AOE)) {
-                Debug.Log(c.gameObject.name);
                 HealthManager hm = c.gameObject.GetComponent<HealthManager>();
                 if (hm != null) {
                     hm.TakeDamage(AOEDamage, caster);
@@ -111,7 +110,6 @@ public class Projectile : MonoBehaviour
         //rotate sprite
         float angleToFace = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         GetComponentInChildren<SpriteRenderer>().transform.rotation = Quaternion.AngleAxis(angleToFace, Vector3.forward);
-
     }
 
     IEnumerator DisableAfterTime() {

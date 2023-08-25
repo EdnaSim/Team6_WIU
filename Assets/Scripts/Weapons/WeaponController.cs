@@ -22,6 +22,7 @@ public class WeaponController : MonoBehaviour
     [Header("UI")]
     [SerializeField] TMP_Text ReloadingText;
     [SerializeField] TMP_Text NoAmmoText;
+    [SerializeField] TMP_Text AmmoDisplayText;
     float ReloadFlashTimer = 0;
 
     private void Awake() {
@@ -31,17 +32,19 @@ public class WeaponController : MonoBehaviour
         if (owner == null) {
             owner = gameObject;
         }
-        OwnedRangedList = new List<RangedWeaponStats>();
-        OwnedMeleeList = new List<MeleeWeaponStats>();
         LoadLists();
 
         ReloadingText.enabled = false;
         NoAmmoText.enabled = false;
+        AmmoDisplayText.enabled = false;
     }
 
     private void Update() {
-        if (NoAmmoText.enabled && InventoryManager.Instance.getAmmo() > 0) //TEMP: USE GETAMMO FROM INV INSTEAD OF TOTALSTOREAMMO
+        if (InventoryManager.Instance.getAmmo() > 0 || RangedStats.AmmoInTheMag > 0) 
             NoAmmoText.enabled = false;
+        else if (InventoryManager.Instance.getAmmo() <= 0 && RangedStats.AmmoInTheMag <= 0 && RangedStats.ProjPrefab != null)
+            NoAmmoText.enabled = true;
+
         if (RangedStats.Reloading) {
             ReloadFlashTimer += Time.deltaTime;
             if (ReloadFlashTimer >= 0.2f) {
@@ -78,8 +81,22 @@ public class WeaponController : MonoBehaviour
         }
     }
 
+    public void UpdateAmmoDisplay() {
+        if (RangedStats == null) return;
+
+        AmmoDisplayText.text = RangedStats.AmmoInTheMag + "  /  " + RangedStats.AmmoPerMag;
+        if (InventoryManager.Instance.getSelected().type != Item.itemType.ranged)
+            AmmoDisplayText.enabled = false;
+        else
+            AmmoDisplayText.enabled = true;
+    }
+
     public bool CanRanged() {
-        if (RangedStats == null || RangedStats.ProjPrefab == null || RangedStats.TimerForFireRate > 0f || RangedStats.Reloading)
+        if (RangedStats == null 
+            || RangedStats.ProjPrefab == null 
+            || RangedStats.TimerForFireRate > 0f 
+            || RangedStats.Reloading 
+            || (RangedStats.AmmoInTheMag == 0 && InventoryManager.Instance.getAmmo() <= 0))
             return false;
 
         return true;
@@ -130,7 +147,12 @@ public class WeaponController : MonoBehaviour
         if (RangedStats.AmmoInTheMag <= 0) {
             Reload();
         }
+        //auto reload after firing, if no more ammo in the mag
+        if (RangedStats.AmmoInTheMag <= 0) {
+            Reload();
+        }
         RangedStats.TimerForFireRate = RangedStats.FireRate;
+        UpdateAmmoDisplay();
 
         return true;
     }
@@ -165,6 +187,7 @@ public class WeaponController : MonoBehaviour
         ReloadingText.enabled = false;
         ReloadFlashTimer = 0f;
         RangedStats.Reloading = false;
+        UpdateAmmoDisplay();
     }
 
     public bool CanMelee() {
@@ -209,10 +232,6 @@ public class WeaponController : MonoBehaviour
             return;
 
         if (OwnedRangedList.Contains(newWeaponStat)) {
-            //TODO: check if newData exists in the player's inventory (not this temp one)
-            //BaseData = newData;
-         
-            //TODO: use stats of the weapon instance from inventory
             RangedStats = newWeaponStat;
         }
     }

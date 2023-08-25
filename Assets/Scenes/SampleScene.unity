@@ -10191,7 +10191,6 @@ MonoBehaviour:
   - {fileID: 2116740151337848540, guid: 1c55eead7fafc0c4881e30c96570962d, type: 3}
   - {fileID: 8893349677792070559, guid: 5172a15078cb07847a01ffaed4154ebd, type: 3}
   inventoryItemPrefab: {fileID: 7690685759977987638, guid: 48afd56f1db0e3249b1b915dc2694011, type: 3}
-  MaxStackedItems: 20
   itemStats:
   - {fileID: 11400000, guid: 1ce807a0aaea0c349a8ae399ae315550, type: 2}
   - {fileID: 11400000, guid: dc07b58aba8a3ee41aec5987749aec9e, type: 2}

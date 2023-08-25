@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/Inventory/InventoryItem.cs.meta
+guid: f4893ca53c829da42b7776de505ed601
+========
+guid: 0ab72a2de371c334697971f160730139
+>>>>>>>> origin/JSD:Assets/Scripts/AudioVolumeManager.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
