@@ -148,7 +148,7 @@ public class InventoryManager : MonoBehaviour
     }
     void SpawnNewItem(Item _item , InventorySlot slot)
     {
-        Debug.Log("oi");
+        //Debug.Log("oi");
         
         GameObject newItemGo = Instantiate(inventoryItemPrefab, slot.transform);
         
