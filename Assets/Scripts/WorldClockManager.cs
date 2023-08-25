@@ -378,28 +378,14 @@ public class WorldClockManager : MonoBehaviour
                                     //TravelMinute = OnHorse.BaseToFarm % 1 * 60;
                                     //TravelHour = OnHorse.BaseToFarm - (TravelMinute/60);
                                     //TravelEndTime = PredictTime(TravelMinute, TravelHour);
-                                    //if (TravelEndTime > 2400)
-                                    //{
-                                    //    CanTravel = false;
-                                    //}
-                                    //else
-                                    //{
-                                    //    CanTravel = true;
-                                    //}
+                                    //CanTravel = true;
                                     //}
                                     //else
                                     //{
                                     TravelMinute = OnFoot.BaseToFarm % 1 * 60;
                                     TravelHour = OnFoot.BaseToFarm - (TravelMinute/60);
                                     TravelEndTime = PredictTime(TravelMinute, TravelHour);
-                                    if (TravelEndTime > 2400)
-                                    {
-                                        CanTravel = false;
-                                    }
-                                    else
-                                    {
-                                        CanTravel = true;
-                                    }
+                                    CanTravel = true;
                                     //}
                                 }
                                 else if (Loc2.LocationName == "Grocery Store")
@@ -630,28 +616,14 @@ public class WorldClockManager : MonoBehaviour
                                     //TravelMinute = OnHorse.BaseToGroceryStore % 1 * 60;
                                     //TravelHour = OnHorse.BaseToGroceryStore - (TravelMinute/60);
                                     //TravelEndTime = PredictTime(TravelMinute, TravelHour);
-                                    //if (TravelEndTime > 2400)
-                                    //{
-                                    //    CanTravel = false;
-                                    //}
-                                    //else
-                                    //{
-                                    //    CanTravel = true;
-                                    //}
+                                    //CanTravel = true;
                                     //}
                                     //else
                                     //{
                                     TravelMinute = OnFoot.BaseToGroceryStore % 1 * 60;
                                     TravelHour = OnFoot.BaseToGroceryStore - (TravelMinute / 60);
                                     TravelEndTime = PredictTime(TravelMinute, TravelHour);
-                                    if (TravelEndTime > 2400)
-                                    {
-                                        CanTravel = false;
-                                    }
-                                    else
-                                    {
-                                        CanTravel = true;
-                                    }
+                                    CanTravel = true;
                                     //}
                                 }
                                 else if (Loc2.LocationName == "Farm")
@@ -882,28 +854,14 @@ public class WorldClockManager : MonoBehaviour
                                     //TravelMinute = OnHorse.BaseToHardwareStore % 1 * 60;
                                     //TravelHour = OnHorse.BaseToHardwareStore - (TravelMinute/60);
                                     //TravelEndTime = PredictTime(TravelMinute, TravelHour);
-                                    //if (TravelEndTime > 2400)
-                                    //{
-                                    //    CanTravel = false;
-                                    //}
-                                    //else
-                                    //{
-                                    //    CanTravel = true;
-                                    //}
+                                    //CanTravel = true;
                                     //}
                                     //else
                                     //{
                                     TravelMinute = OnFoot.BaseToHardwareStore % 1 * 60;
                                     TravelHour = OnFoot.BaseToHardwareStore - (TravelMinute / 60);
                                     TravelEndTime = PredictTime(TravelMinute, TravelHour);
-                                    if (TravelEndTime > 2400)
-                                    {
-                                        CanTravel = false;
-                                    }
-                                    else
-                                    {
-                                        CanTravel = true;
-                                    }
+                                    CanTravel = true;
                                     //}
                                 }
                                 else if (Loc2.LocationName == "Farm")
@@ -1134,28 +1092,14 @@ public class WorldClockManager : MonoBehaviour
                                     //TravelMinute = OnHorse.BaseToPoliceStation % 1 * 60;
                                     //TravelHour = OnHorse.BaseToPoliceStation - (TravelMinute/60);
                                     //TravelEndTime = PredictTime(TravelMinute, TravelHour);
-                                    //if (TravelEndTime > 2400)
-                                    //{
-                                    //    CanTravel = false;
-                                    //}
-                                    //else
-                                    //{
-                                    //    CanTravel = true;
-                                    //}
+                                    //CanTravel = true;
                                     //}
                                     //else
                                     //{
                                     TravelMinute = OnFoot.BaseToPoliceStation % 1 * 60;
                                     TravelHour = OnFoot.BaseToPoliceStation - (TravelMinute / 60);
                                     TravelEndTime = PredictTime(TravelMinute, TravelHour);
-                                    if (TravelEndTime > 2400)
-                                    {
-                                        CanTravel = false;
-                                    }
-                                    else
-                                    {
-                                        CanTravel = true;
-                                    }
+                                    CanTravel = true;
                                     //}
                                 }
                                 else if (Loc2.LocationName == "Farm")
@@ -1386,28 +1330,14 @@ public class WorldClockManager : MonoBehaviour
                                     //TravelMinute = OnHorse.BaseToPharmacy % 1 * 60;
                                     //TravelHour = OnHorse.BaseToPharmacy - (TravelMinute/60);
                                     //TravelEndTime = PredictTime(TravelMinute, TravelHour);
-                                    //if (TravelEndTime > 2400)
-                                    //{
-                                    //    CanTravel = false;
-                                    //}
-                                    //else
-                                    //{
-                                    //    CanTravel = true;
-                                    //}
+                                    //CanTravel = true;
                                     //}
                                     //else
                                     //{
                                     TravelMinute = OnFoot.BaseToPharmacy % 1 * 60;
                                     TravelHour = OnFoot.BaseToPharmacy - (TravelMinute / 60);
                                     TravelEndTime = PredictTime(TravelMinute, TravelHour);
-                                    if (TravelEndTime > 2400)
-                                    {
-                                        CanTravel = false;
-                                    }
-                                    else
-                                    {
-                                        CanTravel = true;
-                                    }
+                                    CanTravel = true;
                                     //}
                                 }
                                 else if (Loc2.LocationName == "Farm")
@@ -1638,28 +1568,14 @@ public class WorldClockManager : MonoBehaviour
                                     //TravelMinute = OnHorse.BaseToHighSchool % 1 * 60;
                                     //TravelHour = OnHorse.BaseToHighSchool - (TravelMinute/60);
                                     //TravelEndTime = PredictTime(TravelMinute, TravelHour);
-                                    //if (TravelEndTime > 2400)
-                                    //{
-                                    //    CanTravel = false;
-                                    //}
-                                    //else
-                                    //{
-                                    //    CanTravel = true;
-                                    //}
+                                    //CanTravel = true;
                                     //}
                                     //else
                                     //{
                                     TravelMinute = OnFoot.BaseToHighSchool % 1 * 60;
                                     TravelHour = OnFoot.BaseToHighSchool - (TravelMinute / 60);
                                     TravelEndTime = PredictTime(TravelMinute, TravelHour);
-                                    if (TravelEndTime > 2400)
-                                    {
-                                        CanTravel = false;
-                                    }
-                                    else
-                                    {
-                                        CanTravel = true;
-                                    }
+                                    CanTravel = true;
                                     //}
                                 }
                                 else if (Loc2.LocationName == "Farm")
@@ -1890,28 +1806,14 @@ public class WorldClockManager : MonoBehaviour
                                     //TravelMinute = OnHorse.BaseToMilitaryCheckpoint % 1 * 60;
                                     //TravelHour = OnHorse.BaseToMilitaryCheckpoint - (TravelMinute/60);
                                     //TravelEndTime = PredictTime(TravelMinute, TravelHour);
-                                    //if (TravelEndTime > 2400)
-                                    //{
-                                    //    CanTravel = false;
-                                    //}
-                                    //else
-                                    //{
-                                    //    CanTravel = true;
-                                    //}
+                                    //CanTravel = true;
                                     //}
                                     //else
                                     //{
                                     TravelMinute = OnFoot.BaseToMilitaryCheckpoint % 1 * 60;
                                     TravelHour = OnFoot.BaseToMilitaryCheckpoint - (TravelMinute / 60);
                                     TravelEndTime = PredictTime(TravelMinute, TravelHour);
-                                    if (TravelEndTime > 2400)
-                                    {
-                                        CanTravel = false;
-                                    }
-                                    else
-                                    {
-                                        CanTravel = true;
-                                    }
+                                    CanTravel = true;
                                     //}
                                 }
                                 else if (Loc2.LocationName == "Farm")
@@ -2142,28 +2044,14 @@ public class WorldClockManager : MonoBehaviour
                                     //TravelMinute = OnHorse.BaseToTrader % 1 * 60;
                                     //TravelHour = OnHorse.BaseToTrader - (TravelMinute/60);
                                     //TravelEndTime = PredictTime(TravelMinute, TravelHour);
-                                    //if (TravelEndTime > 2400)
-                                    //{
-                                    //    CanTravel = false;
-                                    //}
-                                    //else
-                                    //{
-                                    //    CanTravel = true;
-                                    //}
+                                    //CanTravel = true;
                                     //}
                                     //else
                                     //{
                                     TravelMinute = OnFoot.BaseToTrader % 1 * 60;
                                     TravelHour = OnFoot.BaseToTrader - (TravelMinute / 60);
                                     TravelEndTime = PredictTime(TravelMinute, TravelHour);
-                                    if (TravelEndTime > 2400)
-                                    {
-                                        CanTravel = false;
-                                    }
-                                    else
-                                    {
-                                        CanTravel = true;
-                                    }
+                                    CanTravel = true;
                                     //}
                                 }
                                 else if (Loc2.LocationName == "Farm")

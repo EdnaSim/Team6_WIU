@@ -15,3 +15,5 @@ MonoBehaviour:
   LocationName: Farm
   DefaultCurrentLocationCheck: 0
   DefaultDestinationCheck: 0
+  CurrentLocationCheck: 0
+  CurrentDestinationCheck: 0

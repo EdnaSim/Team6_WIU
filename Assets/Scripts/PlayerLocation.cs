@@ -14,8 +14,8 @@ public class PlayerLocation : ScriptableObject
     [SerializeField]
     private bool DefaultDestinationCheck;
 
-    private bool CurrentLocationCheck;
-    private bool CurrentDestinationCheck;
+    public bool CurrentLocationCheck;
+    public bool CurrentDestinationCheck;
 
     public bool CurrCLCheck
     {

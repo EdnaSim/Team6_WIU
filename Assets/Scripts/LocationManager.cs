@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.SceneManagement;
 
 public class LocationManager : MonoBehaviour
 {
@@ -124,8 +123,6 @@ public class LocationManager : MonoBehaviour
                     {
                         if (Loc2.CurrDCheck == true)
                         {
-                            Loc1.CurrCLCheck = false;
-                            Loc2.CurrDCheck = false;
                             Loc2.CurrCLCheck = true;
 
                             switch(Loc2.LocationName)
@@ -166,6 +163,8 @@ public class LocationManager : MonoBehaviour
                                     SceneLoader.Instance.LoadScene("Trader");
                                     break;
                             }
+                            Loc1.CurrCLCheck = false;
+                            Loc2.CurrDCheck = false;
                         }
                     }
                 }

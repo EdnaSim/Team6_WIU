@@ -15,3 +15,5 @@ MonoBehaviour:
   LocationName: Base
   DefaultCurrentLocationCheck: 0
   DefaultDestinationCheck: 0
+  CurrentLocationCheck: 1
+  CurrentDestinationCheck: 0
