@@ -12,6 +12,7 @@ public class MenuManager : MonoBehaviour
 
     public GameObject winMenu; // Reference to the "Win Menu" GameObject
     public GameObject loseMenu; // Reference to the "Lose Menu" GameObject
+    public GameObject pauseOptionsButton; // Reference to the "Pause Options Button" GameObject
 
     public GameObject loadingScreen; // Reference to the loading screen GameObject
     private Slider loadingSlider; // Reference to the loading slider in the loading screen
@@ -193,6 +194,8 @@ public class MenuManager : MonoBehaviour
         // Show the "Win Menu"
         winMenu.SetActive(true);
         activeMenu = winMenu;
+
+        pauseOptionsButton.SetActive(false);
     }
 
     // Function to show the "Lose Menu"
@@ -213,6 +216,8 @@ public class MenuManager : MonoBehaviour
         // Show the "Lose Menu"
         loseMenu.SetActive(true);
         activeMenu = loseMenu;
+
+        pauseOptionsButton.SetActive(false);
     }
 
     // Function to exit the game and go back to the main menu
