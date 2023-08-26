@@ -77,6 +77,8 @@ public class Player_HealthManager : HealthManager
         PlayerData.CurrHP = 0;
         PlayerData.MaxSanity = 0;
         PlayerData.CurrSanity = 0;
+        PlayerData.MaxEnergy = 0;
+        PlayerData.CurrEnergy = 0;
 
         //reset pet
         PetManager.Instance.ResetAndRemovePet();
