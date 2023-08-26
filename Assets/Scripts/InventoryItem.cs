@@ -56,6 +56,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         parentAfterDrag = transform.parent;
         transform.SetParent(transform.root);
 
+        selectItem();
         
     }
 
@@ -102,7 +103,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
         indicator.SetActive(true);
         selected = true;
-        if(item.type == Item.itemType.food)
+        if(item.type == Item.itemType.food || item.type ==Item.itemType.consumables)
         {
 
             consumeButton.SetActive(true);

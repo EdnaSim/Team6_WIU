@@ -41,18 +41,18 @@ public class CraftingManager : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            if (craftingMenu.activeSelf == true)
-            {
-                craftingMenu.SetActive(false);
-            }
-            else
-            {
-                craftingMenu.SetActive(true);
-            }
+        //if (Input.GetKeyDown(KeyCode.C) )
+        //{
+        //    if (craftingMenu.activeSelf == true)
+        //    {
+        //        craftingMenu.SetActive(false);
+        //    }
+        //    else
+        //    {
+        //        craftingMenu.SetActive(true);
+        //    }
             
-        }
+        //}
         firstItemInSlot = firstSlot.GetComponentInChildren<InventoryItem>();
         secondItemInSlot = secondSlot.GetComponentInChildren<InventoryItem>();
         if (craftingMenu.activeSelf == true)

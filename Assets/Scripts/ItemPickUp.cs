@@ -8,8 +8,13 @@ public class ItemPickUp : MonoBehaviour
 
     void pickedUp()
     {
-        InventoryManager.Instance.addItem(item);
-        Destroy(gameObject);
+        if (InventoryManager.Instance.addItem(item) == true)
+        {
+            
+            Destroy(gameObject);
+        }
+        
+        
     }
 
     private void OnTriggerStay2D(Collider2D collision)

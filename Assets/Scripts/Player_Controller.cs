@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player_Controller : MonoBehaviour
 {
+    public static Player_Controller Instance;
+
     Rigidbody2D rb;
 
     [Header("Movement")]
@@ -13,6 +15,7 @@ public class Player_Controller : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Instance = this;
         rb = GetComponent<Rigidbody2D>();
     }
 

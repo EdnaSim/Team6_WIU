@@ -22,6 +22,7 @@ public class InventoryManager : MonoBehaviour
     public ArmorSlot armorSlot;
     [SerializeField] GameObject player;
     [SerializeField] public GameObject consumeButton;
+    [SerializeField] Item meteorite;
 
     private void Awake() 
     {
@@ -32,56 +33,76 @@ public class InventoryManager : MonoBehaviour
 
     public bool addItem(Item _item)
     {
-        for (int i = 0; i < inventorySlots.Length; i++)
+        if (_item != meteorite)
         {
-            InventorySlot slot = inventorySlots[i];
-            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
-            if (itemInSlot != null
-                && itemInSlot.item == _item
-                && itemInSlot.count < MaxStackedItems
-                && itemInSlot.item.stackable == true)
+            for (int i = 0; i < inventorySlots.Length; i++)
             {
-                
-                itemInSlot.count++;
-                itemInSlot.updateCount();
-                return true;
-            }
-        }
+                InventorySlot slot = inventorySlots[i];
+                InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+                if (itemInSlot != null
+                    && itemInSlot.item == _item
+                    && itemInSlot.count < MaxStackedItems
+                    && itemInSlot.item.stackable == true)
+                {
 
-        for (int i = 0; i< inventorySlots.Length; i++)
-        {
-            InventorySlot slot = inventorySlots[i];
-            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
-            if (itemInSlot == null)
+                    itemInSlot.count++;
+                    itemInSlot.updateCount();
+                    return true;
+                }
+            }
+
+            for (int i = 0; i < inventorySlots.Length; i++)
             {
-                SpawnNewItem(_item, slot);
-                return true;
+                InventorySlot slot = inventorySlots[i];
+                InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+                if (itemInSlot == null)
+                {
+                    SpawnNewItem(_item, slot);
+                    return true;
+                }
             }
         }
+        else
+        {
+            meteorite.amount++;
+            return true;
+        }
+      
+
+        
         return false;
     }
 
 
     public bool removeItem(Item _item, int amount)
     {
-        for (int i = 0; i < inventorySlots.Length; i++)
+        if (_item != meteorite)
         {
-            InventorySlot slot = inventorySlots[i];
-            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
-            if (itemInSlot != null
-                && itemInSlot.item == _item)
+            for (int i = 0; i < inventorySlots.Length; i++)
             {
-
-                itemInSlot.count -= amount;
-                itemInSlot.updateCount();
-                if (itemInSlot.count <= 0)
+                InventorySlot slot = inventorySlots[i];
+                InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+                if (itemInSlot != null
+                    && itemInSlot.item == _item)
                 {
-                    itemInSlot.item.amount = 0;
-                    Destroy(slot.transform.GetChild(0).gameObject);
+
+                    itemInSlot.count -= amount;
+                    itemInSlot.updateCount();
+                    if (itemInSlot.count <= 0)
+                    {
+                        itemInSlot.item.amount = 0;
+                        Destroy(slot.transform.GetChild(0).gameObject);
+                    }
+                    return true;
                 }
-                return true;
             }
         }
+        else
+        {
+            meteorite.amount -= amount;
+            return true;
+        }
+        
 
         return false;
     }
@@ -94,8 +115,7 @@ public class InventoryManager : MonoBehaviour
             InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
             if (itemInSlot == null)
             {
-
-                return slot;
+                return slot;    
             }
         }
         return null;
@@ -243,15 +263,18 @@ public class InventoryManager : MonoBehaviour
             {
                 if (_itemStats.statstype == ItemStats.statsType.health)
                 {
+                    Debug.Log("health");
                     // add to player health
                 }
                 else if (_itemStats.statstype == ItemStats.statsType.stamina)
                 {
+                    Debug.Log("stamina");
                     // add to player stamina
                 }
                 else if (_itemStats.statstype == ItemStats.statsType.sanity)
                 {
                     // add to player sanity
+                    Debug.Log("sanity");
                 }
             }
         }
