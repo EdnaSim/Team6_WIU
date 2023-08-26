@@ -21,6 +21,7 @@ public class InventoryManager : MonoBehaviour
     public ArmorSlot armorSlot;
     [SerializeField] GameObject player;
     public GameObject consumeButton;
+    [SerializeField] Item meteorite;
 
     [Header("Saving and Loading")]
     public SO_SavedInvData InvData;
@@ -47,6 +48,10 @@ public class InventoryManager : MonoBehaviour
 
     public bool addItem(Item _item)
     {
+        if (_item == meteorite) {
+            meteorite.amount++;
+            return true;
+        }
         List<MeleeWeaponData> mwl = WeaponController.Instance.WeaponList.MeleeWeaponlist;
         List<RangedWeaponData> rwl = WeaponController.Instance.WeaponList.RangedWeaponList;
         for (int i = 0; i < inventorySlots.Length; i++) {
@@ -63,16 +68,14 @@ public class InventoryManager : MonoBehaviour
             }
         }
         //if nothing returns true in the above loop
-        for (int i = 0; i< inventorySlots.Length; i++)
-        {
+        for (int i = 0; i < inventorySlots.Length; i++) {
             InventorySlot slot = inventorySlots[i];
             InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
-            if (itemInSlot == null)
-            {
+            if (itemInSlot == null) {
                 SpawnNewItem(_item, slot);
-                
+
                 //add to weapon controller's list, for easier searching later
-                for (int m=0; m < mwl.Count; m++) {
+                for (int m = 0; m < mwl.Count; m++) {
                     //find weapon in weapon list to add a copy
                     if (_item.itemName == mwl[m].Stats.WeaponName) {
                         //check if owned list has a weapon with the same name
@@ -82,7 +85,7 @@ public class InventoryManager : MonoBehaviour
                     }
                 }
                 //add to range weapon list, if possible
-                for (int r = 0; r < rwl.Count; r++){
+                for (int r = 0; r < rwl.Count; r++) {
                     if (_item.itemName == rwl[r].Stats.WeaponName) {
                         //check if owned list has a weapon with the same name
                         if (WeaponController.OwnedRangedList.Find((RangedWeaponStats r) => r.WeaponName == _item.itemName) == null)
@@ -99,6 +102,10 @@ public class InventoryManager : MonoBehaviour
 
     public bool removeItem(Item _item, int amount)
     {
+        if (_item == meteorite) {
+            meteorite.amount -= amount;
+            return true;
+        }
         for (int i = 0; i < inventorySlots.Length; i++)
         {
             InventorySlot slot = inventorySlots[i];
@@ -135,6 +142,18 @@ public class InventoryManager : MonoBehaviour
 
         return false;
     }
+
+    public InventorySlot getEmptySlot() {
+        for (int i = 0; i < inventorySlots.Length; i++) {
+            InventorySlot slot = inventorySlots[i];
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+            if (itemInSlot == null) {
+                return slot;
+            }
+        }
+        return null;
+    }
+
     public Item getSelected()
     {
         for (int i = 0; i < inventorySlots.Length; i++)
@@ -149,7 +168,6 @@ public class InventoryManager : MonoBehaviour
         }
 
         return null;
-            
     }
     void SpawnNewItem(Item _item , InventorySlot slot)
     {   

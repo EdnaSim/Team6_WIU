@@ -356,7 +356,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6681178408548480551}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f8cd563c66ed47488a8638bd07a398f, type: 3}
+  m_Script: {fileID: 11500000, guid: 7375321e3336b21489e656a20e80ec4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   StaminaBar: {fileID: 0}

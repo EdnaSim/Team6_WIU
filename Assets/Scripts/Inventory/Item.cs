@@ -12,7 +12,8 @@ public class Item : ScriptableObject
         food,
         melee,
         ranged,
-        equipment
+        equipment,
+        consumables
     }
     public string itemName;
     public itemType type;

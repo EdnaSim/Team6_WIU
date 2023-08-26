@@ -4139,6 +4139,7 @@ MonoBehaviour:
   armorSlot: {fileID: 250623394}
   player: {fileID: 0}
   consumeButton: {fileID: 192754315}
+  meteorite: {fileID: 0}
   InvData: {fileID: 11400000, guid: 991202c45ba8df140baccbade8065ad3, type: 2}
 --- !u!4 &87172066
 Transform:
