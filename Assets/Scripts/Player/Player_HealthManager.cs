@@ -12,7 +12,7 @@ public class Player_HealthManager : HealthManager
     }
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
         if (PlayerData.MaxHp <= 0)
             PlayerData.MaxHp = Base_MaxHealth;
@@ -41,6 +41,8 @@ public class Player_HealthManager : HealthManager
     public override void TakeDamage(float damage, GameObject attacker) {
         if (Death || attacker.layer == gameObject.layer)
             return;
+
+        Player_Controller.Instance.ps.Emit(5);
 
         PlayerData.CurrHP -= (damage * DamageMultiplier);
         if (PlayerData.CurrHP <= 0) {

@@ -18,6 +18,7 @@ public class PetManager : MonoBehaviour
     [Header("UI")]
     [SerializeField] GameObject PetSelectorContainer;
     [SerializeField] GameObject NameContainer;
+    [SerializeField] TMP_Text PetDeathAlert;
 
     private void Awake() {
         Instance = this;
@@ -32,14 +33,18 @@ public class PetManager : MonoBehaviour
             PetDie = new UnityEvent();
         PetDie.AddListener(OnPetDeath);
 
-        NameContainer.SetActive(false);
+        if (NameContainer != null)
+            NameContainer.SetActive(false);
         if (GetNewGame.isNewGame) {
             MenuManager.Instance.ShowMenu(PetSelectorContainer);
         }
         else {
-            //load from json to  SO_PetDetails
+            //load from json to SO_PetDetails
             LoadPetDetails();
         }
+
+        if (PetDeathAlert != null)
+            PetDeathAlert.enabled = false;
     }
 
     //new save, on select pet
@@ -53,7 +58,8 @@ public class PetManager : MonoBehaviour
             return;
         }
         if (PetDetails.PetType != SO_PetDetails.PETTYPE.NONE) {
-            MenuManager.Instance.ShowMenu(NameContainer);
+            if (NameContainer != null)
+                MenuManager.Instance.ShowMenu(NameContainer);
         }
     }
     
@@ -108,6 +114,13 @@ public class PetManager : MonoBehaviour
     }
 
     public void OnPetDeath() {
+        //show alert
+        if (PetDeathAlert != null) {
+            PetDeathAlert.enabled = true;
+            PetDeathAlert.text = Pet.name + " starved to death!";
+            Destroy(PetDeathAlert, 5); //show for x seconds
+        }
+
         ResetAndRemovePet();
         //drain(-) player sanity
         SanityManager.Instance.PetAlive = false;

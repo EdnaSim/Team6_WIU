@@ -5535,7 +5535,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6353,6 +6353,7 @@ MonoBehaviour:
     WeaponName: DefaultName
   ReloadingText: {fileID: 1759593996}
   NoAmmoText: {fileID: 315810643}
+  AmmoDisplayText: {fileID: 0}
 --- !u!114 &1333630709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6448,7 +6449,7 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0.21133333}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0.3}
     oldSize: {x: 2, y: 2}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
@@ -6628,7 +6629,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8160,6 +8161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 0}
+  HealthBar: {fileID: 0}
 --- !u!1 &1759593994
 GameObject:
   m_ObjectHideFlags: 0
@@ -10191,6 +10193,7 @@ MonoBehaviour:
   - {fileID: 2116740151337848540, guid: 1c55eead7fafc0c4881e30c96570962d, type: 3}
   - {fileID: 8893349677792070559, guid: 5172a15078cb07847a01ffaed4154ebd, type: 3}
   inventoryItemPrefab: {fileID: 7690685759977987638, guid: 48afd56f1db0e3249b1b915dc2694011, type: 3}
+  MaxStackedItems: 20
   itemStats:
   - {fileID: 11400000, guid: 1ce807a0aaea0c349a8ae399ae315550, type: 2}
   - {fileID: 11400000, guid: dc07b58aba8a3ee41aec5987749aec9e, type: 2}

@@ -253,7 +253,7 @@ public class WeaponController : MonoBehaviour
         OwnedMeleeList.Add(new MeleeWeaponStats(stat));
     }
 
-    public void SaveLists() {
+    public void SaveEquipment() {
         InvData.SavedRangedWeapons = OwnedRangedList;
         InvData.SavedMeleeWeapons = OwnedMeleeList;
         InvData.EquippedArmour = ArmourDetails.Instance.EquippedArmour;

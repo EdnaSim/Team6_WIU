@@ -41,7 +41,7 @@ public class InventoryManager : MonoBehaviour
     private void Update() {
         if (Input.GetKeyDown(KeyCode.J)) {
             SaveInvSlotData();
-            WeaponController.Instance.SaveLists();
+            WeaponController.Instance.SaveEquipment();
         }
     }
 
@@ -73,15 +73,20 @@ public class InventoryManager : MonoBehaviour
                 
                 //add to weapon controller's list, for easier searching later
                 for (int m=0; m < mwl.Count; m++) {
+                    //find weapon in weapon list to add a copy
                     if (_item.itemName == mwl[m].Stats.WeaponName) {
-                        Player_Controller.Instance.wc.AddMeleeWeapon(mwl[m].Stats);
+                        //check if owned list has a weapon with the same name
+                        if (WeaponController.OwnedMeleeList.Find((MeleeWeaponStats m) => m.WeaponName == _item.itemName) == null)
+                            Player_Controller.Instance.wc.AddMeleeWeapon(mwl[m].Stats);
                         return true;
                     }
                 }
                 //add to range weapon list, if possible
                 for (int r = 0; r < rwl.Count; r++){
                     if (_item.itemName == rwl[r].Stats.WeaponName) {
-                        Player_Controller.Instance.wc.AddRangedWeapon(rwl[r].Stats);
+                        //check if owned list has a weapon with the same name
+                        if (WeaponController.OwnedRangedList.Find((RangedWeaponStats r) => r.WeaponName == _item.itemName) == null)
+                            Player_Controller.Instance.wc.AddRangedWeapon(rwl[r].Stats);
                         return true;
                     }
                 }

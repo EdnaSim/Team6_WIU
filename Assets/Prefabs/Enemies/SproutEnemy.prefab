@@ -252,7 +252,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7562847014486420589}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d779cc2e2965cce4b9ea12decedf7265, type: 3}
+  m_Script: {fileID: 11500000, guid: 816bdea60fc6c82468ca3cd3c4cccb63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
@@ -262,8 +262,8 @@ MonoBehaviour:
   Player:
     serializedVersion: 2
     m_Bits: 64
-  FOVradius: 20
-  ATKradius: 1.84
+  FOVradius: 5
+  ATKradius: 2
   targetMask:
     serializedVersion: 2
     m_Bits: 64
@@ -287,7 +287,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.03839302, y: -0.20476031}
+  m_Offset: {x: 0.22870302, y: -2.3253567}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -298,7 +298,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.7898607, y: 6.5285306}
+  m_Size: {x: 4.1704807, y: 2.2873378}
   m_EdgeRadius: 0
 --- !u!114 &733628943
 MonoBehaviour:

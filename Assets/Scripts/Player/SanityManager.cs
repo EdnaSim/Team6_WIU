@@ -16,7 +16,7 @@ public class SanityManager : MonoBehaviour
     public float DrainAmtOnHit;
     public float DrainAmtOnPetDeath;
 
-    [HideInInspector] public bool inDark;
+    public bool inDark;
 
     [Header("Modifiers")]
     [Tooltip("Recommended between -1 and 0. Additive with the PetDrainReduction. Actual Drain = amt * (DarknessDrainIncrease + PetDrainReduction)")]
@@ -51,8 +51,10 @@ public class SanityManager : MonoBehaviour
     }
 
     private void Update() {
+        //flashing sanity bar display
         if ((PlayerData.CurrSanity / PlayerData.MaxSanity) * 100 <= 25) {
             LowSanityFlashTimer += Time.deltaTime;
+            //flash speed increases the lower the sanity
             if (LowSanityFlashTimer >= (PlayerData.CurrSanity / PlayerData.MaxSanity)) {
                 BarImage.color = new Color(0.45f, 0.55f, 0.568f, 1);
             }
@@ -65,7 +67,7 @@ public class SanityManager : MonoBehaviour
             BarImage.color = originalCol;
         }
 
-        //make the bar go down smoothly
+        //make the bar go down smoothly (also updates the bar)
         float smoothValue = Mathf.SmoothDamp(SanityBar.value, PlayerData.CurrSanity, ref currVel, 0.5f);
         SanityBar.value = smoothValue;
     }
@@ -82,10 +84,8 @@ public class SanityManager : MonoBehaviour
         //check if lost their mind
         else if (PlayerData.CurrSanity <= 0) {
             PlayerData.CurrSanity = 0; //set 0 to not break the sanity bar display
-            //TODO: Game over
-
+            Player_HealthManager.Instance.OnDeath();
         }
-        //UpdateSanityBar();
     }
 
     public void UpdateSanityBar() {

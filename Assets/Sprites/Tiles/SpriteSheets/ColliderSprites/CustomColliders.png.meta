@@ -527,6 +527,174 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: CustomColliders_19
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 952
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d56001d35e219f46bad1ecb6b8d6223
+      internalID: 1763593025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CustomColliders_20
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 952
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71e7bae6c21a1b040ab2c0b268c822c8
+      internalID: -1657846855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CustomColliders_21
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 952
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dba24eca0b946e8429eebf273cb27318
+      internalID: 376426648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CustomColliders_22
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 952
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5748db61ebb50b041a20a6ac94d6a9d7
+      internalID: -1612915341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CustomColliders_23
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 952
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4eed3ab9d5f31f04f81a7b1b0358a83f
+      internalID: 429247170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CustomColliders_24
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 952
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 228b2d50c1903a348aaa43bcd7b8a3df
+      internalID: -1075220365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CustomColliders_25
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 952
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cca34091b60c7c54da752d0114b53405
+      internalID: 1450060783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CustomColliders_26
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 952
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e79239bc2ff18c4396a8b25e8b6b863
+      internalID: 283443798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -549,7 +717,15 @@ TextureImporter:
       CustomColliders_16: 868455389
       CustomColliders_17: -645644439
       CustomColliders_18: 931202701
+      CustomColliders_19: 1763593025
       CustomColliders_2: -1824714299
+      CustomColliders_20: -1657846855
+      CustomColliders_21: 376426648
+      CustomColliders_22: -1612915341
+      CustomColliders_23: 429247170
+      CustomColliders_24: -1075220365
+      CustomColliders_25: 1450060783
+      CustomColliders_26: 283443798
       CustomColliders_3: -2107959960
       CustomColliders_4: 1125433742
       CustomColliders_5: -210080880

@@ -30,7 +30,7 @@ public class HealthManager : MonoBehaviour
     protected GameObject killer;
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         if (MaxHealth <= 0)
             MaxHealth = Base_MaxHealth;
@@ -101,7 +101,7 @@ public class HealthManager : MonoBehaviour
     public virtual void OnDeath() {
         CurrentHealth = 0;
         Death = true;
-        UI_Hpbar.SetBarDisplay(false);
+        if (UI_Hpbar != null) UI_Hpbar.SetBarDisplay(false);
         //play death anim
         if (ar != null)
             ar.SetTrigger("Die");

@@ -136,9 +136,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.038963437, y: 0}
+  m_Offset: {x: 0.29, y: -0.8409122}
   serializedVersion: 2
-  m_Radius: 1.0844516
+  m_Radius: 0.58886063
 --- !u!114 &906330046433100080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,7 +148,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 906330046433100042}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84128cff0c32cc44e94f398bcda4091b, type: 3}
+  m_Script: {fileID: 11500000, guid: 5ba8acec0d145c04dab5ef89a269ce5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
@@ -157,17 +157,17 @@ MonoBehaviour:
   ChasePlayerTimer: 0
   Player:
     serializedVersion: 2
-    m_Bits: 64
-  FOVradius: 10
-  FOVangle: 180
-  ATKradius: 0.62
+    m_Bits: 0
+  FOVradius: 5
+  FOVangle: 90
+  ATKradius: 2
   targetMask:
     serializedVersion: 2
     m_Bits: 64
   obstacleMask:
     serializedVersion: 2
     m_Bits: 8
-  WaitOutOfFOVtime: 5
+  WaitOutOfFOVtime: 2
 --- !u!114 &124499144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,7 +180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b40981723d264e4fa020cb7b0748e66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Base_MaxHealth: 100
+  Base_MaxHealth: 50
   MaxHealth: 0
   CurrentHealth: 0
   UI_Hpbar: {fileID: 7240579045502513828}
@@ -283,7 +283,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 906330046754839109}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1075f769249ca5468f1735407ce08dd, type: 3}
+  m_Script: {fileID: 11500000, guid: ff8a7558a291e6b4887fe3e1724729f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   aiPath: {fileID: 906330046433100084}

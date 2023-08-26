@@ -11,11 +11,16 @@ public class PlayerData : ScriptableObject
     //Sanity
     public static float MaxSanity;
     public static float CurrSanity;
+    //stamina
+    public static float MaxStamina;
+    public static float CurrStamina;
 
     private void Awake() {
         MaxHp = 0;
         CurrHP = 0;
         MaxSanity = 0;
         CurrSanity = 0;
+        MaxStamina = 0;
+        CurrStamina = 0;
     }
 }

@@ -10,6 +10,7 @@ public class Player_Controller : MonoBehaviour
     Rigidbody2D rb;
     Animator ar;
     SpriteRenderer sr;
+    public ParticleSystem ps;
     [HideInInspector] public WeaponController wc;
     [SerializeField] SO_WeaponList wl;
     Vector2 PrevMoveDir;
@@ -22,6 +23,8 @@ public class Player_Controller : MonoBehaviour
     [SerializeField] float SprintIncrease;
     [HideInInspector] public Vector2 MoveDir;
     Vector2 facing;
+    float RestTimer = 0f;
+    bool Tired = false;
 
     bool isAttacking = false; //check if bound to an attack anim (set by anim trigger)
     [Header("Attack")]
@@ -44,6 +47,7 @@ public class Player_Controller : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         ar = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
+        ps = GetComponent<ParticleSystem>();
 
         MovementSpeed = Base_MovementSpeed;
 
@@ -57,13 +61,32 @@ public class Player_Controller : MonoBehaviour
         if (!isPaused && !Player_HealthManager.Instance.Death) {
             //get input for moving
             MoveDir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
+            if (MoveDir == Vector2.zero) { //not moving
+                RestTimer += Time.deltaTime;
+            }
+            else {
+                RestTimer = 0f;
+                EnergyManager.Instance.Regen = false;
+            }
+            //rested long enough, regen stamina
+            if (RestTimer >= EnergyManager.Instance.RestTimeTillRegenStamina && !EnergyManager.Instance.Regen) {
+                EnergyManager.Instance.StartRegen();
+            }
             //holding down sprint key
-            if (Input.GetKey(KeyCode.LeftShift)) {
+            if (Input.GetKey(KeyCode.LeftShift) && PlayerData.CurrStamina > 0f) {
                 //Sprint
                 MovementSpeed = Base_MovementSpeed + SprintIncrease;
+                if (MoveDir != Vector2.zero)
+                    EnergyManager.Instance.isRunning = true;
             }
             else if (Input.GetKeyUp(KeyCode.LeftShift)) {
                 MovementSpeed -= SprintIncrease;
+                EnergyManager.Instance.isRunning = false;
+            }
+            else if (PlayerData.CurrStamina <= 0 && !Tired) {
+                Tired = true;
+                MovementSpeed -= SprintIncrease;
+                EnergyManager.Instance.isRunning = false;
             }
 
             //input
@@ -72,9 +95,6 @@ public class Player_Controller : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.M)) {
                 //Open map
-            }
-            if (Input.GetKeyDown(KeyCode.B)) {
-                //Open Inventory
             }
             if (Input.GetMouseButton(0)) {
                 //if clicked on UI / no object selected

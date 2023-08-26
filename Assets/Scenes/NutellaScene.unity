@@ -5582,7 +5582,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6211,7 +6211,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8951,7 +8951,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ae19fc8bd48ebd478b88c4cce2109a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wc: {fileID: 0}
+  wl: {fileID: 0}
+  isPaused: 0
+  Base_MovementSpeed: 0
   MovementSpeed: 10
+  SprintIncrease: 0
+  MoveDir: {x: 0, y: 0}
+  MeleeOrigin: {fileID: 0}
+  CanMelee: 1
+  CanRange: 1
+  PetDetails: {fileID: 0}
 --- !u!50 &1912795512
 Rigidbody2D:
   serializedVersion: 4
@@ -9019,7 +9029,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9630,14 +9640,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e45bd92e5a8f85145bec6ba777279f08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pauseOptionsButton: {fileID: 0}
+  GameEndMenu: {fileID: 0}
+  ResultText: {fileID: 0}
+  ExitBtn: {fileID: 0}
+  WinColor: {r: 0, g: 0, b: 0, a: 0}
+  LoseColor: {r: 0, g: 0, b: 0, a: 0}
+  loadingScreen: {fileID: 0}
   audioVolumeManager: {fileID: 2055667072}
   masterSlider: {fileID: 283688492}
   musicSlider: {fileID: 1316578193}
   sfxSlider: {fileID: 680506903}
-  winMenu: {fileID: 0}
-  loseMenu: {fileID: 0}
-  loadingScreen: {fileID: 0}
-  tempNewGame: {fileID: 0}
 --- !u!114 &2055667074
 MonoBehaviour:
   m_ObjectHideFlags: 0
