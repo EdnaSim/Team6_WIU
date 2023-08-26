@@ -8,71 +8,71 @@ public class EnergyManager : MonoBehaviour
     public static EnergyManager Instance;
     public Slider StaminaBar;
 
-    [Header("Base stats")]
-    [SerializeField] float Base_MaxEnergy;
+    public float Base_MaxStamina = 100f;
 
-    public float staminaAmt = 100f;
+    [Header("Passive drain")]
+    [HideInInspector] public bool CanDrain;
+    [SerializeField] float PassiveDrainAmt = 1f;
 
-    public float MaxStaminaAmt = 100f;
+    [Header("Stamina Modifiers")]
+    public bool isRunning;
+    [Tooltip("Extra passive drain when running. Added to current passive drain.")]
+    [SerializeField][Min(0)] float RunningDrainIncrease = 1f;
 
-    public bool CanDrain;
+    [Header("Passive regen")]
+    public float RestTimeTillRegenStamina = 3f;
+    [SerializeField] float RegenInterval;
+    float RegenTimer;
+    public bool Regen = false;
 
     [Header("UI")]
-    [SerializeField] Slider EnergyBar;
     Image BarImage;
     Color originalCol;
     float LowEnergyFlashTimer;
-    float currVel = 0; //for smooth damp
 
     [HideInInspector] public bool PetAlive = false;
 
     private void Awake()
     {
         Instance = this;
+        if (PlayerData.MaxStamina <= 0)
+            PlayerData.MaxStamina = Base_MaxStamina;
+        if (PlayerData.CurrStamina <= 0)
+            PlayerData.CurrStamina = PlayerData.MaxStamina;
     }
     // Start is called before the first frame update
     void Start()
     {
         //staminaAmt = MaxStaminaAmt;
-        //StaminaBar.value = staminaAmt / MaxStaminaAmt;
-        //set stuff for new saves
-        if (PlayerData.MaxEnergy <= 0)
-            PlayerData.MaxEnergy = Base_MaxEnergy;
-        if (PlayerData.CurrEnergy <= 0)
-            PlayerData.CurrEnergy = PlayerData.MaxEnergy;
+
+        UpdateBar();
         CanDrain = true;
 
-        BarImage = EnergyBar.fillRect.GetComponent<Image>();
+        BarImage = StaminaBar.fillRect.GetComponent<Image>();
         originalCol = BarImage.color;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(CanDrain)
+        //passive drain (increased when running)
+        if (CanDrain && !Regen)
         {
-            LoseEnergy(1f * Time.deltaTime);
+            LoseEnergy((PassiveDrainAmt + (isRunning ? RunningDrainIncrease : 0)) * Time.deltaTime);
         }
-
-        if(PlayerData.CurrEnergy <= 0)
+        if (Input.GetKeyDown(KeyCode.L))
         {
-            Player_HealthManager.Instance.TakeDamage(0.01f, gameObject);
-            PlayerData.CurrEnergy = 0;
+            LoseEnergy(50);
         }
-
-        if (Input.GetKeyUp(KeyCode.K))
-        {
-            AdrenalineShot();
-        }
-
-        if ((PlayerData.CurrEnergy / PlayerData.MaxEnergy) * 100 <= 25)
+        //flashing bar
+        if ((PlayerData.CurrStamina / PlayerData.MaxStamina) * 100 <= 25)
         {
             LowEnergyFlashTimer += Time.deltaTime;
-            if (LowEnergyFlashTimer >= (PlayerData.CurrEnergy / PlayerData.MaxEnergy))
+            if (LowEnergyFlashTimer >= (PlayerData.CurrStamina / PlayerData.MaxStamina))
             {
                 BarImage.color = new Color(0.45f, 0.55f, 0.568f, 1);
             }
-            if (LowEnergyFlashTimer > (PlayerData.CurrEnergy / PlayerData.MaxEnergy) * 2)
+            if (LowEnergyFlashTimer > (PlayerData.CurrStamina / PlayerData.MaxStamina) * 2)
             {
                 BarImage.color = originalCol;
                 LowEnergyFlashTimer = 0f;
@@ -83,35 +83,51 @@ public class EnergyManager : MonoBehaviour
             BarImage.color = originalCol;
         }
 
-        //make the bar go down smoothly
-        float smoothValue = Mathf.SmoothDamp(EnergyBar.value, PlayerData.CurrSanity, ref currVel, 0.5f);
-        EnergyBar.value = smoothValue;
+        //passive regen start
+        if (RegenTimer > 0f) RegenTimer -= Time.deltaTime;
+        else if (Regen)
+        {
+            RegenTimer = RegenInterval;
+            EnergyRecover(2);
+        }
+    }
+
+    public void StartRegen()
+    {
+        Regen = true;
+        RegenTimer = RegenInterval;
     }
 
     public void LoseEnergy(float energyloss)
     {
-        //staminaAmt -= energyloss;
-        //StaminaBar.value = staminaAmt / MaxStaminaAmt;
-        PlayerData.CurrEnergy -= energyloss;
-        StaminaBar.value = PlayerData.CurrEnergy / PlayerData.MaxEnergy;
+        PlayerData.CurrStamina -= energyloss;
+        if (PlayerData.CurrStamina <= 0)
+        {
+            //Player_HealthManager.Instance.TakeDamage(0.01f, gameObject);
+            PlayerData.CurrStamina = 0;
+        }
+        UpdateBar();
     }
 
     public void EnergyRecover(float energygain)
     {
-        //staminaAmt += energygain;
-        //StaminaBar.value = staminaAmt / MaxStaminaAmt;
-        PlayerData.CurrEnergy += energygain;
-        StaminaBar.value = PlayerData.CurrEnergy / PlayerData.MaxEnergy;
+        PlayerData.CurrStamina += energygain;
+        if (PlayerData.CurrStamina > PlayerData.MaxStamina)
+        {
+            //Player_HealthManager.Instance.TakeDamage(0.01f, gameObject);
+            PlayerData.CurrStamina = PlayerData.MaxStamina;
+        }
+        UpdateBar();
     }
 
     public void AdrenalineShot()
     {
-        if(CanDrain)
+        if (CanDrain)
         {
             //BarImage.color = new Color(0.45f, 0.55f, 0.568f, 1);
             BarImage.color = new Color(1f, 0.84f, 0f, 1);
             EnergyRecover(75f);
-            PlayerData.CurrSanity += 20f;
+            SanityManager.Instance.ChangeSanity(20);
             Player_HealthManager.Instance.ChangeDamageMultiplier(-0.5f);
             Player_HealthManager.Instance.Heal(25f);
             Player_Controller.Instance.MovementSpeed += 25f;
@@ -123,9 +139,16 @@ public class EnergyManager : MonoBehaviour
     IEnumerator InvulnerableTimer()
     {
         yield return new WaitForSeconds(5f);
-        Player_HealthManager.Instance.ChangeDamageMultiplier(+0.5f);
+        //adrenaline shot ends
+        Player_HealthManager.Instance.ChangeDamageMultiplier(0.5f);
         Player_Controller.Instance.MovementSpeed = Player_Controller.Instance.Base_MovementSpeed;
         BarImage.color = originalCol;
         CanDrain = true;
+    }
+
+    public void UpdateBar()
+    {
+        StaminaBar.maxValue = PlayerData.MaxStamina;
+        StaminaBar.value = PlayerData.CurrStamina;
     }
 }

@@ -24,6 +24,10 @@ public class WeaponController : MonoBehaviour
     [SerializeField] TMP_Text NoAmmoText;
     float ReloadFlashTimer = 0;
 
+    [Header("Weapon Audio")]
+    public AudioClip[] GunSFX;
+    private AudioSource audiosrc;
+
     private void Awake() {
         Instance = this;
     }
@@ -37,6 +41,12 @@ public class WeaponController : MonoBehaviour
 
         ReloadingText.enabled = false;
         NoAmmoText.enabled = false;
+
+        for(int i = 0; i < GunSFX.Length; i++)
+        {
+            GunSFX[i] = GetComponent<AudioClip>();
+        }
+        audiosrc = GetComponent<AudioSource>();
     }
 
     private void Update() {
@@ -149,6 +159,15 @@ public class WeaponController : MonoBehaviour
             return;
         }
         if (!RangedStats.Reloading) {
+            if(InventoryManager.Instance.getSelected().name == "Shotgun")
+            {
+                if (!audiosrc.isPlaying)
+                {
+                    audiosrc.clip = GunSFX[5];
+                    //audiosrc.Play();
+                    Debug.Log(audiosrc.clip);
+                }
+            }
             RangedStats.Reloading = true;
             ReloadingText.enabled = true;
             RangedStats.TimerForReload = RangedStats.ReloadTime;

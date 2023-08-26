@@ -25,6 +25,7 @@ public class RedSmile_Controller : MonoBehaviour
     private bool StartIdleTimer;
     private bool StartATKTimer;
     private bool StartDeathTimer;
+    private bool AlertScreamBool;
 
     public float ChasePlayerTimer;
     public LayerMask Player;
@@ -53,6 +54,8 @@ public class RedSmile_Controller : MonoBehaviour
 
     private BoxCollider2D boxCollider;
 
+    private AudioSource AlertScream;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -61,6 +64,7 @@ public class RedSmile_Controller : MonoBehaviour
         StartIdleTimer = false;
         StartATKTimer = false;
         StartDeathTimer = false;
+        AlertScreamBool = false;
         ChasePlayerTimer = 3f;
 
         ChangeState(currentState);
@@ -76,6 +80,7 @@ public class RedSmile_Controller : MonoBehaviour
         DestSetter = GetComponent<AIDestinationSetter>();
         healthManager = GetComponent<HealthManager>();
         boxCollider = GetComponent<BoxCollider2D>();
+        AlertScream = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -312,6 +317,11 @@ public class RedSmile_Controller : MonoBehaviour
 
                     //RUN
                     RUN.enabled = true;
+                    if(!AlertScreamBool)
+                    {
+                        AlertScream.Play();
+                        AlertScreamBool = true;
+                    }
                     //Debug.Log(unit.gameObject.name + " seen");
                 }
                 else if (canSeeUnit)

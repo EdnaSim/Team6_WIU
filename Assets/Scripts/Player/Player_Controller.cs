@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class Player_Controller : MonoBehaviour
 {
     public static Player_Controller Instance;
+    private Dictionary<string, KeyCode> movementKeys;
 
     Rigidbody2D rb;
     Animator ar;
@@ -58,6 +59,9 @@ public class Player_Controller : MonoBehaviour
         //}
 
         Physics2D.IgnoreLayerCollision(gameObject.layer, gameObject.layer);
+
+        // Get the movement keys from KeybindManager
+        //movementKeys = KeybindManager.keybindManager.GetMovementKeys();
     }
 
     // Update is called once per frame
@@ -65,15 +69,57 @@ public class Player_Controller : MonoBehaviour
     {
         //stuff that cant be done when paused
         if (!isPaused && !Player_HealthManager.Instance.Death) {
-            //get input for moving
-            MoveDir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
-            //holding down sprint key
-            if (Input.GetKey(KeyCode.LeftShift)) {
-                //Sprint
-                MovementSpeed = Base_MovementSpeed + SprintIncrease;
+            //Debug.Log("KeybindManager Instance: " + KeybindManager.Instance);
+            // Use KeybindManager to get movement keys
+            KeyCode moveUpKey = KeyCode.W; // Default value if KeybindManager is not available
+            KeyCode moveDownKey = KeyCode.S;
+            KeyCode moveLeftKey = KeyCode.A;
+            KeyCode moveRightKey = KeyCode.D;
+            KeyCode sprintKey = KeyCode.LeftShift;
+
+            if (KeybindManager.Instance != null)
+            {
+                moveUpKey = KeybindManager.Instance.GetKeyForAction("Up");
+                moveDownKey = KeybindManager.Instance.GetKeyForAction("Down");
+                moveLeftKey = KeybindManager.Instance.GetKeyForAction("Left");
+                moveRightKey = KeybindManager.Instance.GetKeyForAction("Right");
+                sprintKey = KeybindManager.Instance.GetKeyForAction("Sprinting");
             }
-            else if (Input.GetKeyUp(KeyCode.LeftShift)) {
+
+            // Check movement input
+            Vector2 newMoveDir = Vector2.zero;
+            if (Input.GetKey(moveUpKey))
+                newMoveDir.y = 1;
+            if (Input.GetKey(moveDownKey))
+                newMoveDir.y = -1;
+            if (Input.GetKey(moveLeftKey))
+                newMoveDir.x = -1;
+            if (Input.GetKey(moveRightKey))
+                newMoveDir.x = 1;
+
+            MoveDir = newMoveDir.normalized;
+            //get input for moving
+            //MoveDir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
+            //holding down sprint key
+            //if (Input.GetKey(KeyCode.LeftShift)) {
+            //    //Sprint
+            //    MovementSpeed = Base_MovementSpeed + SprintIncrease;
+            //}
+            //else if (Input.GetKeyUp(KeyCode.LeftShift)) {
+            //    MovementSpeed -= SprintIncrease;
+            //}
+            bool isSprinting = Input.GetKey(sprintKey) && PlayerData.CurrStamina > 0f;
+            if (isSprinting)
+            {
+                // Sprint
+                MovementSpeed = Base_MovementSpeed + SprintIncrease;
+                if (MoveDir != Vector2.zero)
+                    EnergyManager.Instance.isRunning = true;
+            }
+            else if (Input.GetKeyUp(sprintKey))
+            {
                 MovementSpeed -= SprintIncrease;
+                EnergyManager.Instance.isRunning = false;
             }
 
             //input
@@ -150,6 +196,17 @@ public class Player_Controller : MonoBehaviour
         rb.AddForce(MoveDir * MovementSpeed);
         //cap velocity to MovementSpeed
         rb.velocity = new Vector2(Mathf.Min(MovementSpeed, rb.velocity.x), Mathf.Min(MovementSpeed, rb.velocity.y));
+
+        //// Update player movement using the new movementKeys
+        //Vector2 movementInput = new Vector2(
+        //    Input.GetKey(movementKeys["Right"]) ? 1 : (Input.GetKey(movementKeys["Left"]) ? -1 : 0),
+        //    Input.GetKey(movementKeys["Up"]) ? 1 : (Input.GetKey(movementKeys["Down"]) ? -1 : 0));
+        //rb.AddForce(movementInput.normalized * MovementSpeed);
+
+        //// Cap velocity to MovementSpeed
+        //rb.velocity = new Vector2(
+        //    Mathf.Min(MovementSpeed, rb.velocity.x),
+        //    Mathf.Min(MovementSpeed, rb.velocity.y));
     }
 
     private void LateUpdate() {
