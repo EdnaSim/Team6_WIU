@@ -22,6 +22,7 @@ public class EnergyManager : MonoBehaviour
     Image BarImage;
     Color originalCol;
     float LowEnergyFlashTimer;
+    float currVel = 0; //for smooth damp
 
     [HideInInspector] public bool PetAlive = false;
 
@@ -81,6 +82,10 @@ public class EnergyManager : MonoBehaviour
         {
             BarImage.color = originalCol;
         }
+
+        //make the bar go down smoothly
+        float smoothValue = Mathf.SmoothDamp(EnergyBar.value, PlayerData.CurrSanity, ref currVel, 0.5f);
+        EnergyBar.value = smoothValue;
     }
 
     public void LoseEnergy(float energyloss)
