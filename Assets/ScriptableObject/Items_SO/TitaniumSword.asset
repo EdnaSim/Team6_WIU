@@ -16,5 +16,5 @@ MonoBehaviour:
   type: 3
   image: {fileID: 21300000, guid: 5f0fc2d7c28d5994cab5043200815773, type: 3}
   description: 
-  amount: 0
+  amount: 1
   stackable: 0
