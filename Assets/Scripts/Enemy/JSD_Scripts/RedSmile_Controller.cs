@@ -343,6 +343,7 @@ public class RedSmile_Controller : MonoBehaviour
     {
         //OutOfFOVtimer ran out, enemy "give up" pursuing player
         //Debug.Log(gameObject.name + " Lost " + target.gameObject.name);
+        RUN.enabled = false;
         canSeeUnit = false;
         DestSetter.target = null;
         ChangeState(State.IDLE);
