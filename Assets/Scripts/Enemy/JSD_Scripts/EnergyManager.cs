@@ -8,6 +8,9 @@ public class EnergyManager : MonoBehaviour
     public static EnergyManager Instance;
     public Slider StaminaBar;
 
+    [Header("Base stats")]
+    [SerializeField] float Base_MaxEnergy;
+
     public float staminaAmt = 100f;
 
     public float MaxStaminaAmt = 100f;
@@ -29,8 +32,13 @@ public class EnergyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        staminaAmt = MaxStaminaAmt;
-        StaminaBar.value = staminaAmt / MaxStaminaAmt;
+        //staminaAmt = MaxStaminaAmt;
+        //StaminaBar.value = staminaAmt / MaxStaminaAmt;
+        //set stuff for new saves
+        if (PlayerData.MaxEnergy <= 0)
+            PlayerData.MaxEnergy = Base_MaxEnergy;
+        if (PlayerData.CurrEnergy <= 0)
+            PlayerData.CurrEnergy = PlayerData.MaxEnergy;
         CanDrain = true;
 
         BarImage = EnergyBar.fillRect.GetComponent<Image>();
@@ -45,10 +53,10 @@ public class EnergyManager : MonoBehaviour
             LoseEnergy(1f * Time.deltaTime);
         }
 
-        if(staminaAmt <= 0)
+        if(PlayerData.CurrEnergy <= 0)
         {
             Player_HealthManager.Instance.TakeDamage(0.01f, gameObject);
-            staminaAmt = 0;
+            PlayerData.CurrEnergy = 0;
         }
 
         if (Input.GetKeyUp(KeyCode.K))
@@ -56,14 +64,14 @@ public class EnergyManager : MonoBehaviour
             AdrenalineShot();
         }
 
-        if ((staminaAmt / MaxStaminaAmt) * 100 <= 25)
+        if ((PlayerData.CurrEnergy / PlayerData.MaxEnergy) * 100 <= 25)
         {
             LowEnergyFlashTimer += Time.deltaTime;
-            if (LowEnergyFlashTimer >= (staminaAmt / MaxStaminaAmt))
+            if (LowEnergyFlashTimer >= (PlayerData.CurrEnergy / PlayerData.MaxEnergy))
             {
                 BarImage.color = new Color(0.45f, 0.55f, 0.568f, 1);
             }
-            if (LowEnergyFlashTimer > (staminaAmt / MaxStaminaAmt) * 2)
+            if (LowEnergyFlashTimer > (PlayerData.CurrEnergy / PlayerData.MaxEnergy) * 2)
             {
                 BarImage.color = originalCol;
                 LowEnergyFlashTimer = 0f;
@@ -77,14 +85,18 @@ public class EnergyManager : MonoBehaviour
 
     public void LoseEnergy(float energyloss)
     {
-        staminaAmt -= energyloss;
-        StaminaBar.value = staminaAmt / MaxStaminaAmt;
+        //staminaAmt -= energyloss;
+        //StaminaBar.value = staminaAmt / MaxStaminaAmt;
+        PlayerData.CurrEnergy -= energyloss;
+        StaminaBar.value = PlayerData.CurrEnergy / PlayerData.MaxEnergy;
     }
 
     public void EnergyRecover(float energygain)
     {
-        staminaAmt += energygain;
-        StaminaBar.value = staminaAmt / MaxStaminaAmt;
+        //staminaAmt += energygain;
+        //StaminaBar.value = staminaAmt / MaxStaminaAmt;
+        PlayerData.CurrEnergy += energygain;
+        StaminaBar.value = PlayerData.CurrEnergy / PlayerData.MaxEnergy;
     }
 
     public void AdrenalineShot()
