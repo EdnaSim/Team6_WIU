@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7422805310760992660
+--- !u!1 &9196978600514627481
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7422805310760992662}
-  - component: {fileID: 7422805310760992663}
+  - component: {fileID: 9196978600514627483}
+  - component: {fileID: 9196978600514627482}
   m_Layer: 0
   m_Name: SlideshowPrefab
   m_TagString: Untagged
@@ -17,13 +17,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7422805310760992662
+--- !u!4 &9196978600514627483
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7422805310760992660}
+  m_GameObject: {fileID: 9196978600514627481}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -32,19 +32,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7422805310760992663
+--- !u!114 &9196978600514627482
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7422805310760992660}
+  m_GameObject: {fileID: 9196978600514627481}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4f2ee0fe8cf6ce43be63c6bdfb617c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   slides:
-  - {fileID: 3794304449840096921, guid: e7f26b9adf204cd4f9c2e111b4e511ad, type: 3}
-  - {fileID: 4315480311493105767, guid: d4c8f76003b14ca4481305081f636077, type: 3}
-  - {fileID: 2598227973473174042, guid: b911b281f28138e429feccfcb458c405, type: 3}
+  - {fileID: 3572992625133578520, guid: 3b370c8a54eed6044a3afe7f493f3974, type: 3}
+  - {fileID: 8428339096788466120, guid: 2252b58b3cf6b3844abd7ab146b82161, type: 3}
+  - {fileID: 445421389048910889, guid: 9dabbc4dd8be90a4183cb6014833c848, type: 3}
+  - {fileID: 4219018119885729010, guid: e61487e9149100a4e89650dad668c441, type: 3}
+  - {fileID: 7990893795772499171, guid: 4d02e624434691d448eb6114fd3c52bb, type: 3}
