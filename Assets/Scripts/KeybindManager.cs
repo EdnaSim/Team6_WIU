@@ -123,7 +123,7 @@ public class KeybindManager : MonoBehaviour
         {
             if (Input.GetKeyDown(key.Value))
             {
-                Debug.Log(key.Key + " key pressed");
+                //Debug.Log(key.Key + " key pressed");
             }
         }
         UpdateSaveKeysButtonInteractable();
@@ -228,15 +228,15 @@ public class KeybindManager : MonoBehaviour
             {
                 Debug.Log("Keys " + string.Join(", ", pair.Value) + " have the same value: " + pair.Key);
             }
-            Debug.Log("The configuration is not valid.");
+            //Debug.Log("The configuration is not valid.");
         }
         else if (hasChangedKey)
         {
-            Debug.Log("The configuration is valid.");
+            //Debug.Log("The configuration is valid.");
         }
         else
         {
-            Debug.Log("No keys were changed, so nothing to validate.");
+            //Debug.Log("No keys were changed, so nothing to validate.");
         }
     }
 
@@ -265,7 +265,7 @@ public class KeybindManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("No keys were changed, so nothing was saved.");
+            //Debug.Log("No keys were changed, so nothing was saved.");
         }
         UpdateSaveKeysButtonInteractable();
     }

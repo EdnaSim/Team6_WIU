@@ -21,7 +21,8 @@ public class ItemPickUp : MonoBehaviour
             KeyCode interactionKey = KeyCode.F; // Default interaction key is F
 
             if (KeybindManager.Instance != null) {
-                interactionKey = KeybindManager.Instance.GetKeyForAction("Interact");
+                if (KeybindManager.Instance.GetKeyForAction("Interact") != KeyCode.None)
+                    interactionKey = KeybindManager.Instance.GetKeyForAction("Interact");
             }
 
             // Check if the interaction key is pressed

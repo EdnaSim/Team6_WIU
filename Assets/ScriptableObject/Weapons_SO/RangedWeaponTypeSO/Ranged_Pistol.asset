@@ -19,7 +19,7 @@ MonoBehaviour:
     MaxRange: 10
     ProjSpeed: 10
     FallOffDist: 5
-    AmmoInTheMag: 6
+    AmmoInTheMag: 0
     AmmoPerMag: 6
     ReloadTime: 1.5
     CanReload: 1

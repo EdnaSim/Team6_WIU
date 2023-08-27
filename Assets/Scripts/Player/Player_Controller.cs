@@ -120,7 +120,7 @@ public class Player_Controller : MonoBehaviour
                 EnergyManager.Instance.isRunning = false;
                 
             }
-            if (Input.GetKeyDown(attackKey)) {
+            if (Input.GetKey(attackKey)) {
                 //if clicked on UI / no object selected
                 if (!EventSystem.current.IsPointerOverGameObject() 
                     && InventoryManager.Instance != null && InventoryManager.Instance.getSelected() != null) {
@@ -151,10 +151,6 @@ public class Player_Controller : MonoBehaviour
                         }
                     }
                 }
-            }
-
-            if (Input.GetKeyDown(KeyCode.T)) {
-                SanityManager.Instance.ChangeSanity(-50);
             }
         }
         //can be done when paused

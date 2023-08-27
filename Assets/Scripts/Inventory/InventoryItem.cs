@@ -30,9 +30,11 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         inventorySlots = InventoryManager.Instance.inventorySlots;
         consumeButton = InventoryManager.Instance.consumeButton;
         CraftingSlots = new craftingSlot[3];
-        CraftingSlots[0] = CraftingManager.Instance.firstSlot;
-        CraftingSlots[1] = CraftingManager.Instance.secondSlot;
-        CraftingSlots[2] = CraftingManager.Instance.finalSlot;
+        if (CraftingManager.Instance != null) {
+            CraftingSlots[0] = CraftingManager.Instance.firstSlot;
+            CraftingSlots[1] = CraftingManager.Instance.secondSlot;
+            CraftingSlots[2] = CraftingManager.Instance.finalSlot;
+        }
     }
     public void InitializeItem(Item newItem)
     {
@@ -57,6 +59,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             invi.GetComponent<CanvasGroup>().blocksRaycasts = false;
         }
         for (int i = 0; i < CraftingSlots.Length; i++) {
+            if (CraftingSlots[i] == null) continue;
             InventoryItem invi = CraftingSlots[i].GetComponentInChildren<InventoryItem>();
             if (invi == null) continue;
             invi.GetComponent<CanvasGroup>().blocksRaycasts = false;
@@ -87,6 +90,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             invi.GetComponent<CanvasGroup>().blocksRaycasts = true;
         }
         for (int i=0; i < CraftingSlots.Length; i++) {
+            if (CraftingSlots[i] == null) continue;
             InventoryItem invi = CraftingSlots[i].GetComponentInChildren<InventoryItem>();
             if (invi == null) continue;
             invi.GetComponent<CanvasGroup>().blocksRaycasts = true;
@@ -124,6 +128,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                 }
             }
             for (int i=0; i < CraftingSlots.Length; i++) {
+                if (CraftingSlots[i] == null) continue;
                 //found the slot that player tried to drag into
                 if (CraftingSlots[i].transform == PrevParentAfterDrag) {
                     //check if same as the existing item
@@ -189,6 +194,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             
         }
         for (int i= 0; i < CraftingSlots.Length; i++) {
+            if (CraftingSlots[i] == null) continue;
             craftingSlot slot = CraftingSlots[i];
             InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
             if (itemInSlot != null) {

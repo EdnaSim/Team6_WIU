@@ -4215,6 +4215,7 @@ MonoBehaviour:
   - {fileID: 2116740151337848540, guid: 1c55eead7fafc0c4881e30c96570962d, type: 3}
   - {fileID: 8893349677792070559, guid: 5172a15078cb07847a01ffaed4154ebd, type: 3}
   inventoryItemPrefab: {fileID: 7690685759977987638, guid: 48afd56f1db0e3249b1b915dc2694011, type: 3}
+  MaxStackedItems: 20
   itemStats:
   - {fileID: 11400000, guid: 1ce807a0aaea0c349a8ae399ae315550, type: 2}
   - {fileID: 11400000, guid: dc07b58aba8a3ee41aec5987749aec9e, type: 2}
@@ -4231,6 +4232,7 @@ MonoBehaviour:
   player: {fileID: 1912795510}
   consumeButton: {fileID: 360518217}
   meteorite: {fileID: 11400000, guid: 2e1fc3f1c4e511541a26b76001ecbe14, type: 2}
+  InvData: {fileID: 0}
 --- !u!114 &975128899 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1119021679469781360, guid: 8fa39ad304630e04f8a41b5d96ab1581, type: 3}
@@ -5195,7 +5197,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5884,7 +5886,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8416,7 +8418,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ae19fc8bd48ebd478b88c4cce2109a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ps: {fileID: 0}
+  wc: {fileID: 0}
+  wl: {fileID: 0}
+  isPaused: 0
+  Base_MovementSpeed: 0
   MovementSpeed: 10
+  SprintIncrease: 0
+  MoveDir: {x: 0, y: 0}
+  MeleeOrigin: {fileID: 0}
+  CanMelee: 1
+  CanRange: 1
+  PetDetails: {fileID: 0}
 --- !u!50 &1912795512
 Rigidbody2D:
   serializedVersion: 4
@@ -8484,7 +8497,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9544,6 +9557,7 @@ MonoBehaviour:
   - {fileID: 2116740151337848540, guid: 1c55eead7fafc0c4881e30c96570962d, type: 3}
   - {fileID: 8893349677792070559, guid: 5172a15078cb07847a01ffaed4154ebd, type: 3}
   inventoryItemPrefab: {fileID: 7690685759977987638, guid: 48afd56f1db0e3249b1b915dc2694011, type: 3}
+  MaxStackedItems: 20
   itemStats:
   - {fileID: 11400000, guid: 1ce807a0aaea0c349a8ae399ae315550, type: 2}
   - {fileID: 11400000, guid: dc07b58aba8a3ee41aec5987749aec9e, type: 2}
@@ -9560,6 +9574,7 @@ MonoBehaviour:
   player: {fileID: 1912795510}
   consumeButton: {fileID: 285785665}
   meteorite: {fileID: 0}
+  InvData: {fileID: 0}
 --- !u!4 &2136221740
 Transform:
   m_ObjectHideFlags: 0
