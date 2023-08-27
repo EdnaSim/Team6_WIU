@@ -10,7 +10,16 @@ public class TeleportController : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player")
         {
-            if(Input.GetKeyDown(KeyCode.F))
+            // Use KeybindManager to get the interaction key
+            KeyCode interactionKey = KeyCode.F; // Default interaction key is F
+
+            if (KeybindManager.Instance != null)
+            {
+                interactionKey = KeybindManager.Instance.GetKeyForAction("Interact");
+            }
+
+            // Check if the interaction key is pressed
+            if (Input.GetKeyDown(interactionKey))
             {
                 collision.gameObject.transform.position = TeleportDestination.transform.position;
             }

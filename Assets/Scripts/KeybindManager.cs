@@ -6,6 +6,9 @@ using TMPro;
 
 public class KeybindManager : MonoBehaviour
 {
+    // Singleton instance
+    public static KeybindManager Instance;
+
     // Dictionaries to store current and default key bindings
     private Dictionary<string, KeyCode> keys = new Dictionary<string, KeyCode>();
     private Dictionary<string, KeyCode> defaultKeys = new Dictionary<string, KeyCode>();
@@ -21,6 +24,7 @@ public class KeybindManager : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this; // Assign the singleton instance
         //PlayerPrefs.DeleteAll();
         // Load default and saved key bindings
         LoadDefaultKeys();
@@ -76,12 +80,6 @@ public class KeybindManager : MonoBehaviour
                 return KeyCode.Mouse0;
             case "Interacting":
                 return KeyCode.F;
-            case "Pausing":
-                return KeyCode.Escape;
-            case "Open Inventory":
-                return KeyCode.B;
-            case "Open Map":
-                return KeyCode.M;
             default:
                 return KeyCode.None; // Return None as default for unknown key names
         }
@@ -270,5 +268,14 @@ public class KeybindManager : MonoBehaviour
             Debug.Log("No keys were changed, so nothing was saved.");
         }
         UpdateSaveKeysButtonInteractable();
+    }
+
+    public KeyCode GetKeyForAction(string actionName)
+    {
+        if (keys.TryGetValue(actionName, out KeyCode key))
+        {
+            return key;
+        }
+        return KeyCode.None; // Return None if the action name is not found
     }
 }

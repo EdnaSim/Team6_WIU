@@ -1,0 +1,194 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Pathfinding;
+using TMPro;
+using UnityEngine.UI;
+
+public abstract class Pet : MonoBehaviour
+{
+    protected GameObject player;
+    [SerializeField] SO_PetDetails details;
+
+    [Header("Base stats")]
+    public float Base_MaxHunger;
+    public float Base_HungerDrain;
+
+    protected Rigidbody2D rb;
+    protected Animator ar;
+    protected SpriteRenderer sr;
+    protected Vector2 facing;
+    protected Vector2 force;
+
+    [Header("Food")]
+    public List<Item> EdibleFoodList;
+    [SerializeField] float ReplenishAmtFromFood;
+
+    [Header("Pathfinding")]
+    public Transform target;
+    [SerializeField] protected float moveSpeed;
+    public float nextWaypointDist;
+    protected Path path;
+    [HideInInspector] public int currentWaypoint = 0;
+    protected Seeker seeker;
+
+    [Header("Sprite")]
+    [SerializeField] protected bool OriginalSpriteFaceLeft = false;
+
+    [Header("UI")]
+    public TMP_Text Nametag;
+    public Slider HungerBar;
+
+    protected void OnEnable()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+        rb = GetComponent<Rigidbody2D>();
+        ar = transform.GetChild(0).gameObject.GetComponent<Animator>();
+        sr = transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>();
+        seeker = GetComponent<Seeker>();
+
+        target = player.transform;
+        InvokeRepeating("UpdatePath", 0f, 0.5f);
+
+        HungerBar.value = details.CurrentHunger;
+        HungerBar.maxValue = details.MaxHunger;
+
+        UpdateHungerBar();
+        SetHungerBarDisplay(true);
+    }
+
+    protected virtual void FixedUpdate() {
+        if (target == null)
+            return;
+
+        //calculate where to go and move towards it
+        FollowPath();
+
+        //"face" the target
+        facing = (target.transform.position - gameObject.transform.position).normalized;
+
+        //target dead, return to player
+        
+        if (!target.gameObject.activeSelf || (target.GetComponent<HealthManager>() != null && target.GetComponent<HealthManager>().Death)) {
+            target = player.transform;
+        }
+
+        //cap velocity
+        rb.velocity = new Vector2(Mathf.Min(rb.velocity.x, moveSpeed), Mathf.Min(rb.velocity.y, moveSpeed * 2));
+    }
+    protected void LateUpdate() {
+        UpdateAnimation();
+        //teleport back to player if too far
+        if (Vector2.Distance(player.transform.position, transform.position) > 10) {
+            transform.position = new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z);
+        }
+    }
+
+    protected void OnTriggerStay2D(Collider2D col) {
+        if (col.gameObject.tag == "Player") {
+            //check if player has edible food and can feed
+            if (Input.GetKeyDown(KeyCode.F) 
+                && EdibleFoodList.Contains(InventoryManager.Instance.getSelected()) 
+                && details.CurrentHunger < details.MaxHunger) {
+                //consume 1
+                InventoryManager.Instance.removeItem(InventoryManager.Instance.getSelected(), 1);
+                //gain hunger back
+                ChangeHunger(ReplenishAmtFromFood);
+            }
+            SetHungerBarDisplay(true);
+        }
+    }
+
+    protected void OnTriggerExit2D(Collider2D collision) {
+        SetHungerBarDisplay(false);
+    }
+
+    public void UpdateHungerBar() {
+        HungerBar.maxValue = details.MaxHunger;
+        HungerBar.value = details.CurrentHunger;
+    }
+
+    protected void UpdateAnimation() {
+        if (ar == null)
+            return;
+
+        //update if current anim ends (normalizedTime>1 means 1 cycle completed)
+        if (ar.GetCurrentAnimatorStateInfo(0).normalizedTime > 1) {
+            if (Mathf.Abs(rb.velocity.x) <= 0.001f) ar.Play("Dog_Idle");
+            if (Mathf.Abs(rb.velocity.x) > 0.001f) ar.Play("Dog_Run");
+        }
+
+        if (facing.x > 0) {
+            if (OriginalSpriteFaceLeft)
+                sr.flipX = true;
+            else
+                sr.flipX = false; 
+        }
+        else if (facing.x < 0) {
+            if (OriginalSpriteFaceLeft)
+                sr.flipX = false;
+            else
+                sr.flipX = true;
+        }
+    }
+
+    protected void UpdatePath() {
+        if (seeker.IsDone() && target != null) {
+            seeker.StartPath(rb.position, target.position, OnPathComplete);
+        }
+    }
+
+    protected void OnPathComplete(Path p) {
+        if (!p.error) {
+            path = p;
+            currentWaypoint = 0; //start at beginning of path
+        }
+    }
+
+    protected void FollowPath() {
+        if (path == null)
+            return;
+
+        //check not at the end of waypoints
+        if (currentWaypoint >= path.vectorPath.Count) {
+            return;
+        }
+
+        Vector2 dir = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
+        force = dir * moveSpeed;
+
+        float distance = Vector2.Distance(transform.position, path.vectorPath[currentWaypoint]);
+        if (distance < nextWaypointDist) {
+            currentWaypoint++;
+        }
+
+        //to stop unit from moving when close to target
+        if (Vector2.Distance((Vector2)target.position, (Vector2)transform.position) > nextWaypointDist)
+            rb.AddForce(force);
+    }
+
+    public virtual void ChangeHunger(float amt) {
+        details.CurrentHunger += amt;
+        if (details.CurrentHunger > details.MaxHunger) {
+            details.CurrentHunger = details.MaxHunger;
+        }
+        //starved to death
+        else if (details.CurrentHunger <= 0) {
+            PetManager.PetDie?.Invoke();
+        }
+
+        UpdateHungerBar();
+    }
+
+    public void SetHungerBarDisplay(bool b) {
+        HungerBar.gameObject.SetActive(b);
+    }
+
+    public virtual void OwnerAttacked(GameObject attacker) {
+        //leave empty, set by the child classes
+    }
+
+    public virtual void TargetEnemyAttacked(GameObject enemy) {
+        //leave empty, set by the child classes
+    }
+}
