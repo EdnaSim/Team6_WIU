@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 11
+  m_SortingOrder: 4
   m_Sprite: {fileID: -996468194, guid: f7aa8b03ee6095f4c82d0f91bd43b677, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!95 &7562847013591429120
 Animator:
   serializedVersion: 5
@@ -258,10 +258,6 @@ MonoBehaviour:
   currentState: 0
   anim: {fileID: 7562847013591429120}
   aiPath: {fileID: 7562847014486420588}
-  ChasePlayerTimer: 0
-  Player:
-    serializedVersion: 2
-    m_Bits: 64
   FOVradius: 5
   ATKradius: 2
   targetMask:
@@ -287,7 +283,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.22870302, y: -2.3253567}
+  m_Offset: {x: 0.22870302, y: 0.35263336}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -298,7 +294,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.1704807, y: 2.2873378}
+  m_Size: {x: 4.1704807, y: 1.5820711}
   m_EdgeRadius: 0
 --- !u!114 &733628943
 MonoBehaviour:
@@ -433,7 +429,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7559391101268652864, guid: cb8299a9763bba74795eb67097482c52, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 3.06
+      value: 5.02
       objectReference: {fileID: 0}
     - target: {fileID: 7559391101268652864, guid: cb8299a9763bba74795eb67097482c52, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

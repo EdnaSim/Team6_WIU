@@ -6,6 +6,9 @@ using TMPro;
 
 public class KeybindManager : MonoBehaviour
 {
+    // Singleton instance
+    public static KeybindManager Instance;
+
     // Dictionaries to store current and default key bindings
     private Dictionary<string, KeyCode> keys = new Dictionary<string, KeyCode>();
     private Dictionary<string, KeyCode> defaultKeys = new Dictionary<string, KeyCode>();
@@ -19,10 +22,31 @@ public class KeybindManager : MonoBehaviour
     private Color32 normal = new Color32(39, 171, 249, 255);
     private Color32 selected = new Color32(239, 116, 36, 255);
 
-    private void Start()
+    private void Awake()
     {
+        Instance = this; // Assign the singleton instance
+        //PlayerPrefs.DeleteAll();
         // Load default and saved key bindings
         LoadDefaultKeys();
+
+        foreach (var keyButton in keyButtons)
+        {
+            if (System.Enum.IsDefined(typeof(KeyCode), PlayerPrefs.GetString(keyButton.name)) == false)
+            {
+                PlayerPrefs.SetString(keyButton.name, defaultKeys[keyButton.name].ToString());
+                string keyText = PlayerPrefs.GetString(keyButton.name);
+                
+                if (System.Enum.TryParse(keyText, out KeyCode parsedKeyCode))
+                {
+                    // Use the loadedKey variable
+                    KeyCode loadedKey = parsedKeyCode;
+                }
+                else
+                {
+                    Debug.Log("Failed to parse KeyCode: " + keyText);
+                }
+            }
+        }   
         LoadKeys();
     }
 
@@ -56,12 +80,6 @@ public class KeybindManager : MonoBehaviour
                 return KeyCode.Mouse0;
             case "Interacting":
                 return KeyCode.F;
-            case "Pausing":
-                return KeyCode.Escape;
-            case "Open Inventory":
-                return KeyCode.B;
-            case "Open Map":
-                return KeyCode.M;
             default:
                 return KeyCode.None; // Return None as default for unknown key names
         }
@@ -116,12 +134,8 @@ public class KeybindManager : MonoBehaviour
         // Show the current keybinds in the UI
         foreach (var keyButton in keyButtons)
         {
-            Debug.Log(PlayerPrefs.GetString(keyButton.name));
-            if (System.Enum.IsDefined(typeof(KeyCode), PlayerPrefs.GetString(keyButton.name)))
-            {
-                KeyCode loadedKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), keyButton.GetComponentInChildren<TMP_Text>().text = PlayerPrefs.GetString(keyButton.name));
-                keyButton.GetComponentInChildren<TMP_Text>().text = GetKeyDisplayName(loadedKey);
-            }
+            KeyCode loadedKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), keyButton.GetComponentInChildren<TMP_Text>().text = PlayerPrefs.GetString(keyButton.name));
+            keyButton.GetComponentInChildren<TMP_Text>().text = GetKeyDisplayName(loadedKey);
         }
     }
 
@@ -218,11 +232,11 @@ public class KeybindManager : MonoBehaviour
         }
         else if (hasChangedKey)
         {
-            //Debug.Log("The configuration is valid.");
+            Debug.Log("The configuration is valid.");
         }
         else
         {
-            //Debug.Log("No keys were changed, so nothing to validate.");
+            Debug.Log("No keys were changed, so nothing to validate.");
         }
     }
 
@@ -254,5 +268,14 @@ public class KeybindManager : MonoBehaviour
             Debug.Log("No keys were changed, so nothing was saved.");
         }
         UpdateSaveKeysButtonInteractable();
+    }
+
+    public KeyCode GetKeyForAction(string actionName)
+    {
+        if (keys.TryGetValue(actionName, out KeyCode key))
+        {
+            return key;
+        }
+        return KeyCode.None; // Return None if the action name is not found
     }
 }

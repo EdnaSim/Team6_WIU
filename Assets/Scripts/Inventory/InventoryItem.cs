@@ -15,6 +15,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     [SerializeField]GameObject indicator;
     public bool selected = false;
     private InventorySlot[] inventorySlots;
+    private craftingSlot[] CraftingSlots;
     GameObject consumeButton;
 
     [HideInInspector] public Transform parentAfterDrag;
@@ -28,7 +29,10 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         indicator.SetActive(false);
         inventorySlots = InventoryManager.Instance.inventorySlots;
         consumeButton = InventoryManager.Instance.consumeButton;
-
+        CraftingSlots = new craftingSlot[3];
+        CraftingSlots[0] = CraftingManager.Instance.firstSlot;
+        CraftingSlots[1] = CraftingManager.Instance.secondSlot;
+        CraftingSlots[2] = CraftingManager.Instance.finalSlot;
     }
     public void InitializeItem(Item newItem)
     {
@@ -52,11 +56,21 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             if (invi == null) continue;
             invi.GetComponent<CanvasGroup>().blocksRaycasts = false;
         }
+        for (int i = 0; i < CraftingSlots.Length; i++) {
+            InventoryItem invi = CraftingSlots[i].GetComponentInChildren<InventoryItem>();
+            if (invi == null) continue;
+            invi.GetComponent<CanvasGroup>().blocksRaycasts = false;
+        }
         //GetComponent<CanvasGroup>().blocksRaycasts = false;
         image.raycastTarget = false;
+        if (transform.parent.gameObject.tag == "finalProduct") {
+            CraftingManager.Instance.destroyMaterials();
+        }
+        GetComponent<Canvas>().sortingOrder = 12;
         parentAfterDrag = transform.parent;
         transform.SetParent(transform.root);
-        
+
+        selectItem();
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -66,8 +80,14 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        GetComponent<Canvas>().sortingOrder = 11;
         for (int i = 0; i < inventorySlots.Length; i++) {
             InventoryItem invi = inventorySlots[i].GetComponentInChildren<InventoryItem>();
+            if (invi == null) continue;
+            invi.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        }
+        for (int i=0; i < CraftingSlots.Length; i++) {
+            InventoryItem invi = CraftingSlots[i].GetComponentInChildren<InventoryItem>();
             if (invi == null) continue;
             invi.GetComponent<CanvasGroup>().blocksRaycasts = true;
         }
@@ -80,6 +100,34 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                 if (inventorySlots[i].transform == PrevParentAfterDrag) {
                     //check if same as the existing item
                     InventoryItem itemInSlot = inventorySlots[i].GetComponentInChildren<InventoryItem>();
+                    if (itemInSlot != null && item.itemName == itemInSlot.item.itemName && itemInSlot.item.stackable) {
+                        //stackable, start stacking
+                        for (int ii = 0; ii < count; ii++) {
+                            if (itemInSlot.count < InventoryManager.Instance.MaxStackedItems) {
+                                itemInSlot.count++;
+                                itemInSlot.updateCount();
+                                Destroy(gameObject);
+                            }
+                        }
+                        break;
+                    }
+                    else if (itemInSlot != null) {
+                        //not stackable, try swapping slots
+                        if (parentAfterDrag != PrevParentAfterDrag && parentAfterDrag.childCount == 0) {
+                            //swap parents
+                            Transform newParent = itemInSlot.transform.parent; //need this cuz itemInSlot's parent gets changed
+                            itemInSlot.transform.SetParent(parentAfterDrag);
+                            parentAfterDrag = newParent;
+                            break;
+                        }
+                    }
+                }
+            }
+            for (int i=0; i < CraftingSlots.Length; i++) {
+                //found the slot that player tried to drag into
+                if (CraftingSlots[i].transform == PrevParentAfterDrag) {
+                    //check if same as the existing item
+                    InventoryItem itemInSlot = CraftingSlots[i].GetComponentInChildren<InventoryItem>();
                     if (itemInSlot != null && item.itemName == itemInSlot.item.itemName && itemInSlot.item.stackable) {
                         //stackable, start stacking
                         for (int ii = 0; ii < count; ii++) {
@@ -139,6 +187,13 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                 itemInSlot.deselectItem();
             }
             
+        }
+        for (int i= 0; i < CraftingSlots.Length; i++) {
+            craftingSlot slot = CraftingSlots[i];
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+            if (itemInSlot != null) {
+                itemInSlot.deselectItem();
+            }
         }
         indicator.SetActive(true);
         selected = true;

@@ -27,7 +27,7 @@ public class Sprout_Controller : MonoBehaviour
     private bool StartDeathTimer;
     private bool StartSummonTimer;
 
-    public float ChasePlayerTimer;
+    //public float ChasePlayerTimer;
 
     public float FOVradius = 5f;
     public float ATKradius = 2f;
@@ -60,7 +60,7 @@ public class Sprout_Controller : MonoBehaviour
         StartIdleTimer = false;
         StartATKTimer = false;
         StartDeathTimer = false;
-        ChasePlayerTimer = 3f;
+        //ChasePlayerTimer = 3f;
 
         ChangeState(currentState);
 
@@ -105,10 +105,10 @@ public class Sprout_Controller : MonoBehaviour
             Death();
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            isDead = true;
-        }
+        //if (Input.GetKeyDown(KeyCode.R))
+        //{
+        //    isDead = true;
+        //}
 
         if (isDead)
         {

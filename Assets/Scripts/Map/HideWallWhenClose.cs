@@ -11,6 +11,9 @@ public class HideWallWhenClose : MonoBehaviour
     Vector3Int PlayerCell; //player's cell coords
     Color FadedCol;
 
+    [SerializeField] bool HideWholeTilemap = false;
+    Color TmOriginalCol;
+
     private struct tile {
         public Vector3Int pos; //position
         public Color OgCol; //original color
@@ -29,6 +32,7 @@ public class HideWallWhenClose : MonoBehaviour
     void Start()
     {
         tm = GetComponent<Tilemap>();
+        TmOriginalCol = tm.color;
         tm.CompressBounds();
 
         structTiles = new List<tile>();
@@ -38,6 +42,12 @@ public class HideWallWhenClose : MonoBehaviour
     }
 
     private void OnTriggerStay2D(Collider2D collision) {
+        if (HideWholeTilemap) {
+            FadedCol = TmOriginalCol;
+            FadedCol.a = 0.5f;
+            tm.color = FadedCol;
+            return;
+        }
         Vector3Int oldcells = PlayerCell;
         PlayerCell = tm.WorldToCell(Player_Controller.Instance.transform.position);
         if (oldcells != PlayerCell) {
@@ -59,6 +69,10 @@ public class HideWallWhenClose : MonoBehaviour
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
+        if (HideWholeTilemap) {
+            tm.color = TmOriginalCol;
+            return;
+        }
         ResetTiles();
     }
 

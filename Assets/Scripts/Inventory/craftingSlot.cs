@@ -8,10 +8,14 @@ public class craftingSlot : MonoBehaviour, IDropHandler
 { 
     public void OnDrop(PointerEventData eventData)
     {
-        if (transform.childCount == 0)
-        {
-            InventoryItem inventoryItem = eventData.pointerDrag.GetComponent<InventoryItem>();
+        InventoryItem inventoryItem = eventData.pointerDrag.GetComponent<InventoryItem>();
+        if (transform.childCount == 0) {
+            inventoryItem.CheckIfStack = false;
             inventoryItem.parentAfterDrag = transform;
+        }
+        else {
+            inventoryItem.CheckIfStack = true;
+            inventoryItem.PrevParentAfterDrag = transform;
         }
     }
 }

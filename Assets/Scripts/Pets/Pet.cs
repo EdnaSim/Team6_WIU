@@ -86,8 +86,14 @@ public abstract class Pet : MonoBehaviour
 
     protected void OnTriggerStay2D(Collider2D col) {
         if (col.gameObject.tag == "Player") {
+            // Use KeybindManager to get the interaction key
+            KeyCode interactionKey = KeyCode.F; // Default interaction key is F
+
+            if (KeybindManager.Instance != null) {
+                interactionKey = KeybindManager.Instance.GetKeyForAction("Interact");
+            }
             //check if player has edible food and can feed
-            if (Input.GetKeyDown(KeyCode.F) 
+            if (Input.GetKeyDown(interactionKey) 
                 && EdibleFoodList.Contains(InventoryManager.Instance.getSelected()) 
                 && details.CurrentHunger < details.MaxHunger) {
                 //consume 1

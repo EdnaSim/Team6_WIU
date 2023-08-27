@@ -25,7 +25,7 @@ public class RedSmile_Controller : MonoBehaviour
     private bool StartATKTimer;
     private bool StartDeathTimer;
 
-    public float ChasePlayerTimer;
+    //public float ChasePlayerTimer;
 
     public float FOVradius = 5f;
     public float FOVangle = 90;
@@ -57,7 +57,7 @@ public class RedSmile_Controller : MonoBehaviour
         StartIdleTimer = false;
         StartATKTimer = false;
         StartDeathTimer = false;
-        ChasePlayerTimer = 3f;
+        //ChasePlayerTimer = 3f;
 
         ChangeState(currentState);
         //StartCoroutine(Die());
@@ -210,36 +210,6 @@ public class RedSmile_Controller : MonoBehaviour
 
     private void FOVCheck()
     {
-        //Collider2D[] detectedUnits = Physics2D.OverlapCircleAll(transform.position, FOVradius, targetMask);
-        //Collider2D[] ATKRange = Physics2D.OverlapCircleAll(transform.position, ATKradius, targetMask);
-
-        //if (ATKRange.Length != 0)
-        //{
-        //    ChangeState(State.ATTACK);
-        //    isAttacking = true;
-        //}
-
-        //else if (detectedUnits.Length != 0)
-        //{
-        //    if (!isAttacking)
-        //    {
-        //        //Debug.Log("MOVE");
-        //        ChangeState(State.CHARGE);
-        //    }
-        //    //inRange = true;
-        //    //ChasePlayerTimer = 3f;
-        //}
-
-        //else
-        //{
-        //    //inRange = false;
-        //    if (!StartIdleTimer)
-        //    {
-        //        StartIdleTimer = true;
-        //        StartCoroutine(ReturnToIdle());
-        //    }
-        //}
-
         //look for units (player layer)
         Collider2D[] detectedUnits = Physics2D.OverlapCircleAll(transform.position, FOVradius, targetMask);
         Collider2D[] ATKRange = Physics2D.OverlapCircleAll(transform.position, ATKradius, targetMask);

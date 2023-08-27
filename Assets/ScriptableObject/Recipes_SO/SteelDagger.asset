@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d685b022d60e05469bc5abc47ae06c0, type: 3}
+  m_Script: {fileID: 11500000, guid: 5acf7d33e14a8f247a255303138cd1ac, type: 3}
   m_Name: SteelDagger
   m_EditorClassIdentifier: 
   firstMaterial: {fileID: 11400000, guid: 445ff303224e195428b44c5c65a83914, type: 2}

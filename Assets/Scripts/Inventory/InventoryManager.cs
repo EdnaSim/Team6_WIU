@@ -36,14 +36,8 @@ public class InventoryManager : MonoBehaviour
     private void Start() {
         //putting this in awake causes NullReferenceExceptions cuz Player_Controller hasnt been init yet
         LoadInvSlotData();
-    }
-
-    //TEMP, FOR SAVE TESTING
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.J)) {
-            SaveInvSlotData();
-            WeaponController.Instance.SaveEquipment();
-        }
+        if (player == null)
+            player = GameObject.FindGameObjectWithTag("Player");
     }
 
     public bool addItem(Item _item)

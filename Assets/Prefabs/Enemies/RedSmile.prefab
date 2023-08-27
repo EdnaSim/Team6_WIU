@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 11
+  m_SortingOrder: 4
   m_Sprite: {fileID: 1913480541, guid: f72fd586a6b214d4c88631de921ebe0f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!114 &2750919599947305016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,7 +234,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2750919601040052932}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.920528, y: -1.311582, z: 0}
+  m_LocalPosition: {x: 12.920528, y: -1.04, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -370,14 +370,11 @@ MonoBehaviour:
   anim: {fileID: 2750919599947305019}
   aiPath: {fileID: 2750919601040052952}
   isDead: 0
-  ChasePlayerTimer: 0
-  Player:
-    serializedVersion: 2
-    m_Bits: 64
   FOVradius: 5
   FOVangle: 90
   ATKradius: 2
   DOTradius: 5
+  DOTOrigin: {fileID: 2750919600333241585}
   targetMask:
     serializedVersion: 2
     m_Bits: 64
@@ -530,7 +527,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7559391101268652864, guid: cb8299a9763bba74795eb67097482c52, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1.94
+      value: 3.13
       objectReference: {fileID: 0}
     - target: {fileID: 7559391101268652864, guid: cb8299a9763bba74795eb67097482c52, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

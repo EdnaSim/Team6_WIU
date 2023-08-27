@@ -12,11 +12,15 @@ public class SanityManager : MonoBehaviour
     [SerializeField] float Base_MaxSanity;
 
     [Tooltip("Amount of sanity drained by certain events")]
-    public float DrainAmtOnStarve;
     public float DrainAmtOnHit;
     public float DrainAmtOnPetDeath;
-
     public bool inDark;
+
+    [Header("When insane")]
+    [Tooltip("The % of health to slowly drain to before stopping")]
+    [SerializeField] [Range(0, 1)] float HealthDrainLimit = 0.25f;
+    [SerializeField] [Min(0)] float HpDrainWhenInsane = 1f;
+    bool Insane = false;
 
     [Header("Modifiers")]
     [Tooltip("Recommended between -1 and 0. Additive with the PetDrainReduction. Actual Drain = amt * (DarknessDrainIncrease + PetDrainReduction)")]
@@ -67,6 +71,11 @@ public class SanityManager : MonoBehaviour
             BarImage.color = originalCol;
         }
 
+        //if above the hp threshold and can drain
+        if (Insane && PlayerData.CurrHP/PlayerData.MaxHp > HealthDrainLimit) {
+            Player_HealthManager.Instance.TakeDamage(HpDrainWhenInsane * Time.deltaTime);
+        }
+
         //make the bar go down smoothly (also updates the bar)
         float smoothValue = Mathf.SmoothDamp(SanityBar.value, PlayerData.CurrSanity, ref currVel, 0.5f);
         SanityBar.value = smoothValue;
@@ -84,7 +93,11 @@ public class SanityManager : MonoBehaviour
         //check if lost their mind
         else if (PlayerData.CurrSanity <= 0) {
             PlayerData.CurrSanity = 0; //set 0 to not break the sanity bar display
-            Player_HealthManager.Instance.OnDeath();
+            //Player_HealthManager.Instance.OnDeath();
+            Insane = true;
+        }
+        else if (PlayerData.CurrSanity > 0) {
+            Insane = false;
         }
     }
 

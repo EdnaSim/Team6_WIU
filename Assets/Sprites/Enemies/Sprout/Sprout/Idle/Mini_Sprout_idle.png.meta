@@ -129,85 +129,85 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Sprout_idle_0
+      name: Mini_Sprout_idle_0
       rect:
         serializedVersion: 2
         x: 25
         y: 306
         width: 49
         height: 61
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.455, y: 0.09}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0dd6495a433434543b832d685263c157
-      internalID: -996468194
+      spriteID: 9ab6436e0f8c3cf45ae87fb0cfc1ebea
+      internalID: -1756984760
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprout_idle_1
+      name: Mini_Sprout_idle_1
       rect:
         serializedVersion: 2
         x: 25
         y: 210
         width: 49
-        height: 61
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        height: 60
+      alignment: 9
+      pivot: {x: 0.455, y: 0.09}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 30dd619bf24423b41b79eeaaeb511741
-      internalID: -385187909
+      spriteID: 617ce0f450841ad4881dfb4fb20e1224
+      internalID: -599870016
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprout_idle_2
+      name: Mini_Sprout_idle_2
       rect:
         serializedVersion: 2
         x: 25
         y: 114
         width: 49
-        height: 61
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        height: 59
+      alignment: 9
+      pivot: {x: 0.455, y: 0.09}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4228b858b43000c49b164c52f8ea88d3
-      internalID: -1932189523
+      spriteID: 048b6c556ddec0547b2872703225cdd0
+      internalID: 1673683382
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprout_idle_3
+      name: Mini_Sprout_idle_3
       rect:
         serializedVersion: 2
         x: 25
         y: 18
         width: 49
-        height: 61
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        height: 60
+      alignment: 9
+      pivot: {x: 0.455, y: 0.09}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3204cecb284adb549adef2c9c0e8c9f4
-      internalID: 1735029252
+      spriteID: 0edd104abe32282478b035fd7eeaf845
+      internalID: 1897271183
       vertices: []
       indices: 
       edges: []
@@ -223,10 +223,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Sprout_idle_0: -996468194
-      Sprout_idle_1: -385187909
-      Sprout_idle_2: -1932189523
-      Sprout_idle_3: 1735029252
+      Mini_Sprout_idle_0: -1756984760
+      Mini_Sprout_idle_1: -599870016
+      Mini_Sprout_idle_2: 1673683382
+      Mini_Sprout_idle_3: 1897271183
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

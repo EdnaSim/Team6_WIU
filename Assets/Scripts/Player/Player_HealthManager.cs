@@ -56,6 +56,16 @@ public class Player_HealthManager : HealthManager
             Player_Controller.Instance.OnHitByEnemy(attacker);
     }
 
+    public void TakeDamage(float damage) {
+        if (Death) return;
+
+        PlayerData.CurrHP -= (damage * DamageMultiplier);
+        if (PlayerData.CurrHP <= 0) {
+            OnDeath();
+            return;
+        }
+    }
+
     public override void Heal(float amt) {
         PlayerData.CurrHP += amt;
         if (PlayerData.CurrHP > PlayerData.MaxHp)

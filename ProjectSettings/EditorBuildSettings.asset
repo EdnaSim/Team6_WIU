@@ -5,13 +5,31 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
+  - enabled: 0
+    path: Assets/Scenes/TestScenes/MainMenuOLD.unity
     guid: a1915a8fda686da428759411734f0e1d
+  - enabled: 0
+    path: Assets/Scenes/TestScenes/TestSceneJSDOfficial.unity
+    guid: ed782d6ddd3286941809254598009d49
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/TestSceneJSDOfficial.unity
-    guid: ed782d6ddd3286941809254598009d49
+    path: Assets/Scenes/MainMenu.unity
+    guid: e53f9643cc837df4c901328ddf7da0d3
+  - enabled: 1
+    path: Assets/Scenes/Base.unity
+    guid: be30dbf1714f1bb4a92648120935d411
+  - enabled: 1
+    path: Assets/Scenes/MilitaryCheckpoint.unity
+    guid: a734927dc741f35449fded523413154e
+  - enabled: 1
+    path: Assets/Scenes/Pharmacy.unity
+    guid: 798d71167b2f2fb488f3fc97fc81fb2d
+  - enabled: 1
+    path: Assets/Scenes/Trader.unity
+    guid: f41dd81ddafc96d499070179f3707b77
+  - enabled: 1
+    path: Assets/Scenes/School.unity
+    guid: d72c04a2333811b4bb30f5ffadce9411
   m_configObjects: {}

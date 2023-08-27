@@ -9,11 +9,15 @@ public class craftingTable : MonoBehaviour
     {
         craftingMenu.SetActive(false);
     }
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Player" && Input.GetKey(KeyCode.C))
+    private void OnTriggerStay2D(Collider2D collision) {// Use KeybindManager to get the interaction key
+        KeyCode interactionKey = KeyCode.F; // Default interaction key is F
+
+        if (KeybindManager.Instance != null) {
+            interactionKey = KeybindManager.Instance.GetKeyForAction("Interact");
+        }
+        if (collision.gameObject.tag == "Player")
         {
-            if (Input.GetKeyDown(KeyCode.C))
+            if (Input.GetKeyDown(interactionKey))
             {
                 if (craftingMenu.activeSelf == true)
                 {

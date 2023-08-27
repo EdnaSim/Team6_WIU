@@ -6,9 +6,9 @@ public class CraftingManager : MonoBehaviour
 {
     public static CraftingManager Instance;
 
-    [SerializeField] craftingSlot firstSlot;
-    [SerializeField] craftingSlot secondSlot;
-    [SerializeField] craftingSlot finalSlot;
+    public craftingSlot firstSlot;
+    public craftingSlot secondSlot;
+    public craftingSlot finalSlot;
     [SerializeField] GameObject craftingMenu;
 
     public CraftingRecipe[] recipes;

@@ -14,9 +14,20 @@ public class ItemPickUp : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player" && Input.GetKey(KeyCode.F))
+
+        if (collision.gameObject.tag == "Player")
         {
-            pickedUp();
+            // Use KeybindManager to get the interaction key
+            KeyCode interactionKey = KeyCode.F; // Default interaction key is F
+
+            if (KeybindManager.Instance != null) {
+                interactionKey = KeybindManager.Instance.GetKeyForAction("Interact");
+            }
+
+            // Check if the interaction key is pressed
+            if (Input.GetKeyDown(interactionKey)) {
+                pickedUp();
+            }
         }
     }
 }

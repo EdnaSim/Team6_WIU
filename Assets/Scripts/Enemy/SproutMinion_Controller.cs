@@ -26,7 +26,7 @@ public class SproutMinion_Controller : MonoBehaviour
     private bool StartATKTimer;
     private bool StartDeathTimer;
 
-    public float ChasePlayerTimer;
+    //public float ChasePlayerTimer;
 
     public float FOVradius = 5f;
     public float FOVangle;
@@ -61,7 +61,7 @@ public class SproutMinion_Controller : MonoBehaviour
         StartIdleTimer = false;
         StartATKTimer = false;
         StartDeathTimer = false;
-        ChasePlayerTimer = 3f;
+        //ChasePlayerTimer = 3f;
 
         ChangeState(currentState);
         StartCoroutine(Die());

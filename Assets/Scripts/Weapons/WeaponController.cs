@@ -40,11 +40,12 @@ public class WeaponController : MonoBehaviour
     }
 
     private void Update() {
-        if (InventoryManager.Instance.getAmmo() > 0 || RangedStats.AmmoInTheMag > 0) 
-            NoAmmoText.enabled = false;
-        else if (InventoryManager.Instance.getAmmo() <= 0 && RangedStats.AmmoInTheMag <= 0 && RangedStats.ProjPrefab != null)
-            NoAmmoText.enabled = true;
-
+        if (InventoryManager.Instance != null) {
+            if (InventoryManager.Instance.getAmmo() > 0 || RangedStats.AmmoInTheMag > 0)
+                NoAmmoText.enabled = false;
+            else if (InventoryManager.Instance.getAmmo() <= 0 && RangedStats.AmmoInTheMag <= 0 && RangedStats.ProjPrefab != null)
+                NoAmmoText.enabled = true;
+        }
         if (RangedStats.Reloading) {
             ReloadFlashTimer += Time.deltaTime;
             if (ReloadFlashTimer >= 0.2f) {
@@ -84,11 +85,15 @@ public class WeaponController : MonoBehaviour
     public void UpdateAmmoDisplay() {
         if (RangedStats == null) return;
 
-        AmmoDisplayText.text = RangedStats.AmmoInTheMag + "  /  " + RangedStats.AmmoPerMag;
-        if (InventoryManager.Instance.getSelected().type != Item.itemType.ranged)
-            AmmoDisplayText.enabled = false;
-        else
-            AmmoDisplayText.enabled = true;
+        if (AmmoDisplayText != null && InventoryManager.Instance != null) {
+            AmmoDisplayText.text = RangedStats.AmmoInTheMag + "  /  " + RangedStats.AmmoPerMag;
+            if (InventoryManager.Instance.getSelected() != null) {
+                if (InventoryManager.Instance.getSelected().type != Item.itemType.ranged)
+                    AmmoDisplayText.enabled = false;
+                else
+                    AmmoDisplayText.enabled = true;
+            }
+        }
     }
 
     public bool CanRanged() {
@@ -96,7 +101,7 @@ public class WeaponController : MonoBehaviour
             || RangedStats.ProjPrefab == null 
             || RangedStats.TimerForFireRate > 0f 
             || RangedStats.Reloading 
-            || (RangedStats.AmmoInTheMag == 0 && InventoryManager.Instance.getAmmo() <= 0))
+            || (RangedStats.AmmoInTheMag == 0 && InventoryManager.Instance != null && InventoryManager.Instance.getAmmo() <= 0))
             return false;
 
         return true;
@@ -159,7 +164,7 @@ public class WeaponController : MonoBehaviour
 
     public void Reload() {
         //no more ammo in inventory, or weapon CanReload is set to false
-        if (InventoryManager.Instance.getAmmo() <= 0 || !RangedStats.CanReload) {
+        if (InventoryManager.Instance != null && InventoryManager.Instance.getAmmo() <= 0 || !RangedStats.CanReload) {
             NoAmmoText.enabled = true;
             return;
         }
@@ -175,7 +180,7 @@ public class WeaponController : MonoBehaviour
         if (diff > 0) {
             //when stored ammo runs out, it just puts in all the bullets it can, then stops
             for (int i = 0; i < diff; i++) {
-                if (InventoryManager.Instance.getAmmo() > 0) {
+                if (InventoryManager.Instance != null && InventoryManager.Instance.getAmmo() > 0) {
                     InventoryManager.Instance.RemoveAmmo(1);
                     RangedStats.AmmoInTheMag++;
                 }
@@ -262,6 +267,7 @@ public class WeaponController : MonoBehaviour
     public void LoadLists() {
         OwnedRangedList = InvData.SavedRangedWeapons;
         OwnedMeleeList = InvData.SavedMeleeWeapons;
-        ArmourDetails.Instance.EquipArmour(InvData.EquippedArmour);
+        if (ArmourDetails.Instance != null)
+            ArmourDetails.Instance.EquipArmour(InvData.EquippedArmour);
     }
 }

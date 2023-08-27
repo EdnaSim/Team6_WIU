@@ -31,22 +31,25 @@ public class ItemGenerator : MonoBehaviour
         bool isDup;
         for (int i=0; i < ChosenSet.transform.childCount; i++) {
             isDup = false;
-            Item item = ChosenSet.transform.GetChild(i).GetComponent<ItemPickUp>().item;
-            if (item.type == Item.itemType.melee) {
-                for (int ii=0; ii < WeaponController.OwnedMeleeList.Count; ii++) {
-                    if (item.itemName == WeaponController.OwnedMeleeList[ii].WeaponName) { 
-                        //found in owned weapons list
-                        isDup = true;
-                        break; 
+            ItemPickUp itemPU = ChosenSet.transform.GetChild(i).GetComponent<ItemPickUp>();
+            if (itemPU != null) {
+                Item item = itemPU.item;
+                if (item.type == Item.itemType.melee) {
+                    for (int ii = 0; ii < WeaponController.OwnedMeleeList.Count; ii++) {
+                        if (item.itemName == WeaponController.OwnedMeleeList[ii].WeaponName) {
+                            //found in owned weapons list
+                            isDup = true;
+                            break;
+                        }
                     }
                 }
-            }
-            else if (item.type == Item.itemType.ranged) {
-                for (int ii = 0; ii < WeaponController.OwnedRangedList.Count; ii++) {
-                    if (item.itemName == WeaponController.OwnedRangedList[ii].WeaponName) {
-                        //found in owned weapons list
-                        isDup = true;
-                        break;
+                else if (item.type == Item.itemType.ranged) {
+                    for (int ii = 0; ii < WeaponController.OwnedRangedList.Count; ii++) {
+                        if (item.itemName == WeaponController.OwnedRangedList[ii].WeaponName) {
+                            //found in owned weapons list
+                            isDup = true;
+                            break;
+                        }
                     }
                 }
             }

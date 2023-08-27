@@ -9,6 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: c6910349d05bfeb4cabb18dde8a37681, type: 3}
   m_Name: Ammo
   m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: 7e3efb43da895894283da4f122e3b7e2, type: 2}
+  amountOfItem: 2
+  costOfItem: 80

@@ -60,9 +60,6 @@ public class EnergyManager : MonoBehaviour
         {
             LoseEnergy((PassiveDrainAmt + (isRunning ? RunningDrainIncrease : 0)) * Time.deltaTime);
         }
-        if (Input.GetKeyDown(KeyCode.L)) {
-            LoseEnergy(50);
-        }
         //flashing bar
         if ((PlayerData.CurrStamina / PlayerData.MaxStamina) * 100 <= 25)
         {

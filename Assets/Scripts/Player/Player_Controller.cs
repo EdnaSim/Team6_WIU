@@ -60,7 +60,36 @@ public class Player_Controller : MonoBehaviour
         //stuff that cant be done when paused
         if (!isPaused && !Player_HealthManager.Instance.Death) {
             //get input for moving
-            MoveDir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
+            //MoveDir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
+            // Use KeybindManager to get movement keys
+            KeyCode moveUpKey = KeyCode.W; // Default value if KeybindManager is not available
+            KeyCode moveDownKey = KeyCode.S;
+            KeyCode moveLeftKey = KeyCode.A;
+            KeyCode moveRightKey = KeyCode.D;
+            KeyCode sprintKey = KeyCode.LeftShift;
+            KeyCode attackKey = KeyCode.Mouse0;
+
+            if (KeybindManager.Instance != null) {
+                moveUpKey = KeybindManager.Instance.GetKeyForAction("Up");
+                moveDownKey = KeybindManager.Instance.GetKeyForAction("Down");
+                moveLeftKey = KeybindManager.Instance.GetKeyForAction("Left");
+                moveRightKey = KeybindManager.Instance.GetKeyForAction("Right");
+                sprintKey = KeybindManager.Instance.GetKeyForAction("Sprinting");
+                attackKey = KeybindManager.Instance.GetKeyForAction("Attacking");
+            }
+
+            // Check movement input
+            Vector2 newMoveDir = Vector2.zero;
+            if (Input.GetKey(moveUpKey))
+                newMoveDir.y = 1;
+            if (Input.GetKey(moveDownKey))
+                newMoveDir.y = -1;
+            if (Input.GetKey(moveLeftKey))
+                newMoveDir.x = -1;
+            if (Input.GetKey(moveRightKey))
+                newMoveDir.x = 1;
+
+            MoveDir = newMoveDir.normalized;
             if (MoveDir == Vector2.zero) { //not moving
                 RestTimer += Time.deltaTime;
             }
@@ -73,32 +102,28 @@ public class Player_Controller : MonoBehaviour
                 EnergyManager.Instance.StartRegen();
             }
             //holding down sprint key
-            if (Input.GetKey(KeyCode.LeftShift) && PlayerData.CurrStamina > 0f) {
+            if (Input.GetKey(sprintKey) && PlayerData.CurrStamina > 0f) {
                 //Sprint
                 MovementSpeed = Base_MovementSpeed + SprintIncrease;
                 if (MoveDir != Vector2.zero)
                     EnergyManager.Instance.isRunning = true;
             }
-            else if (Input.GetKeyUp(KeyCode.LeftShift)) {
-                MovementSpeed -= SprintIncrease;
+            else if (Input.GetKeyUp(sprintKey)) {
+                if (EnergyManager.Instance.isRunning)
+                    MovementSpeed -= SprintIncrease;
                 EnergyManager.Instance.isRunning = false;
             }
             else if (PlayerData.CurrStamina <= 0 && !Tired) {
                 Tired = true;
-                MovementSpeed -= SprintIncrease;
+                if (EnergyManager.Instance.isRunning)
+                    MovementSpeed -= SprintIncrease;
                 EnergyManager.Instance.isRunning = false;
+                
             }
-
-            //input
-            if (Input.GetKeyDown(KeyCode.F)) {
-                //Interact
-            }
-            if (Input.GetKeyDown(KeyCode.M)) {
-                //Open map
-            }
-            if (Input.GetMouseButton(0)) {
+            if (Input.GetKeyDown(attackKey)) {
                 //if clicked on UI / no object selected
-                if (!EventSystem.current.IsPointerOverGameObject() && InventoryManager.Instance.getSelected() != null) {
+                if (!EventSystem.current.IsPointerOverGameObject() 
+                    && InventoryManager.Instance != null && InventoryManager.Instance.getSelected() != null) {
 
                     if (InventoryManager.Instance.getSelected().type == Item.itemType.melee) {
                         //melee attack
@@ -126,17 +151,17 @@ public class Player_Controller : MonoBehaviour
                         }
                     }
                 }
-                
             }
 
-            //Play audio
+            if (Input.GetKeyDown(KeyCode.T)) {
+                SanityManager.Instance.ChangeSanity(-50);
+            }
         }
         //can be done when paused
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P)) {
-            //pause / unpause
-            SetPause();
-        }
-
+        //if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P)) {
+        //    //pause / unpause
+        //    SetPause();
+        //}
     }
     private void FixedUpdate() {//move player
         rb.AddForce(MoveDir * MovementSpeed);
@@ -195,7 +220,6 @@ public class Player_Controller : MonoBehaviour
 
     public void StartRanged() {
         if (wc.Fire(facing)) {
-
             //play audio
         }
     }
